@@ -1,0 +1,29 @@
+.fixed-table-pagination{display: block;position: absolute;margin-top: 0px; width: 100%;}
+.fixed-table-pagination .pagination-detail{margin-top: 10px;margin-bottom: 10px;}
+.pull-right.pagination{display: inline-block;float: right;margin: 10px 0px 10px 0px;}
+.pull-right.pagination{display: inline-block; float: right; margin: 10px 16px 10px 0px;}
+.pull-right.pagination ul{display: inline-block; margin: 0px 0px;}
+.pull-right.pagination ul li{float: left; margin-left: 4px; color: #999999;}
+.pull-right.pagination ul li input{border: 1px solid #cccccc; outline: none; color: #999999; margin: 0px 5px; width: 36px; height: 20px; line-height: 20px; text-align: center;}
+.pull-right.pagination ul li a{display: block; border: 1px solid #c0e5fd; height: 20px; padding: 0px 5px; color: #999999; font-size: 12px; line-height: 20px;}
+.pull-right.pagination ul li.active a{background: #0785fd; border-color: #0785fd; color: #fff;}
+.pull-right.pagination ul li:hover a{background: #0785fd; border-color: #0785fd; color: #fff;}
+.pull-right.pagination ul li button{width: 38px; cursor: pointer; outline: none; height: 22px; border: 1px solid #5297ff; color: #fff; background: #5ebaff; text-align: center; line-height: 22px; display: inline-block;}
+.pull-right.pagination ul li button:hover{background: #58aae7;}
+.fixed-table-pagination .pagination-detail{font-size: 12px; color: #666;}
+.btn-group>.btn:first-child{padding: 4px 12px;}
+.page-size{font-size: 12px; color: #666;}
+.table{margin-bottom: 0px;}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{    padding: 0px 5px;line-height:100%;vertical-align: middle;border-top: 1px solid #c0e5fd;;}
+.table_a .btn-group-sm>.btn, .btn-sm{    display: inline-block;height: 20px;font-size: 12px;line-height: 17px;border-radius: 2px;box-sizing: border-box;padding: 0px 10px;color: #fff;}
+.table_a .btn-primary{display: inline-block;background: #82bfff;border: 1px solid #5fa3ea;}
+.table_a .btn-danger{    display: inline-block; background: #ff87c4;border: 1px solid #fa75b8;}
+.table-striped>tbody>tr:nth-of-type(odd){background-color: #fff;}
+.table-hover>tbody>tr:hover{background-color: #fbf9ff;;}
+.search_but{display: inline-block; pa}
+.bs-checkbox input{display: block;}
+.th-inner .layui-form-checkbox{display: none;}
+
+.ibox-title{border-width:1px 1px 0px 1px;border-color:#c0e5fd;}
+.ibox-content{border-color:#c0e5fd;border-width:1px 1px 1px 1px;    height: 400px; overflow-y: scroll;}
+.ibox{border-bottom: 1px solid #c0e5fd;}

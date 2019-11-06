@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<<html xmlns:th="http://www.thymeleaf.org">>
+
+	<head>
+		<meta charset="utf-8">
+		<title>nepadmin</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all">
+		<link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all">
+		<link rel="stylesheet" href="css/l-style.css" />
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<!--[if IE 8]> 
+	 <link rel="stylesheet" href="css/l-style_8.css" />
+	<![endif]-->
+	</head>
+
+	<body>
+
+		<!-- 主体内容 -->
+		<div class="layui-fluid dang_fluid" lay-title="日历页">
+			<div class="layui-row layui-col-space20">
+				<div class="layui-col-xs4">
+					<div class="item_box">
+						<div class="item_head">
+							<h3 class="item_tit">日历</h3>
+						</div>
+						<div class="item_main">
+							<div class="index-item-f">
+								<h3></h3>
+								<table id='mycalendar' class='calendar dang_calen'></table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-xs4">
+					<div class="item_box">
+						<div class="item_head">
+							<h3 class="item_tit">天气预报</h3>
+						</div>
+						<div class="item_main">
+							<div class="tianqi">
+								<div class="layui-row">
+									<div class="layui-col-xs5">
+										<div class="tian_img">
+											<img src="images/icon_tian_b.png" />
+										</div>
+									</div>
+									<div class="layui-col-xs7">
+										<div class="tian_text">
+											<p class="tian_du">16~22<span>℃</span></p>
+											<p class="tian_city"><span>中山</span><span>多云转晴</span></p>
+											<p class="tian_kong">空气质量<span>良好</span></p>
+										</div>
+									</div>
+								</div>
+								<dl class="dl_tian clear">
+									<dd>
+										<p>明天</p>
+										<img src="images/icon_tian_a1.png" />
+										<span>16℃ </span>
+									</dd>
+									<dd>
+										<p>周三</p>
+										<img src="images/icon_tian_a2.png" />
+										<span>16℃ </span>
+									</dd>
+									<dd>
+										<p>周四</p>
+										<img src="images/icon_tian_a3.png" />
+										<span>16℃ </span>
+									</dd>
+									<dd>
+										<p>周五</p>
+										<img src="images/icon_tian_a4.png" />
+										<span>16℃ </span>
+									</dd>
+									<dd>
+										<p>周六</p>
+										<img src="images/icon_tian_a5.png" />
+										<span>16℃ </span>
+									</dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<script src="js/jquery.min.js"></script>
+		<script src="layui/layui.js"></script>
+		<script src="layui/layui.all.js"></script>
+		<script type="text/javascript" src="js/l-index.js"></script>
+		<!--日历-->
+		<link rel="stylesheet" href="css/dcalendar.picker.css" />
+		<script type="text/javascript" src="js/dcalendar.picker.js"></script>
+		<script>
+			$('#mycalendar').dcalendar(); //初始化日历
+		</script>
+	</body>
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+<script src="js/ie8hack/html5shiv.min.js"></script>
+<script src="js/ie8hack/respond.min.js"></script>
+<script src="js/ie8hack/placeholders.min.js"></script>
+<![endif]-->
+
+</html>

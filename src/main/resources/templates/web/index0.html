@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<title>nepadmin</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all">
+		<link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all">
+		<link rel="stylesheet" href="css/l-style.css" />
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<!--[if IE 8]> 
+	 <link rel="stylesheet" href="css/l-style_8.css" />
+	<![endif]-->
+	</head>
+
+	<body>
+
+		<!-- 主体内容 -->
+		<div class="layui-fluid dang_fluid" id="VIEW-index" lay-title="首页">
+			<div class="row_a clear">
+				<div class="row_a_l">
+					<div class="item_box">
+						<div class="item_head">
+							<h3 class="item_tit">服务器连通性</h3>
+							<a href="#" class="item_more">更多></a>
+						</div>
+						<div class="item_main">
+							<table class="table_a" cellpadding="0" cellspacing="0">
+								<tr>
+									<th>序号 </th>
+									<th>服务器IP地址</th>
+									<th>测试地址</th>
+									<th>状态</th>
+								</tr>
+								<tr class="tr_b">
+									<td>1</td>
+									<td>党政外网</td>
+									<td>http://192.168.4.112/rdmanager/main/index.jhtml</td>
+									<td>
+										<img src="images/icon_zhuangt_1.png" />
+									</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>党政外网</td>
+									<td>http://192.168.4.112/rdmanager/main/index.jhtml</td>
+									<td>
+										<img src="images/icon_zhuangt_2.png" />
+									</td>
+								</tr>
+								<tr class="tr_b">
+									<td>3</td>
+									<td>党政外网</td>
+									<td>http://192.168.4.112/rdmanager/main/index.jhtml</td>
+									<td>
+										<img src="images/icon_zhuangt_1.png" />
+									</td>
+								</tr>
+								<tr>
+									<td>4</td>
+									<td>党政外网</td>
+									<td>http://192.168.4.112/rdmanager/main/index.jhtml</td>
+									<td>
+										<img src="images/icon_zhuangt_1.png" />
+									</td>
+								</tr>
+								<tr class="tr_b">
+									<td>5</td>
+									<td>党政外网</td>
+									<td>http://192.168.4.112/rdmanager/main/index.jhtml</td>
+									<td>
+										<img src="images/icon_zhuangt_2.png" />
+									</td>
+								</tr>
+								<tr>
+									<td>6</td>
+									<td>党政外网</td>
+									<td>http://192.168.4.112/rdmanager/main/index.jhtml</td>
+									<td>
+										<img src="images/icon_zhuangt_1.png" />
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="row_a_r">
+					<div class="item_box">
+						<div class="item_head">
+							<h3 class="item_tit">速度监控</h3>
+							<div class="item_h_r">
+								<select class="select_a">
+									<option>最近10天</option>
+									<option>最近1月</option>
+									<option>最近1年</option>
+								</select>
+								<button class="table_but table_but_a but_a">全 部</button>
+							</div>
+						</div>
+						<div class="item_main">
+							<div class="tubiao">
+								<div class="pie_bg_m">
+									<i class="i-bg"></i>
+									<div id="EC-1" style="width:100%;height:265px;">
+									</div>
+									<script type="text/javascript">
+										// 基于准备好的dom，初始化echarts实例
+										var myChart1 = echarts.init(document.getElementById('EC-1'));
+
+										// 指定图表的配置项和数据
+
+										var option = {
+											title: {
+												text: '监控时间：2018年12月07日 ',
+												textStyle: {
+													color: '#666',
+													fontSize: 12,
+													fontWeight: '100',
+												},
+												top: 10,
+												left: 5
+											},
+											tooltip: {
+												show: true,
+												trigger: 'item',
+											},
+											grid: {
+												left: 80,
+												right: 35,
+												bottom: 25
+											},
+											xAxis: {
+												type: 'value',
+												axisLabel: {
+													interval: 0,
+													color: ['#666'],
+													formatter: '{value}ms'
+												},
+												axisLine: {
+													lineStyle: {
+														color: '#4997c5',
+													},
+												},
+												axisTick: {
+													show: false
+												},
+												splitArea: {
+													show: true,
+													areaStyle: {
+														color: ['#ecfafe', '#fff']
+													}
+												},
+												splitLine: {
+													lineStyle: {
+														color: ['#d8f2f9'],
+													}
+												},
+												splitNumber: 8,
+											},
+											yAxis: {
+												type: 'category',
+												axisLabel: {
+													interval: 0,
+													color: ['#666']
+												},
+												axisLine: {
+													lineStyle: {
+														color: '#4997c5',
+													},
+												},
+												axisTick: {
+													show: false
+												},
+												data: ['公文搜索', '发布公文', '系统首页', '公文搜索', '系统登录页']
+											},
+											series: [{
+												data: [130, 190, 154, 66, 78],
+												type: 'bar',
+												barWidth: 18,
+												itemStyle: {
+													normal: {
+														//barBorderRadius: 15,
+														color: '#43aed4'
+													}
+												}
+											}]
+										};
+
+										// 使用刚指定的配置项和数据显示图表。
+										myChart1.setOption(option);
+									</script>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row_a clear mT12">
+				<div class="row_a_l">
+					<div class="item_box">
+						<div class="item_head">
+							<h3 class="item_tit">在线人数</h3>
+							<div class="item_h_r">
+								<select class="select_a">
+									<option>最近10天</option>
+									<option>最近1月</option>
+									<option>最近1年</option>
+								</select>
+								<button class="table_but table_but_a but_a">全 部</button>
+							</div>
+						</div>
+						<div class="item_main">
+
+							<div class="tubiao">
+								<div class="pie_bg_m">
+									<i class="i-bg"></i>
+									<div id="EC-2" style="width:100%;height:266px;">
+									</div>
+									<script type="text/javascript">
+										// 基于准备好的dom，初始化echarts实例
+										var myChart2 = echarts.init(document.getElementById('EC-2'));
+
+										// 指定图表的配置项和数据
+
+										var option = {
+											color: ['#43aed4', '#71dcde'],
+											tooltip: {
+												show: true,
+												trigger: 'axis',
+												showContent: false,
+											},
+											grid: {
+												left: 50,
+												right: 35,
+												bottom: 25
+											},
+											legend: {
+												left: 20,
+												top: 20,
+												align: 'right',
+												itemGap: 20,
+												itemWidth: 10,
+												data: [{
+													name: 'pc端',
+													icon: 'circle',
+												}, {
+													name: '移动端',
+													icon: 'circle',
+												}]
+											},
+											calculable: true,
+											xAxis: [{
+												type: 'category',
+												boundaryGap: false,
+												axisLabel: {
+													interval: 0,
+													color: ['#666']
+												},
+												axisLine: {
+													lineStyle: {
+														color: '#4997c5',
+													},
+												},
+												axisTick: {
+													show: false
+												},
+												data: ['1:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00']
+											}],
+											yAxis: {
+												type: 'value',
+												axisLabel: {
+													interval: 0,
+													color: ['#666']
+												},
+												axisLine: {
+													lineStyle: {
+														color: '#4997c5',
+													},
+												},
+												axisTick: {
+													show: false
+												},
+												splitArea: {
+													show: true,
+													areaStyle: {
+														color: ['#ecfafe', '#fff']
+													}
+												},
+												splitLine: {
+													lineStyle: {
+														color: ['#d8f2f9'],
+													}
+												},
+											},
+											series: [{
+												name: '移动端',
+												type: 'line',
+												symbolSize: 0,
+												areaStyle: {
+													normal: {
+														type: 'default',
+														color: '#43aed4',
+														opacity: 1,
+													}
+												},
+												symbol: 'pin',
+												symbolSize: 90,
+												symbolOffset: [0, 0],
+												showSymbol: false,
+												smooth: true,
+												lineStyle: {
+													color: '#43aed4',
+													width: 0,
+												},
+												label: {
+													show: true,
+													color: '#fff',
+													color: '#fff',
+													formatter: '移动端\n{c}人',
+													position: 'top',
+													distance: -40,
+												},
+												data: [610, 412, 421, 654, 810, 630, 510, 721, 554, 560, 830, 510, 560, 830, 510]
+											}, {
+												name: 'pc端',
+												type: 'line',
+												symbolSize: 0,
+												areaStyle: {
+													normal: {
+														type: 'default',
+														color: '#71dcde',
+														opacity: 1,
+													}
+												},
+												smooth: true,
+												lineStyle: {
+													color: '#71dcde',
+													width: 0,
+												},
+												symbol: 'pin',
+												symbolSize: 91,
+												symbolOffset: [0, 0],
+												showSymbol: false,
+												smooth: true,
+												lineStyle: {
+													color: '#71dcde',
+													width: 0,
+												},
+												label: {
+													show: true,
+													color: '#fff',
+													formatter: '移动端\n{c}人',
+													position: 'top',
+													distance: -40,
+												},
+												data: [236, 375, 380, 449, 214, 267, 442, 318, 357, 193, 421, 391, 235, 546, 256]
+											}, ]
+										};
+
+										// 使用刚指定的配置项和数据显示图表。
+										myChart2.setOption(option);
+									</script>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row_a_r">
+					<div class="item_box">
+						<div class="item_head">
+							<h3 class="item_tit">资源监控</h3>
+							<a href="#" class="item_more">更多></a>
+						</div>
+						<div class="item_main">
+							<table class="table_a bor_a" cellpadding="0" cellspacing="0">
+								<tr>
+									<th width="40">序号</th>
+									<th>服务器</th>
+									<th>设备名称</th>
+									<th>状态</th>
+								</tr>
+								<tr class="tr_b">
+									<td rowspan="3" class="tr_a">1</td>
+									<td rowspan="3" class="tr_a">生产环境-应用服务器（172.18.248.54）</td>
+									<td class="bor_a">CPU</td>
+									<td class="bor_a"><span class="tai tai_a">异常</span></td>
+								</tr>
+								<tr>
+									<td class="bor_a">内存</td>
+									<td class="bor_a"><span class="tai tai_b">正常</span></td>
+
+								</tr>
+								<tr class="tr_b">
+									<td class="bor_a">硬盘</td>
+									<td class="bor_a"><span class="tai tai_a">异常</span></td>
+								</tr>
+								<tr>
+									<td rowspan="3">2</td>
+									<td rowspan="3">生产环境-应用服务器（172.18.248.54）</td>
+									<td class="bor_a">CPU</td>
+									<td class="bor_a"><span class="tai tai_b">正常</span></td>
+								</tr>
+								<tr class="tr_b">
+									<td class="bor_a">内存</td>
+									<td class="bor_a"><span class="tai tai_a">异常</span></td>
+								</tr>
+								<tr>
+									<td class="bor_a">硬盘</td>
+									<td class="bor_a"><span class="tai tai_b">正常</span></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="layui/layui.js"></script>
+		<script src="layui/layui.all.js"></script>
+		<script type="text/javascript" src="js/l-index.js"></script>
+		<script>
+			//由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+			! function() {
+				var layer = layui.layer,
+					form = layui.form;
+				form.on('checkbox(layTableAllChoose)', function(data) {
+					$("input[name='layTableCheckbox']").each(function() {
+						this.checked = data.elem.checked;
+						// console.log(data);
+					});
+					form.render('checkbox');
+				});
+				window.onresize = function() {
+					myChart1.resize();
+					myChart2.resize();
+				}
+			}();
+		</script>
+	</body>
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+<script src="js/ie8hack/html5shiv.min.js"></script>
+<script src="js/ie8hack/respond.min.js"></script>
+<script src="js/ie8hack/placeholders.min.js"></script>
+<![endif]-->
+
+</html>

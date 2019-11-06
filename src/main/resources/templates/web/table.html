@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<title>nepadmin</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all">
+		<link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all">
+		<link rel="stylesheet" href="css/l-style.css" />
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<!--[if IE 8]> 
+	 <link rel="stylesheet" href="css/l-style_8.css" />
+	<![endif]-->
+	</head>
+
+	<body>
+
+		<!-- 主体内容 -->
+		<div class="layui-fluid dang_fluid" id="VIEW-list-table" lay-title="表格列表">
+			<div class="layui-row layui-col-space10">
+				<div class="layui-col-md12">
+					<form class="layui-form" action="" lay-filter="component-form-element">
+						<div class="item_head border_all">
+							<h3 class="item_tit">表格列表</h3>
+						</div>
+					<div class="item_box mT12">
+						<div class="search_box">
+							<div class="layui-form-item search_item">
+								<label class="layui-form-label dang_label">标题名称：</label>
+								<div class="layui-input-inline">
+									<input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input dang_input">
+								</div>
+							</div>
+							<div class="layui-form-item search_item">
+								<label class="layui-form-label dang_label">标题名称：</label>
+								<div class="layui-input-inline">
+									<input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input dang_input">
+								</div>
+							</div>
+							<div class="layui-form-item search_item">
+								<label class="layui-form-label dang_label">标题名称：</label>
+								<div class="layui-input-inline">
+									<input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input dang_input">
+								</div>
+							</div>
+							<div class="layui-form-item search_item">
+								<label class="layui-form-label dang_label">选择：</label>
+								<div class="layui-input-inline dang_select">
+									<select name="interest" lay-filter="aihao">
+										<option value="0">写作</option>
+										<option value="1">阅读</option>
+									</select>
+								</div>
+							</div>
+							<button class="table_but table_but_a but_a">搜 索</button>
+							<button class="table_but table_but_b but_a">导 出</button>
+						</div>
+					</div>	
+					<div class="item_box mT5">
+							<table class="table_b layui-form" cellpadding="0" cellspacing="0">
+								<tr>
+									<th>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" lay-filter="layTableAllChoose" />
+										</div>
+									</th>
+									<th>序号</th>
+									<th>标题</th>
+									<th>内容</th>
+									<th>计划完成时间</th>
+									<th>操作</th>
+								</tr>
+								<tr>
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>1</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr class="area_a">
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>2</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>3</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr class="area_a">
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>4</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>5</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr class="area_a">
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>6</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>7</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr class="area_a">
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>8</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>9</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr class="area_a">
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>10</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>11</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+								<tr class="area_a">
+									<td>
+										<div class="dang_check">
+											<input type="checkbox" name="layTableCheckbox" lay-skin="" />
+										</div>
+									</td>
+									<td>12</td>
+									<td>采购制度定制与设计申请</td>
+									<td>采购部管理制度制定与设计</td>
+									<td>2018-10-20</td>
+									<td>
+										<a href="#" class="tab_icon tab_icon_a1"></a>
+										<a href="#" class="tab_icon tab_icon_a2"></a>
+										<a href="#" class="tab_icon tab_icon_a3"></a>
+										<a href="#" class="tab_icon tab_icon_a4"></a>
+									</td>
+								</tr>
+							</table>
+						
+					</div>
+					</form>
+					<div class="page">
+						<ul>
+							<li>
+								<a href="#">首页</a>
+							</li>
+							<li>
+								<a href="#">上一页</a>
+							</li>
+							<li>
+								<a href="#">1</a>
+							</li>
+							<li class="active">
+								<a href="#">2</a>
+							</li>
+							<li>
+								<a href="#">3</a>
+							</li>
+							<li>
+								<a href="#">4</a>
+							</li>
+							<li>
+								<a href="#">5</a>
+							</li>
+							<li>
+								<a href="#">6</a>
+							</li>
+							<li>
+								<a href="#">下一页</a>
+							</li>
+							<li>
+								<a href="#">尾页</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="layui/layui.js"></script>
+		<script src="layui/layui.all.js"></script>
+		<script type="text/javascript" src="js/l-index.js"></script>
+		<script>
+
+			//由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+			! function() {
+				var layer = layui.layer,
+					form = layui.form;
+//				form.on('checkbox(layTableAllChoose)', function(data) {
+//					$("input[name='layTableCheckbox']").each(function() {
+//						this.checked = data.elem.checked;
+//						// console.log(data);
+//					});
+//					form.render('checkbox');
+//				});
+
+			}();
+			$('.aaaa').click(function(){
+				$('select').append('<option value="2">阅读</option>');
+//				var layer = layui.layer;
+//					form = layui.form;
+					form.render();
+//				layui.use('form', function(){
+//				   var form = layui.form();//高版本建议把括号去掉，有的低版本，需要加()
+//				   form.render();
+//				  });
+			})
+			
+		</script>
+	</body>
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+<script src="js/ie8hack/html5shiv.min.js"></script>
+<script src="js/ie8hack/respond.min.js"></script>
+<script src="js/ie8hack/placeholders.min.js"></script>
+<![endif]-->
+
+</html>

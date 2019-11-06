@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<title>nepadmin</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all">
+		<link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all">
+		<link rel="stylesheet" href="css/l-style.css" />
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<!--[if IE 8]> 
+	 <link rel="stylesheet" href="css/l-style_8.css" />
+	<![endif]-->
+	</head>
+
+	<body>
+
+		<!-- 主体内容 -->
+		<div class="layui-fluid dang_fluid" lay-title="表单页">
+	<div class="item_box">
+		<div class="item_head">
+			<h3 class="item_tit">表单内容</h3>
+		</div>
+		<div class="item_main">
+		<form class="layui-form" action="" lay-filter="component-form-element" id="signupForm">
+			
+				<div class="layui-row bor_b ">
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">标题名称1</label>
+							<div class="layui-input-inline">
+								<input type="text"  placeholder="请输入标题" class="layui-input dang_input">
+							</div>
+							<span class="dang_mid"><span class="mess_i mess_success">成功</span></span>
+						</div>
+					</div>
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">标题名称</label>
+							<div class="layui-input-inline dang_select">
+								<select name="interest" lay-filter="aihao" id="select_a">
+									<option value="0">写作</option>
+									<option value="1"  selected="selected">阅读</option>
+									<option value="2">aaa</option>
+								</select>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="layui-row bor_b area_a">
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">标题名称</label>
+							<div class="layui-input-inline">
+								<input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input dang_input">
+							</div>
+							<span class="dang_mid"><span class="mess_i mess_fail">失败</span></span>
+						</div>
+					</div>
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">日期选择</label>
+							<div class="layui-input-inline">
+								<input type="text" name="date" id="form-group-date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input dang_input">
+							</div>
+							<span class="dang_mid"><a class=""><img src=" images/icon_inp_a1.png" /> </a></span>
+						</div>
+
+					</div>
+				</div>
+				<div class="layui-row bor_b">
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">标题名称</label>
+							<div class="layui-input-inline">
+								<input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input dang_input">
+							</div>
+							<span class="dang_mid"><span class="mess_i mess_info">信息</span></span>
+						</div>
+					</div>
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">日期选择</label>
+							<div class="layui-input-inline">
+								<input type="text" name="date" id="form-group-date1" lay-verify="date" placeholder="yyyy-MM-dd~yyyy-MM-dd" autocomplete="off" class="layui-input dang_input">
+							</div>
+							<span class="dang_mid"><a class=""><img src=" images/icon_inp_a1.png" /> </a></span>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row bor_b area_a">
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">输入密码</label>
+							<div class="layui-input-inline">
+								<input type="password" name="title" placeholder="请输入密码" autocomplete="off" class="layui-input dang_input">
+							</div>
+							
+						</div>
+					</div>
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">输入密码</label>
+							<div class="layui-input-inline">
+								<input type="password" name="title" placeholder="请输入密码" autocomplete="off" class="layui-input dang_input">
+							</div>
+							
+						</div>
+
+					</div>
+				</div>
+				<div class="layui-row bor_b">
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">标题名称</label>
+							<div class="layui-input-inline">
+								<div class="layui-input dang_input dang_file_ie"></div>
+								<input type="file"  name="title" placeholder="请上传文件" autocomplete="off" class="layui-input dang_input dang_input_f">
+							</div>
+							<span class="dang_mid"><a class=""><img src=" images/icon_inp_a2.png" /> </a></span>
+						</div>
+
+					</div>
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">日期选择</label>
+							<div class="layui-input-inline" style="width: 110px;">
+								<input type="text" class="layui-input dang_input" id="test-laydate-start" placeholder="开始日期" lay-key="1" >
+							</div>
+							<div class="layui-form-mid dang_mid" style="padding: 0px !important;">
+								-
+							</div>
+							<div class="layui-input-inline" style="width: 110px;">
+								<input type="text" class="layui-input dang_input" id="test-laydate-end" placeholder="结束日期" lay-key="2" >
+							</div>
+							<span class="dang_mid"><a class=""><img src=" images/icon_inp_a1.png" /> </a></span>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row bor_b area_a">
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">单选框</label>
+							<div class="layui-input-block dang_radio">
+								<input type="radio" name="sex" value="男" title="男">
+								<input type="radio" name="sex" value="女" title="女" checked>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">复选框</label>
+							<div class="layui-input-block dang_check">
+								<input type="checkbox" name="like[write]" title="选择1">
+								<input type="checkbox" name="like[read]" title="选择2" checked>
+								<input type="checkbox" name="like[dai]" title="选择3">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row bor_b">
+					<div class="layui-col-xs12">
+						<div class="layui-form-item layui-form-text dang_form_item">
+							<label class="layui-form-label dang_label">文本域</label>
+							<div class="layui-input-block dang_textarea">
+								<textarea name="desc" placeholder="请输入内容" class="layui-textarea" style="width: 40%;"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row bor_b area_a">
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">名字</label>
+							<div class="layui-input-inline">
+								<input type="text" id="firstname" name="firstname"  placeholder="请输入标题" class="layui-input dang_input">
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">姓氏</label>
+							<div class="layui-input-inline">
+								<input type="text" id="lastname" name="lastname"  placeholder="请输入标题" class="layui-input dang_input">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row bor_b ">
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">用户名</label>
+							<div class="layui-input-inline">
+								<input type="text" id="usernamea" name="username"  placeholder="请输入标题" class="layui-input dang_input">
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">密码</label>
+							<div class="layui-input-inline">
+								<input type="password" id="password" name="password"  placeholder="请输入标题" class="layui-input dang_input">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row bor_b area_a">
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">用户名</label>
+							<div class="layui-input-inline">
+								<input type="text" id="username" name="username"  placeholder="请输入标题" class="layui-input dang_input">
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">密码</label>
+							<div class="layui-input-inline">
+								<input type="password" id="passworda" name="password"  placeholder="请输入标题" class="layui-input dang_input">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row bor_b ">
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">验证密码</label>
+							<div class="layui-input-inline">
+								<input type="password" id="confirm_password" name="confirm_password"  placeholder="请输入标题" class="layui-input dang_input">
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6">
+						<div class="layui-form-item dang_form_item">
+							<label class="layui-form-label dang_label">Email</label>
+							<div class="layui-input-inline">
+								<input type="text" id="email" name="email"  placeholder="请输入标题" class="layui-input dang_input">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row dang_but_box">
+					<button href="#" class="but_a but_a_3">确 定 </button>
+					<a href="#" class="but_a but_a_2">返 回 </a>
+					
+				</div>
+				
+			</form>
+		</div>
+	</div>
+</div>
+
+		<script src="js/jquery.min.js"></script>
+		<script src="layui/layui.js"></script>
+		<script src="layui/layui.all.js"></script>
+		<script type="text/javascript" src="js/jquery.validate.min.js" ></script>
+		<script type="text/javascript" src="js/messages_zh.min.js" ></script>
+		<script type="text/javascript" src="js/l-index.js"></script>
+		<script>
+			//由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+			! function() {
+				var layer = layui.layer;
+//					form = layui.form;
+				var laydate = layui.laydate;
+//				form.on('checkbox(layTableAllChoose)', function(data) {
+//					$("input[name='layTableCheckbox']").each(function() {
+//						this.checked = data.elem.checked;
+//						// console.log(data);
+//					});
+//					form.render('checkbox');
+//				});
+				laydate.render({
+			elem: '#form-group-date'
+		});
+		laydate.render({
+			elem: '#form-group-date1',
+			type: 'date',
+			range: '~' //或 range: '~' 来自定义分割字符
+		});
+		$('.dang_input').click(function(e){
+			e.stopPropagation();
+		});
+		
+		var insStart = laydate.render({
+			elem: '#test-laydate-start',
+			min: 0,
+			done: function(value, date) {
+				//更新结束日期的最小日期
+				insEnd.config.min = lay.extend({}, date, {
+					month: date.month - 1
+				});
+
+				//自动弹出结束日期的选择器
+				insEnd.config.elem[0].focus();
+			}
+		});
+
+		//结束日期
+		var insEnd = laydate.render({
+			elem: '#test-laydate-end',
+			min: 0,
+			done: function(value, date) {
+				//更新开始日期的最大日期
+				insStart.config.max = lay.extend({}, date, {
+					month: date.month - 1
+				});
+			}
+		});
+		$('#click_a').click(function(){
+			$('.aaaaa').show();
+			
+			$('#select_b').children().each(function(){
+				if($(this).html() == 'aaa'){
+					$(this)[0].selected = true;
+					console.log($(this)[0].selected);
+					
+				}
+			})
+			  form.render(); 
+		})
+
+			}();
+			
+		 $("#signupForm").validate({
+	    rules: {
+	      firstname: "required",
+	      lastname: "required",
+	      confirm_password: {
+	        required: true,
+	        minlength: 5,
+	        equalTo: "#password"
+	      },
+	      email: {
+	        required: true,
+	        email: true
+	      },
+	      "topic[]": {
+	        required: "#newsletter:checked",
+	        minlength: 2
+	      },
+	      agree: "required"
+	    },
+	    messages: {
+	      firstname: "请输入您的名字",
+	      lastname: "请输入您的姓氏",
+	      confirm_password: {
+	        required: "请输入密码",
+	        minlength: "密码长度不能小于 5 个字母",
+	        equalTo: "两次密码输入不一致"
+	      },
+	      email: "请输入一个正确的邮箱",
+	      agree: "请接受我们的声明",
+	      topic: "请选择两个主题"
+	    }
+	});
+	
+		
+
+		</script>
+	</body>
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+<script src="js/ie8hack/html5shiv.min.js"></script>
+<script src="js/ie8hack/respond.min.js"></script>
+<script src="js/ie8hack/placeholders.min.js"></script>
+<![endif]-->
+
+</html>

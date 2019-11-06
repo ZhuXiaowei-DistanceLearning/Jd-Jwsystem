@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<title>nepadmin</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all">
+		<link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all">
+		<link rel="stylesheet" href="css/l-style.css" />
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<!--[if IE 8]> 
+	 <link rel="stylesheet" href="css/l-style_8.css" />
+	<![endif]-->
+	</head>
+
+	<body>
+
+		<!-- 主体内容 -->
+		<div class="layui-fluid dang_fluid" lay-title="按钮页">
+			<div class="layui-row layui-col-space20">
+				<div class="layui-col-xs12">
+					<div class="item_box">
+						<div class="item_head">
+							<h3 class="item_tit">进度条</h3>
+						</div>
+						<div class="item_main">
+							<div class="pD14 jindu_mr">
+								<div class="layui-progress">
+									<div class="layui-progress-bar" lay-percent="10%" style="width: 10%; background: #43aed4;" ></div>
+								</div>
+								<div class="layui-progress">
+									<div class="layui-progress-bar" lay-percent="20%" style="width: 20%; background: #6ac1dd;"></div>
+								</div>
+
+								<div class="layui-progress">
+									<div class="layui-progress-bar " lay-percent="30%" style="width: 30%; background: #71dcde;"></div>
+								</div>
+
+								<div class="layui-progress">
+									<div class="layui-progress-bar" lay-percent="40%" style="width: 40%; background: #7ba9da;"></div>
+								</div>
+								<div class="layui-progress layui-progress-big">
+									<div class="layui-progress-bar" lay-percent="20%" style="width: 20%; background: #43aed4;"></div>
+								</div>
+								<div class="layui-progress layui-progress-big">
+									<div class="layui-progress-bar" lay-percent="35%" style="width: 35%; background: #6ac1dd;"></div>
+								</div>
+								<div class="layui-progress layui-progress-big">
+									<div class="layui-progress-bar" lay-percent="75%" style="width: 75%; background: #71dcde;"></div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="layui-row layui-col-space20">
+				<div class="layui-col-xs12">
+					<div class="item_box">
+						<div class="item_head">
+							<h3 class="item_tit">带数字进度条</h3>
+						</div>
+						<div class="item_main">
+							<div class="pD14 jindu_mr">
+								<div class="layui-progress" lay-showpercent="true">
+									<div class="layui-progress-bar" lay-percent="20%" style="width: 20%; background: #43aed4;"><span class="layui-progress-text">20%</span></div>
+								</div>
+								<div class="layui-progress" lay-showpercent="true">
+									<div class="layui-progress-bar" lay-percent="5 / 10" style="width: 50%; background: #43aed4;"><span class="layui-progress-text">5 / 10</span></div>
+								</div>
+								<div class="layui-progress layui-progress-big" lay-showpercent="true">
+									<div class="layui-progress-bar" lay-percent="70%" style="width: 70%; background: #43aed4;"><span class="layui-progress-text">70%</span></div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="layui/layui.js"></script>
+		<script src="layui/layui.all.js"></script>
+		<script type="text/javascript" src="js/l-index.js"></script>
+		<script>
+			//由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+			! function() {
+				var layer = layui.layer;
+				var element = layui.element;
+			}();
+		</script>
+	</body>
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+<script src="js/ie8hack/html5shiv.min.js"></script>
+<script src="js/ie8hack/respond.min.js"></script>
+<script src="js/ie8hack/placeholders.min.js"></script>
+<![endif]-->
+
+</html>

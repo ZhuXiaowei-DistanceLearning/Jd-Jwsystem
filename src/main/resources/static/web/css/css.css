@@ -1,0 +1,77 @@
+@charset "utf-8";
+/* CSS Document */
+html{height: 100%;}
+*{margin:0px;padding:0px;border:0px;}
+img{ border: none; display: inline-block;_zoom:1; *display:inline; vertical-align: top;}
+.fl{float: left;}
+.fr{float: right;}
+.clear{clear: both;}
+body{font-family:"宋体";font-size:12px;line-height:20px;}
+#box{width:100%;height:100%;}
+.top{ font-size:20px;width: 960px;margin: 0 auto;height: 30px;padding:20px;font-family:"微软雅黑";color:#666}
+.abbox{ position: absolute;left: 680px;top:15%;left: 50%;margin-left: 134px;}
+.login{height:100%;background:url(../images/flash.png) center no-repeat;width: 100%; position: relative;}
+.login_con { position: absolute; width:300px;right:23px; top:90px; border-radius:5px;background:#fff9f3;background: #fff9f3; border: 6px solid #ffdec3;}
+.login_con dl { padding: 10px 20px; text-align: left; border-radius: 6px;  position:relative}
+.login_con dl i{background: url("../images/login_arrow.png")  center  no-repeat; height:22px; width:13px; display:block; position:absolute;top:0px; left:-13px;}
+.login_con dt { color:#FFF;}
+.login_con dt span{ display: block; font-size: 14px; font-weight: bold; margin-top: 15px; color: #3c3b40;}
+.login_con dt font { font-size: 12px; color: #c4c4c4;}
+.login_con dd { padding: 4px 0; position: relative;}
+.login_con dd.text { padding: 0; border:1px solid #ff7070; background:#ffdfdf; padding:3px;}
+.login_con dd.text p{ background: url("../images/icon-no.png") center left no-repeat; padding-left:20px;}
+.log-inp {  padding: 0 10px 0 30px; width: 84%; height: 38px; margin:2px 0px; border-radius: 3px; border: 1px solid #cdcfd5; font: normal 14px/34px Microsoft Yahei; color: #8c8c8c; background-image: url("../images/loginIcons.png"); background-repeat: no-repeat;}
+.in {  padding: 0 10px 0 10px; width: 92%; height: 38px; margin:0px 0px; border-radius: 3px; border: 1px solid #ddd; }
+.log-user { background-color: #fef7ef; background-position: 8px 9px;}
+.log-phone{background: url(../images/icon_phone.png) no-repeat center center #f8f8f8; background-position: 8px 9px;}
+.log-yzm{background: url(../images/icon_tall.png) no-repeat center center #f8f8f8; background-position: 8px 9px;}
+.log-pw { background-color: #fef7ef; background-position: 8px -61px;}
+.login_con p { color: #f00;}
+.login_con .code-inp { margin-right: 10px; width: 100px; height: 38px; line-height: 36px; padding-left:30px;border-radius: 3px; border: 1px solid #c0c4d1; font: normal 14px/34px Microsoft Yahei; color: #8c8c8c; background: #fef7ef url("../images/loginIcons.png") 8px -273px no-repeat;}
+.login_con .code-text { padding-left: 10px; cursor: pointer; color: #f00;}
+.login_con a:hover { color: #fcc185;}
+.login_con .login-div { padding: 5px 0px; text-align: left;}
+.login_con .remeber-txt { color: #eee;}
+.login_con .checkbox { margin: 0 5px 0 0px;}
+/* btn 登录按钮*/
+.login_con .btn{ display: inline-block; width:100%; height: 42px; line-height:42px; font: bold 14px/35px arial, \5b8b\4f53; text-align: center; color: #fff; border: 0px; border-radius:3px; 
+background: -webkit-linear-gradient( #e8a071 , #e98b5c) !important; /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#e8a071 , #e98b5c) !important; /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient( #e8a071 , #e98b5c) !important; /* Firefox 3.6 - 15 */
+    background: linear-gradient(#e8a071  ,#e98b5c) !important; /* 标准的语法（必须放在最后） */
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #e8a071, endColorstr = #e98b5c); border:1px solid #bc8961;}
+.login_con .btn:hover { color: #fff; background: -webkit-linear-gradient( #f3ae82 , #f09466) !important; /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#f3ae82 , #f09466) !important; /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient( #f3ae82 , #f09466) !important; /* Firefox 3.6 - 15 */
+    background: linear-gradient(#f3ae82  ,#f09466) !important; /* 标准的语法（必须放在最后） */
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #f3ae82, endColorstr = #f09466); border:1px solid #bc8961; cursor: pointer;}
+.login_con .btn-disabled { margin-left: 8px; color: #888; background: #d0d5d9;}
+.reg_c{ color:#888; display:block; text-align:center; line-height:30px; }
+.reg_c a{ color:#0760de;  }
+.id_box{ width:700px; margin:0 auto}
+.id_box li{ float:left; width:33.3%;}
+.id_box li dd{ margin:10px; padding:10px; height:100px; display:block; border:2px dashed #ddd; text-align:center; position: relative;}
+.loginbox{height: 100%;width: 960px; margin: 0 auto;position: relative;}
+.for_pw{display: inline-block; position: absolute; width: 20px; height: 18px;   right: 6px; top: 17px; background: url(../images/icon_mm.png); border-radius: 3px; text-decoration: none;}
+.for_pw:hover{opacity: 0.8;}
+.for_yzm{display: inline-block; position: absolute; width: 70px; height: 26px; line-height: 26px; color: #0382dd; text-align: center;  font-size: 12px; right: 6px; top: 14px; border: 1px solid #0382dd; border-radius: 3px; text-decoration: none;}
+.for_yzm:hover{background: #0382dd; color: #fff !important;}
+.check{display: none; width: 24px; height: 18px;}
+.check_s{display: block; position: absolute; top: 5px; height: 18px; width: 18px; background: url(../images/icon_che.png) no-repeat center center;}
+.check_s.on{background: url(../images/icon_check.png) no-repeat center center;}
+.zhuce{color: #bc8961; text-decoration: underline; float: right;}
+.bottom_text{color: #999999; text-align: center; padding: 15px; font-size: 12px;}
+.bottom_text span{font-size: 16px; vertical-align: top;display: inline-block; padding-top: 1px ; padding-right: 2px;}
+.right_box{width:calc(50% - 800px); position: absolute; height: 500px; background: #625afb; top: 0px;}
+.gray{color: #606060;}
+.classbg{min-height: 620px; position: relative;  background: -webkit-linear-gradient( #ffc88b , #f3945f) !important; /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#ffc88b , #f3945f) !important; /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient( #ffc88b , #f3945f) !important; /* Firefox 3.6 - 15 */
+    background: linear-gradient(#ffc88b  ,#f3945f) !important; /* 标准的语法（必须放在最后） */
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #ffc88b, endColorstr = #f3945f);}
+
+.login_con dd span { display: inline-block; zoom: 1; *display: inline;}
+.login_con dd span.gray { padding-left: 22px;}
+.bg_a{background: url(../images/bg-login-1.png) repeat; height: 100%;}
+.bg_b{background: url(../images/flash1.png) no-repeat right center; height: 100%;}
+.login-foot{text-align: right; color: #775353; font-size: 12px; position: absolute; width: 100%; bottom: -50px; display: block;}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>登录页面</title>
+    <link href="css/css.css" rel="stylesheet" type="text/css" th:href="@{/web/css/css.css}"/>
+    <script type="application/javascript" src="js/jquery.min.js" th:src="@{/web/js/jquery.min.js}"></script>
+</head>
+
+<body>
+<div class="classbg">
+    <div class="bg_a">
+        <div class="bg_b">
+            <div class="login" id="banner">
+                <div class="loginbox">
+                    <div class="login_con">
+                        <form name="loginForm" action="doLogin" method="post" onsubmit="javscript:return checkLogin();">
+                            <dl>
+                                <dt><span>用户登录</span></dt>
+                                <dd><input type="text" name="username" placeholder="用户名" class="log-inp log-user"/></dd>
+                                <dd><input type="password" name="password" placeholder="密  码" class="log-inp log-pw"/>
+                                    <a href="#" class="for_pw"></a>
+                                </dd>
+                                <dd><input type="text" name="checkcode" class="code-inp" placeholder="请输入验证码" name="secCode"
+                                           style="width: 135px;"/><img src="images/img-code.png" id="code"
+                                                                       th:src="@{/kaptcha/create}" alt=""
+                                                                       onclick="switchCode()"/></dd>
+                                <dd><input type="checkbox" class="check"/><span class="check_s"></span><span
+                                        class='gray'>记住密码</span>
+                                </dd>
+                                <div class="login-div"><input type="submit" value="登 录" class="btn"/></div>
+                            </dl>
+
+                        </form>
+                        <span class="login-foot">
+						Copyright © 2016 中山市人民政府 版权所有<br>粤ICP11005604号-1
+					</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    function switchCode() {
+        $("#code").attr("src", "../kaptcha/create")
+    }
+</script>
+<script>
+    $('.check_s').click(function () {
+        $(this).toggleClass('on');
+        if ($(this).hasClass('on')) {
+            $('.check')[0].checked = true;
+        } else {
+            $('.check')[0].checked = false;
+        }
+    })
+    $('.classbg').height($('html').height());
+    $('.login_con')[0].style.top = ($('.classbg').height() - 300) / 2 + 'px';
+</script>
+<
+/body>
+
+< /html>

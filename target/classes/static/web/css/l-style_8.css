@@ -1,0 +1,23 @@
+body,html{min-height: 100%; height: auto; overflow: hidden;}
+.dang_la_out .but_s{top: 14px;}
+.nepadmin-tabs-wrap.dang_tabs .nepadmin-tabs-menu .nepadmin-tabs-active .bot{left: 48%;}
+.select_a{padding: 2px 0px;}
+.dang_la_out .input-s{padding-top: 4px; box-sizing: border-box;}
+.dang_file_ie{display: none;}
+.dang_input_f{position: relative;}
+.calendar.dang_calen thead th{background: #efc9a4; color: #fff; padding: 8px 0px;    border-top: 1px solid #efc9a4;border-right: 1px solid #efc9a4;}
+.calendar.dang_calen thead th#currM{background: #fff;color: #b98860; border: none;}
+.calendar.dang_calen thead th#prev{border: none;}
+.calendar.dang_calen thead th#next{border: none;}
+.calendar.dang_calen #today{display: none;}
+.m_but{background-repeat: repeat; background-position: top;}
+.but_a_1{filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #e8a172, endColorstr = #e98b5c);  }
+.but_a_2{filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #7aaab5, endColorstr = #72a2ac);}
+.but_a_3{filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #f5b286, endColorstr = #f0a97c);}
+.but_a_4{filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #efc9a4, endColorstr = #e6be97);}
+.but_a_5{filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #d1d1d1, endColorstr = #c2c3c2);}
+.but_a_1:hover{filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #eeab7f, endColorstr = #ef9568);}
+.but_a_2:hover{filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #88b6c1, endColorstr = #79a9b3);}
+.but_a_3:hover{filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #f9bb94, endColorstr = #f7b388);}
+.but_a_4:hover{filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #f8d3b0, endColorstr = #efc8a2);}
+.but_a_5:hover{filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 0, startColorstr = #d8d5d8, endColorstr = #cbc9c9);}
