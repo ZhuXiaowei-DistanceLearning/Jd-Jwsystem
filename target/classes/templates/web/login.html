@@ -22,13 +22,12 @@
                                 <dd><input type="password" name="password" placeholder="密  码" class="log-inp log-pw"/>
                                     <a href="#" class="for_pw"></a>
                                 </dd>
-                                <dd><input type="text" class="code-inp" placeholder="请输入验证码" name="secCode"
+                                <dd><input type="text" name="checkcode" class="code-inp" placeholder="请输入验证码" name="secCode"
                                            style="width: 135px;"/><img src="images/img-code.png" id="code"
                                                                        th:src="@{/kaptcha/create}" alt=""
                                                                        onclick="switchCode()"/></dd>
                                 <dd><input type="checkbox" class="check"/><span class="check_s"></span><span
                                         class='gray'>记住密码</span>
-                                    <a href="#" class="zhuce">用户注册</a>
                                 </dd>
                                 <div class="login-div"><input type="submit" value="登 录" class="btn"/></div>
                             </dl>

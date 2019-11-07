@@ -1,5 +1,6 @@
 package com.zxw;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.ImportResource;
  */
 @SpringBootApplication
 @ImportResource(locations = {"classpath:config/kaptcha.xml"})
+@MapperScan("com.zxw.jwxt.mapper")
 public class JwSystemApplication {
     public static void main(String[] args) {
         SpringApplication.run(JwSystemApplication.class);

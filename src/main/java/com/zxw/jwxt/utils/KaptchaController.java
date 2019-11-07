@@ -31,7 +31,7 @@ public class KaptchaController {
         try {
             // 将生成的验证码保存在session中
             String createText = defaultKaptcha.createText();
-            request.getSession().setAttribute("rightCode", createText);
+            request.getSession().setAttribute("code_" + request.getSession().getId(), createText);
             BufferedImage bi = defaultKaptcha.createImage(createText);
             ImageIO.write(bi, "jpg", out);
         } catch (Exception e) {
