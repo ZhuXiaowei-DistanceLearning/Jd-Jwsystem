@@ -15,9 +15,9 @@ import java.util.Set;
  */
 @Data
 public class UserRealm implements Realm {
-    private String id;
+    private String userId;
     private String name;
-    private String qx;
+    private String role;
     private String salt;
     /**
      * 用户所有角色值，用于shiro做角色权限的判断
@@ -30,11 +30,26 @@ public class UserRealm implements Realm {
 
     @Override
     public boolean supports(AuthenticationToken authenticationToken) {
-        return false;
+        // 令牌支持
+        Object principal = authenticationToken.getPrincipal();
+        System.out.println("-----principal");
+        System.out.println(principal.toString());
+        Object credentials = authenticationToken.getCredentials();
+        System.out.println("-----credentials");
+        System.out.println(credentials.toString());
+        return true;
     }
 
     @Override
     public AuthenticationInfo getAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        // 身份验证
+        // 授权获取
+        Object principal = authenticationToken.getPrincipal();
+        System.out.println("-----principal");
+        System.out.println(principal.toString());
+        Object credentials = authenticationToken.getCredentials();
+        System.out.println("-----credentials");
+        System.out.println(credentials.toString());
         return null;
     }
 }

@@ -18,7 +18,6 @@ public class WebMvcConfigurerConfig implements WebMvcConfigurer {
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
-
         return corsConfiguration;
     }
 
@@ -35,6 +34,6 @@ public class WebMvcConfigurerConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
-
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
     }
 }

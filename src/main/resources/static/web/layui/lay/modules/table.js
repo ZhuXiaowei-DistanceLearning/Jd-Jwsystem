@@ -1276,7 +1276,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util','view','conf'], funct
       //数据行中的事件监听返回的公共对象成员
       var commonMember = function(sets){
         var othis = $(this)
-        ,index = othis.parents('tr').eq(0).data('templates.web.index')
+        ,index = othis.parents('tr').eq(0).data('static.admin.index')
         ,tr = that.layBody.find('tr[data-index="'+ index +'"]')
         ,data = table.cache[that.key][index];
         
@@ -1317,7 +1317,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util','view','conf'], funct
       that.elem.on('click', 'input[name="layTableCheckbox"]+', function(){ //替代元素的 click 事件
         var checkbox = $(this).prev()
         ,childs = that.layBody.find('input[name="layTableCheckbox"]')
-        ,index = checkbox.parents('tr').eq(0).data('templates.web.index')
+        ,index = checkbox.parents('tr').eq(0).data('static.admin.index')
         ,checked = checkbox[0].checked
         ,isAll = checkbox.attr('lay-filter') === 'layTableAllChoose';
         
@@ -1344,7 +1344,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util','view','conf'], funct
         var radio = $(this).prev()
         ,checked = radio[0].checked
         ,thisData = table.cache[that.key]
-        ,index = radio.parents('tr').eq(0).data('templates.web.index')
+        ,index = radio.parents('tr').eq(0).data('static.admin.index')
         
         //重置数据单选属性
         layui.each(thisData, function(i, item){
@@ -1390,7 +1390,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util','view','conf'], funct
         var othis = $(this)
         ,value = this.value
         ,field = othis.parent().data('field')
-        ,index = othis.parents('tr').eq(0).data('templates.web.index')
+        ,index = othis.parents('tr').eq(0).data('static.admin.index')
 
         //nepadmin 记录上一次的VALUE
         ,cacheVal = table.cache[that.key][index][field]
@@ -1420,7 +1420,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util','view','conf'], funct
         var templet
         ,othis = $(this)
         ,field = othis.parent().data('field')
-        ,index = othis.parents('tr').eq(0).data('templates.web.index')
+        ,index = othis.parents('tr').eq(0).data('static.admin.index')
         ,data = table.cache[that.key][index];
         that.eachCols(function(i, item){
           if(item.field == field && item.templet){
@@ -1512,7 +1512,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util','view','conf'], funct
       //行工具条操作事件
       that.layBody.on('click', '*[lay-event]', function(){
         var othis = $(this)
-        ,index = othis.parents('tr').eq(0).data('templates.web.index');
+        ,index = othis.parents('tr').eq(0).data('static.admin.index');
         layui.event.call(this, MOD_NAME, 'tool('+ filter +')', commonMember.call(this, {
           event: othis.attr('lay-event')
         }));

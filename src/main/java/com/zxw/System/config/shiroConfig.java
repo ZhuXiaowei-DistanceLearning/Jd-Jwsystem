@@ -1,6 +1,7 @@
 package com.zxw.System.config;
 
 import com.zxw.jwxt.domain.UserRealm;
+import com.zxw.security.shiro.CustomRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.mgt.SessionsSecurityManager;
@@ -14,26 +15,31 @@ import org.springframework.context.annotation.Configuration;
 public class shiroConfig {
 
 
-	// 配置自定义Realm
+    // 配置自定义Realm
     @Bean
-    public UserRealm userRealm() {
-        UserRealm userRealm = new UserRealm();
+    public CustomRealm customRealm() {
+//        UserRealm userRealm = new UserRealm();
 //        userRealm.setCredentialsMatcher(credentialsMatcher()); //配置使用哈希密码匹配
-        return userRealm;
+        CustomRealm customRealm = new CustomRealm();
+        return customRealm;
     }
 
-	// 配置url过滤器
+    // 配置url过滤器
     @Bean
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
-
-        chainDefinition.addPathDefinition("/captcha", "anon");
-        chainDefinition.addPathDefinition("/logout","anon");
-        chainDefinition.addPathDefinition("/layuiadmin/**", "anon");
-        chainDefinition.addPathDefinition("/druid/**", "anon");
+        // DefaultFilter枚举类中
+        chainDefinition.addPathDefinition("/kaptcha/create", "anon");
+        chainDefinition.addPathDefinition("/logout", "anon");
+        chainDefinition.addPathDefinition("/login", "anon");
         chainDefinition.addPathDefinition("/api/**", "anon");
+//        chainDefinition.addPathDefinition("/**", "anon");
         // all other paths require a logged in user
-        chainDefinition.addPathDefinition("/login","anon");
+        chainDefinition.addPathDefinition("/web/js/**", "anon");
+        chainDefinition.addPathDefinition("/web/css/**", "anon");
+        chainDefinition.addPathDefinition("/web/images/**", "anon");
+        chainDefinition.addPathDefinition("/web/font/**", "anon");
+        chainDefinition.addPathDefinition("/web/iview/**", "anon");
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
     }
@@ -48,11 +54,11 @@ public class shiroConfig {
         return credentialsMatcher;
     }
 
-	// 配置security并设置userReaml，避免xxxx required a bean named 'authorizer' that could not be found.的报错
+    // 配置security并设置userReaml，避免xxxx required a bean named 'authorizer' that could not be found.的报错
     @Bean
     public SessionsSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(userRealm());
+        securityManager.setRealm(customRealm());
         return securityManager;
     }
-   }
+}

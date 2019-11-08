@@ -7,3 +7,7 @@ spring:
     password: 123456
   thymeleaf:
     cache: false
+  banner:
+    location: public/banner.txt
+shiro:
+  loginUrl: /

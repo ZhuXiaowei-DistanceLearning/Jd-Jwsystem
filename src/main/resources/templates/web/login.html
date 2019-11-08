@@ -15,35 +15,49 @@
             <div class="login" id="banner">
                 <div class="loginbox">
                     <div class="login_con">
-                        <form name="loginForm" action="doLogin" method="post" onsubmit="javscript:return checkLogin();">
+                        <form name="loginForm" method="post" id="loginForm">
                             <dl>
                                 <dt><span>用户登录</span></dt>
                                 <dd><input type="text" name="username" placeholder="用户名" class="log-inp log-user"/></dd>
                                 <dd><input type="password" name="password" placeholder="密  码" class="log-inp log-pw"/>
                                     <a href="#" class="for_pw"></a>
                                 </dd>
-                                <dd><input type="text" name="checkcode" class="code-inp" placeholder="请输入验证码" name="secCode"
+                                <dd><input type="text" name="checkcode" class="code-inp" placeholder="请输入验证码"
                                            style="width: 135px;"/><img src="images/img-code.png" id="code"
                                                                        th:src="@{/kaptcha/create}" alt=""
                                                                        onclick="switchCode()"/></dd>
                                 <dd><input type="checkbox" class="check"/><span class="check_s"></span><span
                                         class='gray'>记住密码</span>
                                 </dd>
-                                <div class="login-div"><input type="submit" value="登 录" class="btn"/></div>
+                                <div class="login-div"><input value="登 录" class="btn" onclick="login()"/></div>
                             </dl>
 
                         </form>
                         <span class="login-foot">
 						Copyright © 2016 中山市人民政府 版权所有<br>粤ICP11005604号-1
-					</span>
+					    </span>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript" th:inline="javascript">
+    function login() {
+        $.ajax({
+            url: "http://localhost:8080/" + "/login",
+            data: $("#loginForm").serialize(),
+            type: "post",
+            success(data) {
+                if (data.status == 0) {
+                    alert(data.msg())
+                } else {
+                    window.location.href = "http://localhost:8080/" + "/main";
+                }
+            }
+        })
+    }
+</script>
 <script type="text/javascript" th:inline="javascript">
     function switchCode() {
         $("#code").attr("src", "../kaptcha/create")
@@ -61,7 +75,5 @@
     $('.classbg').height($('html').height());
     $('.login_con')[0].style.top = ($('.classbg').height() - 300) / 2 + 'px';
 </script>
-<
-/body>
-
-< /html>
+</body>
+</html>

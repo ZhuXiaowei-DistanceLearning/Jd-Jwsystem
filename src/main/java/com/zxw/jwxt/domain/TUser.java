@@ -23,8 +23,6 @@ public class TUser extends UserRealm implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private String id;
-
     private String username;
 
     private String password;
@@ -43,7 +41,7 @@ public class TUser extends UserRealm implements Serializable{
 
     private String qx;
 
-    private String sid;
+    private String id;
 
 
 }
