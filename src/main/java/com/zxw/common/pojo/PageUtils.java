@@ -1,27 +1,22 @@
 package com.zxw.common.pojo;
 
-import java.io.Serializable;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PageUtils implements Serializable {
 
     private long total;
     private List<?> rows;
-
-    public long getTotal() {
-        return total;
-    }
-
-    public void setTotal(long total) {
-        this.total = total;
-    }
-
-    public List getRows() {
-        return rows;
-    }
-
-    public void setRows(List rows) {
-        this.rows = rows;
-    }
+    private Map<String, Object> extraData = new HashMap<>();
+    private long realTotal;
 
 }

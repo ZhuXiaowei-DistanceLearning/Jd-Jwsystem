@@ -1,7 +1,8 @@
 package com.zxw.jwxt.service;
 
 import com.zxw.jwxt.domain.TUser;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.zxw.jwxt.mapper.TUserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class UserService {
 
+    @Autowired
+    private TUserMapper userMapper;
+
+    /**
+     * 根据用户名(id)查找用户
+     * @param username
+     * @return
+     */
     public TUser findByUsername(String username) {
-        return null;
+        TUser user = userMapper.selectById(username);
+        return user;
     }
 }

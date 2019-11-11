@@ -1,12 +1,15 @@
 package com.zxw.jwxt.domain;
 
-import java.time.LocalDate;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * <p>
@@ -23,7 +26,7 @@ import lombok.experimental.Accessors;
 public class TClasses implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId(type = IdType.ID_WORKER_STR)
     private String id;
 
     @ApiModelProperty(value = "教室名称")

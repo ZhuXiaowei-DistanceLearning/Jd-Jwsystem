@@ -1,12 +1,12 @@
 package com.zxw.jwxt.domain;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
 import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * <p>
@@ -23,13 +23,15 @@ public class TStudent extends UserRealm implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "学号")
-    private String sid;
+    @TableField(value = "sid")
+    private String id;
 
     @ApiModelProperty(value = "密码")
     private String password;
 
     @ApiModelProperty(value = "姓名")
-    private String sname;
+    @TableField(value = "sname")
+    private String username;
 
     @ApiModelProperty(value = "性别")
     private String sex;
@@ -69,6 +71,5 @@ public class TStudent extends UserRealm implements Serializable {
     @ApiModelProperty(value = "政治面貌")
     @TableField("politicalStatus")
     private String politicalStatus;
-
 
 }

@@ -1,15 +1,17 @@
 package com.zxw.jwxt.domain;
 
-import java.time.LocalDate;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zxw
@@ -18,8 +20,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="TUser对象", description="")
-public class TUser extends UserRealm implements Serializable{
+@ApiModel(value = "TUser对象", description = "")
+public class TUser extends UserRealm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,7 +31,8 @@ public class TUser extends UserRealm implements Serializable{
 
     private Double salary;
 
-    private LocalDate birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
 
     private String gender;
 
@@ -43,5 +46,18 @@ public class TUser extends UserRealm implements Serializable{
 
     private String id;
 
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    @Override
+    public void setQx(String qx) {
+        this.qx = qx;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
 }

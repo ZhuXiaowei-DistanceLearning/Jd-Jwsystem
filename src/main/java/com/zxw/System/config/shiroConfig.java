@@ -1,6 +1,5 @@
 package com.zxw.System.config;
 
-import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.security.shiro.CustomRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -34,12 +33,13 @@ public class shiroConfig {
         chainDefinition.addPathDefinition("/login", "anon");
         chainDefinition.addPathDefinition("/api/**", "anon");
 //        chainDefinition.addPathDefinition("/**", "anon");
-        // all other paths require a logged in user
+        // 静态资源访问设置
         chainDefinition.addPathDefinition("/web/js/**", "anon");
         chainDefinition.addPathDefinition("/web/css/**", "anon");
         chainDefinition.addPathDefinition("/web/images/**", "anon");
         chainDefinition.addPathDefinition("/web/font/**", "anon");
         chainDefinition.addPathDefinition("/web/iview/**", "anon");
+        chainDefinition.addPathDefinition("/web/layui/**", "anon");
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
     }

@@ -16,6 +16,7 @@ $('.dang_nav li').each(function(){
 		$(this).siblings().removeClass('layui-this');
 	})
 })
+
 $('.dang_input_f').change(function(){
 	$(this).siblings('.dang_input').html($(this).val());
 })

@@ -1,17 +1,18 @@
 package com.zxw.jwxt.domain;
 
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zxw
@@ -20,19 +21,21 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="TTeacher对象", description="")
+@ApiModel(value = "TTeacher对象", description = "")
 public class TTeacher extends UserRealm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "教师编号")
-    private String tid;
+    @TableField(value = "tid")
+    private String id;
 
     @ApiModelProperty(value = "密码")
     private String password;
 
     @ApiModelProperty(value = "姓名")
-    private String tname;
+    @TableField(value = "tname")
+    private String username;
 
     @ApiModelProperty(value = "性别")
     private String tsex;
@@ -66,5 +69,18 @@ public class TTeacher extends UserRealm implements Serializable {
     @ApiModelProperty(value = "身份证号")
     private String idcard;
 
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    @Override
+    public void setQx(String qx) {
+        this.qx = qx;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
 }

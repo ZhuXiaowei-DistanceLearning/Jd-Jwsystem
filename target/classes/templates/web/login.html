@@ -6,6 +6,7 @@
     <title>登录页面</title>
     <link href="css/css.css" rel="stylesheet" type="text/css" th:href="@{/web/css/css.css}"/>
     <script type="application/javascript" src="js/jquery.min.js" th:src="@{/web/js/jquery.min.js}"></script>
+    <script type="application/javascript" src="js/jquery.min.js" th:src="@{/web/layui/layui.all.js}"></script>
 </head>
 
 <body>
@@ -26,8 +27,11 @@
                                            style="width: 135px;"/><img src="images/img-code.png" id="code"
                                                                        th:src="@{/kaptcha/create}" alt=""
                                                                        onclick="switchCode()"/></dd>
-                                <dd><input type="checkbox" class="check"/><span class="check_s"></span><span
-                                        class='gray'>记住密码</span>
+                                <dd>
+                                    <input type="radio" name="RadioButtonList1" value="管理员" checked/>管理员
+                                    <input type="radio" name="RadioButtonList1" value="教务人员"/>教务人员
+                                    <input type="radio" name="RadioButtonList1" value="教师"/>教师
+                                    <input type="radio" name="RadioButtonList1" value="学生"/>学生
                                 </dd>
                                 <div class="login-div"><input value="登 录" class="btn" onclick="login()"/></div>
                             </dl>
@@ -48,11 +52,11 @@
             url: "http://localhost:8080/" + "/login",
             data: $("#loginForm").serialize(),
             type: "post",
-            success(data) {
-                if (data.status == 0) {
-                    alert(data.msg())
+            success: function (data) {
+                if (data.status == 1) {
+                    layer.alert(data.msg)
                 } else {
-                    window.location.href = "http://localhost:8080/" + "/main";
+                    window.location.href = "http://localhost:8080/page/index";
                 }
             }
         })
