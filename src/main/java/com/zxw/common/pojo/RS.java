@@ -46,4 +46,5 @@ public class RS extends HashMap<String, Object> implements Serializable {
         rs.put("msg", hashMap);
         return rs;
     }
+
 }

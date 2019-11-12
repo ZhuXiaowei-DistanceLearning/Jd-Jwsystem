@@ -1,15 +1,15 @@
 package com.zxw.jwxt.domain;
 
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zxw
@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="TCollege对象", description="")
+@ApiModel(value = "TCollege对象", description = "")
 public class TCollege implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public class TCollege implements Serializable {
     private String id;
 
     private String name;
-
+    // 1表示可用，0表示不可用
     private String status;
 
 
