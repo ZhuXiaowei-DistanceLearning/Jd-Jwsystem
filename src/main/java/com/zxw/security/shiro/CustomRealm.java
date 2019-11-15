@@ -1,6 +1,9 @@
 package com.zxw.security.shiro;
 
-import com.zxw.jwxt.domain.*;
+import com.zxw.jwxt.domain.AuthFunction;
+import com.zxw.jwxt.domain.TStudent;
+import com.zxw.jwxt.domain.TTeacher;
+import com.zxw.jwxt.domain.TUser;
 import com.zxw.jwxt.service.AuthFunctionService;
 import com.zxw.jwxt.service.StudentService;
 import com.zxw.jwxt.service.TeacherService;
@@ -12,8 +15,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,13 +25,13 @@ import java.util.List;
  */
 public class CustomRealm extends AuthorizingRealm {
 
-    @Resource
+    @Autowired
     private UserService userSerivce;
-    @Resource
+    @Autowired
     private TeacherService teacherService;
-    @Resource
+    @Autowired
     private StudentService studentService;
-    @Resource
+    @Autowired
     private AuthFunctionService functionService;
 
     //告诉shiro如何根据获取到的用户信息中的密码和盐值来校验密码

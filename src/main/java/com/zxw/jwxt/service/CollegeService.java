@@ -11,7 +11,6 @@ import com.zxw.jwxt.mapper.TCollegeMapper;
 import com.zxw.jwxt.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ import java.util.List;
  * @since 2019-11-07
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class CollegeService {
 
     @Autowired
@@ -50,16 +49,15 @@ public class CollegeService {
 
     /**
      * example
+     * <p>
+     * EXAMPLE:
+     * PAEGHelpInfoDATAGRID
      */
     public RS edit(TCollege college) {
         int update = collegeMapper.update(college, new UpdateWrapper<>());
         return update == 1 ? RS.ok() : RS.error("修改失败");
     }
 
-    /**
-     * EXAMPLE:
-     * PAEGHelpInfoDATAGRID
-     */
     public List<TCollege> findListNostatus() {
         QueryWrapper<TCollege> wrapper = new QueryWrapper();
         wrapper.eq("status", "1");

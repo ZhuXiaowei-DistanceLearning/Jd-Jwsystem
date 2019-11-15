@@ -25,7 +25,7 @@ import java.util.List;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/t-college")
+@RequestMapping("/college")
 public class TCollegeController extends BaseController {
 
     @Autowired
