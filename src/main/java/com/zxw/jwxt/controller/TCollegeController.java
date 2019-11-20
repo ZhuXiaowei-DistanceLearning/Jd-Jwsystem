@@ -12,7 +12,6 @@ import com.zxw.jwxt.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -90,7 +89,7 @@ public class TCollegeController extends BaseController {
      */
     @RequestMapping("listajax")
     @ResponseBody
-    public List<TCollege> listajax(HttpServletResponse response) throws IOException {
+    public List<TCollege> listajax() throws IOException {
         List<TCollege> list = collegeService.findListNostatus();
         return list;
     }

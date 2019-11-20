@@ -1,10 +1,10 @@
 package com.zxw.jwxt.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zxw.common.pojo.PageUtils;
+import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.AuthFunction;
 import com.zxw.jwxt.mapper.AuthFunctionMapper;
 import com.zxw.jwxt.vo.FunctionQueryParam;
@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -64,20 +67,44 @@ public class AuthFunctionService {
         return list;
     }
 
-    public void save(AuthFunction model) {
+    public RS save(AuthFunction model) {
         functionMapper.insert(model);
+        return RS.ok();
     }
 
-    public PageUtils pageQuery(FunctionQueryParam params) {
-        IPage ipage = new Page(params.getLimit(), params.getOffset());
-        Wrapper wrapper = new QueryWrapper<>();
-        IPage page = functionMapper.selectPage(ipage, wrapper);
-        PageUtils pageUtils = (PageUtils) page;
-        return pageUtils;
+    public IPage pageQuery(FunctionQueryParam params) {
+        IPage iPage = this.BaseQuery(params);
+        return iPage;
     }
 
     public List<Integer> queryFunctionByRole(String id) {
         List<Integer> list = functionMapper.queryFunctionByRole(id);
         return list;
+    }
+
+    public IPage BaseQuery(FunctionQueryParam baseQueryParam) {
+        Page page = new Page(baseQueryParam.getOffset(), baseQueryParam.getLimit());
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if (baseQueryParam.getSort() != null) {
+            OrderItem orderItems = new OrderItem();
+            orderItems.setColumn(baseQueryParam.getSort());
+            orderItems.setAsc(baseQueryParam.isASC());
+            page.addOrder(orderItems);
+        }
+        if (baseQueryParam.getKeyword() != null) {
+            Map<String, Object> keyword = baseQueryParam.getKeyword();
+            Set<String> strings = keyword.keySet();
+            Iterator<String> iterator = strings.iterator();
+            while (iterator.hasNext()) {
+                String next = iterator.next();
+                Object o = keyword.get(next);
+                queryWrapper.like(next, o);
+            }
+        }
+        if (baseQueryParam.getStatus() != null) {
+            queryWrapper.eq("status", baseQueryParam.getStatus());
+        }
+        IPage iPage = functionMapper.selectPage(page, queryWrapper);
+        return iPage;
     }
 }

@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Service
 //@Transactional(rollbackFor = Exception.class)
-public class CollegeService {
+public class CollegeService extends BaseService {
 
     @Autowired
     private TCollegeMapper collegeMapper;
@@ -74,6 +74,13 @@ public class CollegeService {
     public RS save(TCollege model) {
         int insert = collegeMapper.insert(model);
         return insert == 1 ? RS.ok() : RS.error("添加失败");
+    }
+
+    public IPage BaseQuery(BaseQueryParam baseQueryParam) {
+        Page page = getPage(baseQueryParam);
+        QueryWrapper queryWrapper = getWrapper(page, baseQueryParam);
+        IPage iPage = collegeMapper.selectPage(page, queryWrapper);
+        return iPage;
     }
 
 }

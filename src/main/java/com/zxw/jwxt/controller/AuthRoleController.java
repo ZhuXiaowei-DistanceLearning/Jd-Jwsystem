@@ -1,12 +1,16 @@
 package com.zxw.jwxt.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zxw.common.pojo.RS;
 import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.domain.AuthRole;
 import com.zxw.jwxt.service.AuthRoleService;
+import com.zxw.jwxt.vo.RoleQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -27,49 +31,35 @@ public class AuthRoleController extends BaseController {
     @Autowired
     private AuthRoleService roleService;
 
-    @RequestMapping("/add")
-    public String add(String ids, AuthRole role) {
-//        roleSerivce.save(role, ids);
-        return "redirect:/page/admin/role.action";
+    @GetMapping("/add")
+    public RS add(String ids, AuthRole role) {
+        RS rs = roleService.save(role, ids);
+        return rs;
     }
 
-    @RequestMapping("/update")
-    @ResponseBody
-    public String update(String ids, String roleId) {
-//        roleSerivce.update(ids,roleId);
-        return "true";
+    @PostMapping("/update")
+    public RS update(String ids, String roleId) {
+        RS rs = roleService.update(ids, roleId);
+        return rs;
     }
 
-    @RequestMapping("/delete")
-    @ResponseBody
-    public String delete(String roleId) {
-//        roleSerivce.deleteRole(roleId);
-        return "true";
+    @GetMapping("/delete")
+    public RS delete(String roleId) {
+        RS rs = roleService.deleteRole(roleId);
+        return rs;
     }
 
-    @RequestMapping("/pageQuery")
-    @ResponseBody
-    public TableReponse pageQuery(Integer page, Integer rows) throws IOException {
-//        EasyUIDataGridResult result = roleSerivce.pageQuery(page, rows);
-//        return result;
-        return null;
+    @GetMapping("/pageQuery")
+    public TableReponse pageQuery(RoleQueryParam roleQueryParam) throws IOException {
+        IPage result = roleService.pageQuery(roleQueryParam);
+        TableReponse response = TableReponse.of(result);
+        return response;
     }
 
-    @RequestMapping("/listajax")
-    @ResponseBody
+    @GetMapping("/listajax")
     public List<AuthRole> listajax() throws IOException {
 //        List<AuthRole> list = roleSerivce.findAll();
 //        return list;
         return null;
-    }
-
-    @RequestMapping("/page")
-    public String page() {
-        return "/admin/role";
-    }
-
-    @RequestMapping("/pageAdd")
-    public String pageAdd() {
-        return "/admin/role_add";
     }
 }

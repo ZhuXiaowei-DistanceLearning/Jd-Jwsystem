@@ -13,7 +13,7 @@ let collegeLib = {
             table.render({
                 elem: '#exampleTable',//指定表格元素
                 url: collegeLib.prefix + '/college/pageQuery',  //请求路径
-                toolbar: "#toolbar"
+                toolbar: "#toolbarDemo"
                 , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
                 , even: true    //隔行换色
                 , page: true  //开启分页
@@ -21,8 +21,6 @@ let collegeLib = {
                 , limit: 15 //每页默认显示的数量
                 , method: 'get',  //提交方式
                 loading: true,
-                autoSort: false,
-                async: false,
                 request: {
                     pageName: 'offset' //页码的参数名称，默认：page
                 },
@@ -36,9 +34,10 @@ let collegeLib = {
                 },
                 cols: [[
                     {
+                        type: "checkbox"
+                    }, {
                         field: 'id', //json对应的key
                         title: 'ID',   //列名
-                        type: "checkbox"
                     },
                     {
                         field: 'name', //json对应的key
@@ -47,17 +46,10 @@ let collegeLib = {
                     {
                         field: 'status', //json对应的key
                         title: '状态',   //列名
-                        templet(value, row, index) {
-                            return value == "0" ? "正在使用" : "作废";
+                        templet(res) {
+                            return res.status == "0" ? "正在使用" : "作废";
                         }
-                    },
-                    {
-                        field: 'edit',
-                        title: '操作',
-                        templet(value, row, index) {
-                            return "<a><i class='layui-icon-edit'>&#xe642;</i></a>";
-                        }
-                    },
+                    }
                 ]]
             });
         });

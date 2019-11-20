@@ -1,14 +1,17 @@
 package com.zxw.jwxt.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.MenuNode;
+import com.zxw.common.pojo.RS;
 import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.domain.AuthFunction;
 import com.zxw.jwxt.service.AuthFunctionService;
+import com.zxw.jwxt.vo.FunctionQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -30,35 +33,32 @@ public class AuthFunctionController extends BaseController {
     @Autowired
     private AuthFunctionService functionSerivce;
 
-    @RequestMapping("/pageQuery")
-    @ResponseBody
-    public TableReponse pageQuery(Integer page, Integer rows) throws IOException {
-//        EasyUIDataGridResult result = functionSerivce.pageQuery(page, rows);
-        return null;
+    @GetMapping("/pageQuery")
+    public TableReponse pageQuery(FunctionQueryParam functionQueryParam) throws IOException {
+        IPage pageUtils = functionSerivce.pageQuery(functionQueryParam);
+        TableReponse reponse = TableReponse.of(pageUtils);
+        return reponse;
     }
 
-    @RequestMapping("/listajax")
-    @ResponseBody
+    @GetMapping("/listajax")
     public List<AuthFunction> listajax() throws IOException {
         List<AuthFunction> list = functionSerivce.findAll();
         return list;
     }
 
-    @RequestMapping("/queryFunctionByRole")
-    @ResponseBody
+    @GetMapping("/queryFunctionByRole")
     public List<Integer> queryFunctionByRole(String id) throws IOException {
-//        List<Integer> list = functionSerivce.queryFunctionByRole(id);
-//        return list;
-        return null;
+        List<Integer> list = functionSerivce.queryFunctionByRole(id);
+        return list;
     }
 
-    @RequestMapping("/add")
-    public String add(AuthFunction function) {
-//        functionSerivce.save(function);
-        return "redirect:/page/admin/function.action";
+    @PostMapping("/add")
+    public RS add(AuthFunction function) {
+        RS rs = functionSerivce.save(function);
+        return rs;
     }
 
-    @RequestMapping("/update")
+    @PostMapping("/update")
     public void update(String ids, String roleId) {
         System.out.println(ids);
         System.out.println(roleId.toString());
@@ -69,7 +69,6 @@ public class AuthFunctionController extends BaseController {
      * @throws IOException
      */
     @GetMapping("/menu")
-    @ResponseBody
     public List<MenuNode> findMenu() throws IOException {
         List<MenuNode> menuNodes = new ArrayList<>();
         List<AuthFunction> list = functionSerivce.findMenu(getUserId());

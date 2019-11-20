@@ -2,9 +2,7 @@ package com.zxw.jwxt.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
-import com.zxw.jwxt.controller.BaseController;
 
 /**
  * <p>
@@ -15,7 +13,7 @@ import com.zxw.jwxt.controller.BaseController;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/t-specialty")
+@RequestMapping("/specialty")
 public class TSpecialtyController extends BaseController {
 
 }

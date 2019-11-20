@@ -2,14 +2,18 @@ package com.zxw.jwxt.vo;
 
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * @author zxw
  * @date 2019/11/7 19:28
  */
 @Data
 public class BaseQueryParam {
-    private Integer offset;
-    private Integer limit;
+    private Integer offset = 0;
+    private Integer limit = -1;
     private String sort;
-    private String keyword;
+    private boolean ASC = true;
+    private Map<String, Object> keyword;
+    private String status;
 }

@@ -1,8 +1,46 @@
 package com.zxw.jwxt.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zxw.jwxt.vo.BaseQueryParam;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author zxw
  * @date 2019/11/16 17:50
  */
 public class BaseService {
+    public Page getPage(BaseQueryParam baseQueryParam) {
+        Page page = new Page(baseQueryParam.getOffset(), baseQueryParam.getLimit());
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if (baseQueryParam.getSort() != null) {
+            OrderItem orderItems = new OrderItem();
+            orderItems.setColumn(baseQueryParam.getSort());
+            orderItems.setAsc(baseQueryParam.isASC());
+            page.addOrder(orderItems);
+        }
+        return page;
+    }
+
+    public QueryWrapper getWrapper(Page page, BaseQueryParam baseQueryParam) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if (baseQueryParam.getKeyword() != null) {
+            Map<String, Object> keyword = baseQueryParam.getKeyword();
+            Set<String> strings = keyword.keySet();
+            Iterator<String> iterator = strings.iterator();
+            while (iterator.hasNext()) {
+                String next = iterator.next();
+                Object o = keyword.get(next);
+                queryWrapper.like(next, o);
+            }
+        }
+        if (baseQueryParam.getStatus() != null) {
+            queryWrapper.eq("status", baseQueryParam.getStatus());
+        }
+        return queryWrapper;
+    }
 }
