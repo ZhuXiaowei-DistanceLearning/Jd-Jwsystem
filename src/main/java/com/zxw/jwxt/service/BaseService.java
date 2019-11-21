@@ -26,7 +26,7 @@ public class BaseService {
         return page;
     }
 
-    public QueryWrapper getWrapper(Page page, BaseQueryParam baseQueryParam) {
+    public QueryWrapper getWrapper(BaseQueryParam baseQueryParam, Object... params) {
         QueryWrapper queryWrapper = new QueryWrapper();
         if (baseQueryParam.getKeyword() != null) {
             Map<String, Object> keyword = baseQueryParam.getKeyword();
@@ -40,6 +40,16 @@ public class BaseService {
         }
         if (baseQueryParam.getStatus() != null) {
             queryWrapper.eq("status", baseQueryParam.getStatus());
+        }
+        if (params != null) {
+            Map<String, Object> map = (Map<String, Object>) params[0];
+            Set<String> strings = map.keySet();
+            Iterator<String> iterator = strings.iterator();
+            while (iterator.hasNext()) {
+                String next = iterator.next();
+                Object o = map.get("next");
+                queryWrapper.eq(next, o);
+            }
         }
         return queryWrapper;
     }

@@ -7,7 +7,7 @@ import com.zxw.common.pojo.RS;
 import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.domain.AuthFunction;
 import com.zxw.jwxt.service.AuthFunctionService;
-import com.zxw.jwxt.vo.FunctionQueryParam;
+import com.zxw.jwxt.vo.QueryFunctionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,43 +33,78 @@ public class AuthFunctionController extends BaseController {
     @Autowired
     private AuthFunctionService functionSerivce;
 
+    /**
+     * 权限列表
+     *
+     * @param functionQueryParam
+     * @return
+     * @throws IOException
+     */
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(FunctionQueryParam functionQueryParam) throws IOException {
+    public TableReponse pageQuery(QueryFunctionVO functionQueryParam) {
         IPage pageUtils = functionSerivce.pageQuery(functionQueryParam);
         TableReponse reponse = TableReponse.of(pageUtils);
         return reponse;
     }
 
+    /**
+     * 权限列表
+     *
+     * @return
+     * @throws IOException
+     */
     @GetMapping("/listajax")
-    public List<AuthFunction> listajax() throws IOException {
+    public List<AuthFunction> listajax() {
         List<AuthFunction> list = functionSerivce.findAll();
         return list;
     }
 
+    /**
+     * 查询角色对应的权限
+     *
+     * @param id
+     * @return
+     * @throws IOException
+     */
     @GetMapping("/queryFunctionByRole")
-    public List<Integer> queryFunctionByRole(String id) throws IOException {
+    public List<Integer> queryFunctionByRole(String id) {
         List<Integer> list = functionSerivce.queryFunctionByRole(id);
         return list;
     }
 
+    /**
+     * 添加权限
+     *
+     * @param function
+     * @return
+     */
     @PostMapping("/add")
     public RS add(AuthFunction function) {
         RS rs = functionSerivce.save(function);
         return rs;
     }
 
+    /**
+     * 更新权限
+     *
+     * @param ids
+     * @param roleId
+     */
     @PostMapping("/update")
-    public void update(String ids, String roleId) {
+    public RS update(String ids, String roleId) {
         System.out.println(ids);
         System.out.println(roleId.toString());
+        return RS.ok();
     }
 
     /**
+     * 生成菜单
+     *
      * @return
      * @throws IOException
      */
     @GetMapping("/menu")
-    public List<MenuNode> findMenu() throws IOException {
+    public List<MenuNode> findMenu() {
         List<MenuNode> menuNodes = new ArrayList<>();
         List<AuthFunction> list = functionSerivce.findMenu(getUserId());
         for (int i = 0; i < list.size(); i++) {

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.AuthRole;
 import com.zxw.jwxt.mapper.AuthRoleMapper;
-import com.zxw.jwxt.vo.RoleQueryParam;
+import com.zxw.jwxt.vo.QueryRoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class AuthRoleService extends BaseService {
     @Autowired
     private AuthRoleMapper roleMapper;
 
-    public IPage pageQuery(RoleQueryParam roleQueryParam) {
+    public IPage pageQuery(QueryRoleVO roleQueryParam) {
         IPage iPage = this.BaseQuery(roleQueryParam);
         return iPage;
     }
@@ -59,9 +59,9 @@ public class AuthRoleService extends BaseService {
         return RS.ok();
     }
 
-    public IPage BaseQuery(RoleQueryParam baseQueryParam) {
+    public IPage BaseQuery(QueryRoleVO baseQueryParam) {
         Page page = getPage(baseQueryParam);
-        QueryWrapper queryWrapper = getWrapper(page, baseQueryParam);
+        QueryWrapper queryWrapper = getWrapper(baseQueryParam);
         IPage iPage = roleMapper.selectPage(page, queryWrapper);
         return iPage;
     }

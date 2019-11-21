@@ -14,21 +14,21 @@ public class RS extends HashMap<String, Object> implements Serializable {
 
     public static RS ok() {
         RS rs = new RS();
-        rs.put("status", "0");
+        rs.put("status", "1");
         rs.put("msg", "ok");
         return rs;
     }
 
     public static RS ok(Object msg) {
         RS rs = new RS();
-        rs.put("status", "0");
+        rs.put("status", "1");
         rs.put("msg", msg);
         return rs;
     }
 
     public static RS error(Object msg) {
         RS rs = new RS();
-        rs.put("status", "1");
+        rs.put("status", "0");
         rs.put("msg", msg);
         return rs;
     }

@@ -47,12 +47,6 @@ public class CollegeService extends BaseService {
         return RS.ok(200);
     }
 
-    /**
-     * example
-     * <p>
-     * EXAMPLE:
-     * PAEGHelpInfoDATAGRID
-     */
     public RS edit(TCollege college) {
         int update = collegeMapper.update(college, new UpdateWrapper<>());
         return update == 1 ? RS.ok() : RS.error("修改失败");
@@ -66,21 +60,15 @@ public class CollegeService extends BaseService {
     }
 
     public IPage pageQuery(BaseQueryParam baseQueryParam) {
-        Wrapper wrapper = new QueryWrapper<>();
-        IPage iPage = collegeMapper.selectPage(new Page<>(baseQueryParam.getOffset(), baseQueryParam.getLimit()), wrapper);
+        Page page = getPage(baseQueryParam);
+        QueryWrapper queryWrapper = getWrapper(baseQueryParam);
+        IPage iPage = collegeMapper.selectPage(page, queryWrapper);
         return iPage;
     }
 
     public RS save(TCollege model) {
         int insert = collegeMapper.insert(model);
         return insert == 1 ? RS.ok() : RS.error("添加失败");
-    }
-
-    public IPage BaseQuery(BaseQueryParam baseQueryParam) {
-        Page page = getPage(baseQueryParam);
-        QueryWrapper queryWrapper = getWrapper(page, baseQueryParam);
-        IPage iPage = collegeMapper.selectPage(page, queryWrapper);
-        return iPage;
     }
 
 }

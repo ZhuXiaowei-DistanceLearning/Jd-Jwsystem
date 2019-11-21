@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.AuthFunction;
 import com.zxw.jwxt.mapper.AuthFunctionMapper;
-import com.zxw.jwxt.vo.FunctionQueryParam;
+import com.zxw.jwxt.vo.QueryFunctionVO;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ import java.util.Set;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class AuthFunctionService {
+public class AuthFunctionService extends BaseService {
 
     @Autowired
     private AuthFunctionMapper functionMapper;
@@ -72,7 +72,7 @@ public class AuthFunctionService {
         return RS.ok();
     }
 
-    public IPage pageQuery(FunctionQueryParam params) {
+    public IPage pageQuery(QueryFunctionVO params) {
         IPage iPage = this.BaseQuery(params);
         return iPage;
     }
@@ -82,29 +82,10 @@ public class AuthFunctionService {
         return list;
     }
 
-    public IPage BaseQuery(FunctionQueryParam baseQueryParam) {
-        Page page = new Page(baseQueryParam.getOffset(), baseQueryParam.getLimit());
-        QueryWrapper queryWrapper = new QueryWrapper();
-        if (baseQueryParam.getSort() != null) {
-            OrderItem orderItems = new OrderItem();
-            orderItems.setColumn(baseQueryParam.getSort());
-            orderItems.setAsc(baseQueryParam.isASC());
-            page.addOrder(orderItems);
-        }
-        if (baseQueryParam.getKeyword() != null) {
-            Map<String, Object> keyword = baseQueryParam.getKeyword();
-            Set<String> strings = keyword.keySet();
-            Iterator<String> iterator = strings.iterator();
-            while (iterator.hasNext()) {
-                String next = iterator.next();
-                Object o = keyword.get(next);
-                queryWrapper.like(next, o);
-            }
-        }
-        if (baseQueryParam.getStatus() != null) {
-            queryWrapper.eq("status", baseQueryParam.getStatus());
-        }
-        IPage iPage = functionMapper.selectPage(page, queryWrapper);
+    public IPage BaseQuery(QueryFunctionVO baseQueryParam) {
+        Page page = getPage(baseQueryParam);
+        QueryWrapper wrapper = getWrapper(baseQueryParam);
+        IPage iPage = functionMapper.selectPage(page, wrapper);
         return iPage;
     }
 }

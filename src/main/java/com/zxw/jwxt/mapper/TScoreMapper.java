@@ -1,6 +1,7 @@
 package com.zxw.jwxt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.jwxt.domain.TScore;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -19,6 +20,7 @@ import java.util.List;
 public interface TScoreMapper extends BaseMapper<TScore> {
     /**
      * 查询出对应学生
+     *
      * @param ids
      * @return
      */
@@ -29,6 +31,7 @@ public interface TScoreMapper extends BaseMapper<TScore> {
 
     /**
      * 查询学生是否含有本门课程
+     *
      * @param id
      * @param ids
      * @return
@@ -39,6 +42,7 @@ public interface TScoreMapper extends BaseMapper<TScore> {
 
     /**
      * 查询出对应学生
+     *
      * @param ids
      * @return
      */
@@ -60,6 +64,7 @@ public interface TScoreMapper extends BaseMapper<TScore> {
 
     /**
      * 查询学生个人成绩
+     *
      * @param ids
      * @return
      */
@@ -92,6 +97,7 @@ public interface TScoreMapper extends BaseMapper<TScore> {
 
     /**
      * 添加课程成绩对应页面
+     *
      * @param courseId
      * @return
      */
@@ -105,5 +111,5 @@ public interface TScoreMapper extends BaseMapper<TScore> {
             "\t\tLEFT JOIN\n" +
             "\t\t`t_college` cl ON\n" +
             "\t\tsp.`college_id`=cl.`id` WHERE course_id = #{value}")
-    List<TScore> addStudentScore(String courseId);
+    IPage addStudentScore(IPage iPage, String courseId);
 }

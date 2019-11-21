@@ -6,7 +6,7 @@ import com.zxw.common.pojo.RS;
 import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.domain.AuthRole;
 import com.zxw.jwxt.service.AuthRoleService;
-import com.zxw.jwxt.vo.RoleQueryParam;
+import com.zxw.jwxt.vo.QueryRoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,7 +50,7 @@ public class AuthRoleController extends BaseController {
     }
 
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(RoleQueryParam roleQueryParam) throws IOException {
+    public TableReponse pageQuery(QueryRoleVO roleQueryParam) throws IOException {
         IPage result = roleService.pageQuery(roleQueryParam);
         TableReponse response = TableReponse.of(result);
         return response;

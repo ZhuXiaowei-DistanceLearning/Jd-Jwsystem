@@ -36,9 +36,8 @@ public class TCollegeController extends BaseController {
      * @return
      * @throws IOException
      */
-    @RequestMapping("/pageQuery")
-    @ResponseBody
-    public TableReponse pageQuery(BaseQueryParam baseQueryParam) throws IOException {
+    @GetMapping("/pageQuery")
+    public TableReponse pageQuery(BaseQueryParam baseQueryParam){
         IPage iPage = collegeService.pageQuery(baseQueryParam);
         TableReponse result = TableReponse.of(iPage);
         return result;
@@ -50,7 +49,6 @@ public class TCollegeController extends BaseController {
      * @return
      */
     @PostMapping("addCollege")
-    @ResponseBody
     public RS addCollege(TCollege model) {
         if (model == null) {
             throw new JwException(ExceptionEnums.NO_DATA);
@@ -64,7 +62,6 @@ public class TCollegeController extends BaseController {
      * @return
      */
     @GetMapping("deleteCollege")
-    @ResponseBody
     public RS delete(String ids) {
         RS result = collegeService.delete(ids);
         return result;
@@ -76,7 +73,6 @@ public class TCollegeController extends BaseController {
      * @return
      */
     @PostMapping("editCollege")
-    @ResponseBody
     public RS editCollege(@RequestBody TCollege model) {
         if (model == null) {
             throw new JwException(ExceptionEnums.NO_DATA);
@@ -87,8 +83,7 @@ public class TCollegeController extends BaseController {
     /**
      * 查询列表
      */
-    @RequestMapping("listajax")
-    @ResponseBody
+    @GetMapping("listajax")
     public List<TCollege> listajax() throws IOException {
         List<TCollege> list = collegeService.findListNostatus();
         return list;
