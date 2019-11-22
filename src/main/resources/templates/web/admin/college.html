@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>college</title>
+    <title>教务管理系统</title>
     <link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all" th:href="@{/web/layui/css/layui.css}">
     <link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all" th:href="@{/web/css/admin.css}">
     <link rel="stylesheet" href="css/l-style.css" th:href="@{/web/css/l-style.css}"/>
@@ -47,31 +47,24 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">增加</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">修改</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">作废</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">复原</button>
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i
+                class="layui-icon">&#xe608;</i> 添加
+        </button>
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckLength">
+            <i class="layui-icon">&#xe642;</i>修改
+        </button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="deleteData">
+            <i class="layui-icon">&#xe640;</i>作废
+        </button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="redoData">
+            <i class="layui-icon">&#xe666;</i>复原
+        </button>
     </div>
 </script>
 <script th:src="@{/web/js/jquery.min.js}"></script>
 <script th:src="@{/web/layui/layui.js}"></script>
 <script th:src="@{/web/layui/layui.all.js}"></script>
 <script type="text/javascript" th:src="@{/web/js/l-index.js}"></script>
-<script>
-    // //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
-    // !function () {
-    //     var layer = layui.layer,
-    //         form = layui.form;
-    //     form.on('checkbox(layTableAllChoose)', function (data) {
-    //         $("input[name='layTableCheckbox']").each(function () {
-    //             this.checked = data.elem.checked;
-    //             // console.log(data);
-    //         });
-    //         form.render('checkbox');
-    //     });
-    //
-    // }();
-</script>
 <script>
     function collegeWindos(title, content, data) {
         layer.open({
@@ -86,17 +79,22 @@
                 layui.use('form', function () {
                     var form = layui.form;
                     let dataForm = form.val("fromTest");
-                    console.log(dataForm)
                 });
-                /* $.ajax({
-                     type: "post",
-                     url: "http://localhost:8080/college/addOrSave",
-                     success(data) {
+                $.ajax({
+                    type: "post",
+                    url: "http://localhost:8080/college/saveOrUpdateCollege",
+                    success(data) {
+                        if (data.status == 1) {
+                            layer.alert(data.msg)
+                            parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index)
+                            window.parent.location.reload()
+                            layer.alert(data.msg)
+                        }
+                    }, error(data) {
 
-                     }, error(data) {
-
-                     }
-                 })*/
+                    }
+                });
                 layer.close(index)
             },
             btnAlign: 'c',
@@ -114,6 +112,32 @@
                     } : data);
                 });
             }
+        })
+    }
+
+    function confrimWindow(content, data) {
+        layer.confirm(content, {
+            btn: ["确定", "取消"]
+        }, function () {
+            $.ajax({
+                type: "post",
+                url: "http://localhost:8080/college/deleteCollege?id=" + data.id,
+                success(data) {
+                    if (data.status == 1) {
+                        layer.alert(data.msg)
+                        parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index)
+                        window.parent.location.reload()
+                        layer.alert(data.msg)
+                    }
+                },
+                error(data) {
+
+                }
+            })
+            ;
+        }, function () {
+            layer.close()
         })
     }
 
@@ -142,11 +166,18 @@
                         collegeWindos("学院修改", "#addWindow", data[0]);
                     }
                     break;
-                case 'isAll':
+                case 'deleteData':
                     if (data.length == 0) {
                         layer.alert("请选择一条记录");
                     } else {
-                        collegeWindos("学院添加", "#addWindow", data[0]);
+                        confrimWindow("是否确定作废该条记录", data[0])
+                    }
+                    break;
+                case 'redoData':
+                    if (data.length == 0) {
+                        layer.alert("请选择一条记录");
+                    } else {
+                        confrimWindow("是否确定恢复该条记录", data[0])
                     }
                     break;
 

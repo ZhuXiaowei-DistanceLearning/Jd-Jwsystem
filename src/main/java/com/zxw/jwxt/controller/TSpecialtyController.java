@@ -40,8 +40,8 @@ public class TSpecialtyController extends BaseController {
     }
 
     @PostMapping("/addSpecialty")
-    public RS addSpecialty(TSpecialty specialty) {
-        RS rs = specialtyService.add(specialty);
+    public RS saveOrUpdateSpeciatly(TSpecialty specialty) {
+        RS rs = specialtyService.saveOrUpdateSpeciatly(specialty);
         return rs;
     }
 
@@ -52,8 +52,8 @@ public class TSpecialtyController extends BaseController {
     }
 
     @GetMapping("/delete")
-    public RS delete(String ids) {
-        RS rs = specialtyService.deleteBatch(ids);
+    public RS delete(String id) {
+        RS rs = specialtyService.deleteBatch(id);
         return rs;
     }
 }

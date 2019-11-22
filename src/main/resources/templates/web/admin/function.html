@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>college</title>
+    <title>教务管理系统</title>
     <link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all" th:href="@{/web/layui/css/layui.css}">
     <link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all" th:href="@{/web/css/admin.css}">
     <link rel="stylesheet" href="css/l-style.css" th:href="@{/web/css/l-style.css}"/>
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/l-style_8.css" th:href="@{/web/css/l-style_8.css}"/>
 </head>
 <style>
-    .layui-input-block{
+    .layui-input-block {
         margin-right: 50px;
     }
 </style>
@@ -66,7 +66,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">父功能点</label>
             <div class="layui-input-block">
-                <select name="parent" lay-filter="aihao">
+                <select name="parentSelect" lay-filter="aihao">
                 </select>
             </div>
         </div>
@@ -98,12 +98,13 @@
 <script th:src="@{/web/layui/layui.js}"></script>
 <script th:src="@{/web/layui/layui.all.js}"></script>
 <script type="text/javascript" th:src="@{/web/js/l-index.js}"></script>
+<script type="text/javascript" th:src="@{/web/js/web/common/common.js}"></script>
 <script>
     function collegeWindos(title, content, data) {
         layer.open({
             type: 1 //此处以iframe举例
             , title: title
-            , area: ['500px', '550px']
+            , area: ['350px', '500px']
             , shade: 0
             , maxmin: true
             , content: $(content)
@@ -112,17 +113,22 @@
                 layui.use('form', function () {
                     var form = layui.form;
                     let dataForm = form.val("fromTest");
-                    console.log(dataForm)
                 });
-                /* $.ajax({
-                     type: "post",
-                     url: "http://localhost:8080/college/addOrSave",
-                     success(data) {
+                $.ajax({
+                    type: "post",
+                    url: "http://localhost:8080/college/saveOrUpdateCollege",
+                    success(data) {
+                        if (data.status == 1) {
+                            layer.alert(data.msg)
+                            parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index)
+                            window.parent.location.reload()
+                            layer.alert(data.msg)
+                        }
+                    }, error(data) {
 
-                     }, error(data) {
-
-                     }
-                 })*/
+                    }
+                });
                 layer.close(index)
             },
             btnAlign: 'c',
@@ -131,25 +137,42 @@
             shadeClose: true
             , scrollbar: true
             , success: function (layero, index) {
+                selectAjaxData("parentSelect", "http://localhost:8080/function/listajax")
                 layui.use('form', function () {
-                    let arr = [];
-                    $.ajax({
-                        type: "get",
-                        url: "http://localhost:8080/function/listajax",
-                        success: function (data) {
-                            $.each(data, function (index, item) {
-                                $("select[name='parent']").append("<option value='" + item + "'>" + item.name + "</option>")
-                            })
-                            var form = layui.form;
-
-                            form.render("select")
-                            let dataFrom = form.val("fromTest", data == null ? [] : data);
-                        },
-                        error: function (data) {
-                        }
-                    })
+                    var form = layui.form;
+                    let dataFrom = form.val("fromTest", data == null ? {
+                        "id": null,
+                        "name": null,
+                        "status": null
+                    } : data);
                 });
             }
+        })
+    }
+
+    function confrimWindow(content, data) {
+        layer.confirm(content, {
+            btn: ["确定", "取消"]
+        }, function () {
+            $.ajax({
+                type: "post",
+                url: "http://localhost:8080/college/deleteCollege?id=" + data.id,
+                success(data) {
+                    if (data.status == 1) {
+                        layer.alert(data.msg)
+                        parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index)
+                        window.parent.location.reload()
+                        layer.alert(data.msg)
+                    }
+                },
+                error(data) {
+
+                }
+            })
+            ;
+        }, function () {
+            layer.close()
         })
     }
 

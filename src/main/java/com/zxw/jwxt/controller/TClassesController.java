@@ -8,11 +8,8 @@ import com.zxw.jwxt.domain.TClasses;
 import com.zxw.jwxt.service.ClassesService;
 import com.zxw.jwxt.vo.QueryClassesVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import com.zxw.jwxt.controller.BaseController;
 
 import javax.servlet.http.HttpSession;
@@ -51,7 +48,7 @@ public class TClassesController extends BaseController {
      * @param classes
      * @return
      */
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public RS add(TClasses classes) {
         return classesService.save(classes);
     }
@@ -62,12 +59,12 @@ public class TClassesController extends BaseController {
      * @param classesVO
      * @return
      */
-    @RequestMapping("/delete")
+    @GetMapping("/delete")
     public RS delete(QueryClassesVO classesVO) {
         return classesService.deleteBatch(classesVO);
     }
 
-    @RequestMapping("/findById")
+    @GetMapping("/findById")
     public RS findById(String ids, HttpSession session) {
         session.setAttribute("classes_id", ids);
         return RS.ok();

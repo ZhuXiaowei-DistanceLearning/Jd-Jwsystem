@@ -37,7 +37,7 @@ public class TCollegeController extends BaseController {
      * @throws IOException
      */
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(BaseQueryParam baseQueryParam){
+    public TableReponse pageQuery(BaseQueryParam baseQueryParam) {
         IPage iPage = collegeService.pageQuery(baseQueryParam);
         TableReponse result = TableReponse.of(iPage);
         return result;
@@ -48,7 +48,7 @@ public class TCollegeController extends BaseController {
      *
      * @return
      */
-    @PostMapping("addCollege")
+    @PostMapping("/saveOrUpdateCollege")
     public RS addCollege(TCollege model) {
         if (model == null) {
             throw new JwException(ExceptionEnums.NO_DATA);
@@ -57,18 +57,18 @@ public class TCollegeController extends BaseController {
     }
 
     /**
-     * 更改状态为不可用
+     * 作废学院
      *
      * @return
      */
-    @GetMapping("deleteCollege")
-    public RS delete(String ids) {
-        RS result = collegeService.delete(ids);
+    @GetMapping("/deleteCollege")
+    public RS delete(String id) {
+        RS result = collegeService.delete(id);
         return result;
     }
 
     /**
-     * findListNostatus找到
+     * 修改学院信息
      *
      * @return
      */

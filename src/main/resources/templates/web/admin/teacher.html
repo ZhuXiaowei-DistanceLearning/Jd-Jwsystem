@@ -18,7 +18,7 @@
     <div class="layui-row layui-col-space10">
         <div class="layui-col-md12">
             <div class="item_head border_all">
-                <h3 class="item_tit">教务人员管理</h3>
+                <h3 class="item_tit">教师管理</h3>
             </div>
             <div class="item_box mT5">
                 <table class="layui-hide" id="exampleTable" lay-filter="demo"></table>
@@ -30,10 +30,17 @@
 <div id="addWindow" style="display: none;margin-top: 30px">
     <form class="layui-form" action="" lay-filter="fromTest">
         <div class="layui-form-item">
-            <label class="layui-form-label">用户名称</label>
+            <label class="layui-form-label">专业名称</label>
             <div class="layui-input-block">
                 <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入标题"
                        class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择学院</label>
+            <div class="layui-input-block">
+                <select name="parentSelect" lay-filter="aihao">
+                </select>
             </div>
         </div>
     </form>
@@ -47,10 +54,10 @@
             <i class="layui-icon">&#xe642;</i>修改
         </button>
         <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="deleteData">
-            <i class="layui-icon">&#xe640;</i>封禁
+            <i class="layui-icon">&#xe640;</i>作废
         </button>
         <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="redoData">
-            <i class="layui-icon">&#xe666;</i>解封
+            <i class="layui-icon">&#xe666;</i>复原
         </button>
     </div>
 </script>
@@ -76,8 +83,8 @@
                     dataForm.collegeId = $("select option:selected").val();
                     $.ajax({
                         type: "post",
-                        url: "http://localhost:8080/user/saveOrUpdate",
-                        data: {user: dataForm},
+                        url: "http://localhost:8080/college/saveOrUpdateSpeciatly",
+                        data: {specialty: dataForm},
                         success(data) {
                             if (data.status == 1) {
                                 ajaxSuccess(data)
@@ -95,8 +102,8 @@
             shadeClose: true
             , scrollbar: true
             , success: function (layero, index) {
-                selectAjaxData("parentSelect", "http://localhost:8080/college/listajax");
-                layerFormCustom(null, data)
+                selectAjaxData("parentSelect", "http://localhost:8080/college/listajax")
+                layerFormCustom({name: "",}, data)
             }
         })
     }
@@ -107,7 +114,7 @@
         }, function () {
             $.ajax({
                 type: "post",
-                url: "http://localhost:8080/user/delete?id=" + data.id,
+                url: "http://localhost:8080/college/delete?id=" + data.id,
                 success(data) {
                     if (data.status == 1) {
                         ajaxSuccess(data)
@@ -138,14 +145,14 @@
                     if (data.length == 1) {
                         layer.alert("请勿选择记录");
                     } else {
-                        collegeWindos("用户修改", "#addWindow", data[0]);
+                        collegeWindos("专业添加", "#addWindow", data[0]);
                     }
                     break;
                 case 'getCheckLength':
                     if (data.length == 0) {
                         layer.alert("请选择一条记录");
                     } else {
-                        collegeWindos("学院修改", "#addWindow", data[0]);
+                        collegeWindos("专业修改", "#addWindow", data[0]);
                     }
                     break;
                 case 'deleteData':

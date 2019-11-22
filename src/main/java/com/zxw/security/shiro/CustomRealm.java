@@ -110,6 +110,14 @@ public class CustomRealm extends AuthorizingRealm {
                         this.getClass().getSimpleName());
                 return info;
             }
+        } else if (RadioButtonList1.equals("教务人员")) {
+            TUser user = userSerivce.findByUsername(username);
+            if (user != null) {
+                String password = user.getPassword();
+                SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password,
+                        this.getClass().getSimpleName());
+                return info;
+            }
         }
         return null;
     }

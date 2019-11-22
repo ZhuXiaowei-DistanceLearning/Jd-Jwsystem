@@ -57,7 +57,7 @@ public class TScoreController extends BaseController {
         score.setCourseId(scoreVO.getCourseId());
         scoreService.saveCourse(score);
         int i = scoreVO.getPeople() + 1;
-        courseService.addPeople(i, score);
+        courseService.addPeople(i, score.getCourseId());
         return RS.ok();
 
     }

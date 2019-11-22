@@ -40,11 +40,14 @@ public class SpecialtyService extends BaseService {
     }
 
     public RS deleteBatch(String ids) {
-        String[] id = ids.split(",");
-        for (String spId : id) {
-            specialtyMapper.deleteBatch(spId);
+
+        TSpecialty tSpecialty = specialtyMapper.selectById(ids);
+        if (tSpecialty.getStatus().equals("1")) {
+            tSpecialty.setStatus("0");
+        } else {
+            tSpecialty.setStatus("1");
         }
-        return RS.ok();
+        return specialtyMapper.updateById(tSpecialty) == 0 ? RS.error("作废失败") : RS.ok();
     }
 
     public IPage pageQuery(BaseQueryParam baseQueryParam) {
@@ -61,5 +64,15 @@ public class SpecialtyService extends BaseService {
             specialtyMapper.updateById(tSpecialty);
         }
         return RS.ok();
+    }
+
+    public RS saveOrUpdateSpeciatly(TSpecialty specialty) {
+        int count;
+        if (specialty.getId() != null) {
+            count = specialtyMapper.updateById(specialty);
+        } else {
+            count = specialtyMapper.insert(specialty);
+        }
+        return count == 0 ? RS.error("更新或修改失败") : RS.ok();
     }
 }

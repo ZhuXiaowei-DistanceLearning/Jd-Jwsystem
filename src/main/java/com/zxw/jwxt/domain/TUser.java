@@ -46,6 +46,8 @@ public class TUser extends UserRealm implements Serializable {
 
     private String id;
 
+    private String status;
+
     @Override
     public void setUsername(String username) {
         this.username = username;

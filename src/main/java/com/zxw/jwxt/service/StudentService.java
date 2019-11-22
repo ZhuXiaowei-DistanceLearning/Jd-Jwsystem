@@ -42,7 +42,7 @@ public class StudentService extends BaseService {
     @Autowired
     private StudentRoleService studentRoleService;
 
-    public TStudent findByUsername(QueryStudentVO queryStudentVO) {
+    public TStudent findByUsername(String username) {
 //        TStudentExample studentExample = new TStudentExample();
 //        JW.pojo.TStudentExample.Criteria studentCriteria = studentExample.createCriteria();
 //        studentCriteria.andSidEqualTo(username);

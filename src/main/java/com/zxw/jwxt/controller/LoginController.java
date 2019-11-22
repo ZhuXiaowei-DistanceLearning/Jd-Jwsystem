@@ -7,7 +7,9 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +54,18 @@ public class LoginController extends BaseController {
             return RS.error("验证码错误");
         }
         return RS.error("验证码不能为空");
+    }
+
+    /**
+     * 用户退出时，销毁Session
+     *
+     * @return
+     */
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "redirect:/login";
     }
 
 }

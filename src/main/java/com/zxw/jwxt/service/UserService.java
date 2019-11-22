@@ -3,6 +3,7 @@ package com.zxw.jwxt.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TUser;
 import com.zxw.jwxt.mapper.TUserMapper;
 import com.zxw.jwxt.vo.BaseQueryParam;
@@ -38,8 +39,28 @@ public class UserService extends BaseService {
 
     public IPage pageQuery(BaseQueryParam baseQueryParam) {
         Page page = getPage(baseQueryParam);
-        QueryWrapper queryWrapper = getWrapper(page, baseQueryParam);
+        QueryWrapper queryWrapper = getWrapper(baseQueryParam);
         IPage iPage = userMapper.selectPage(page, queryWrapper);
         return iPage;
+    }
+
+    public RS saveOrUpdate(TUser user) {
+        int count = 0;
+        if (user.getId() != null) {
+            count = userMapper.updateById(user);
+        } else {
+            count = userMapper.insert(user);
+        }
+        return count == 0 ? RS.error("操作失败") : RS.ok();
+    }
+
+    public RS lock(String id) {
+        TUser tUser = userMapper.selectById(id);
+        if (tUser.getStatus().equals("1")) {
+            tUser.setStatus("0");
+        } else {
+            tUser.setStatus("1");
+        }
+        return userMapper.updateById(tUser) == 0 ? RS.error("操作失败") : RS.ok();
     }
 }
