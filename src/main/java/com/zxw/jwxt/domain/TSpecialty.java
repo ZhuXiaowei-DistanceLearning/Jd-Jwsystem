@@ -1,7 +1,6 @@
 package com.zxw.jwxt.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zxw
@@ -20,11 +19,11 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="TSpecialty对象", description="")
+@ApiModel(value = "TSpecialty对象", description = "")
 public class TSpecialty implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @TableId(type = IdType.ID_WORKER_STR)
+    @TableId(type = IdType.INPUT)
     private String id;
 
     private String name;
@@ -32,6 +31,16 @@ public class TSpecialty implements Serializable {
     private String collegeId;
 
     private String status;
+    // 学制
+    private String time;
+    // 授予学位类型
+    private String category;
 
+    @TableField(exist = false, fill = FieldFill.DEFAULT)
+    private TCollege college;
+    @TableField(exist = false, fill = FieldFill.DEFAULT)
+    private String cname;
+    @TableField(exist = false, fill = FieldFill.DEFAULT)
+    private String cstatus;
 
 }

@@ -84,7 +84,7 @@ public class TCollegeController extends BaseController {
      * 查询列表
      */
     @GetMapping("listajax")
-    public List<TCollege> listajax() throws IOException {
+    public List<TCollege> listajax() {
         List<TCollege> list = collegeService.findListNostatus();
         return list;
     }

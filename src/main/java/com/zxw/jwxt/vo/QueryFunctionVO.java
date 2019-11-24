@@ -9,7 +9,5 @@ import lombok.NoArgsConstructor;
  * @date 2019/11/10 11:41
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class QueryFunctionVO extends BaseQueryParam {
 }

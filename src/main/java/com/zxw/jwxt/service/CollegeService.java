@@ -1,6 +1,5 @@
 package com.zxw.jwxt.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -42,9 +41,9 @@ public class CollegeService extends BaseService {
             } else {
                 tCollege.setStatus("1");
             }
-            collegeMapper.update(tCollege, wrapper);
+            collegeMapper.updateById(tCollege);
         }
-        return RS.ok(200);
+        return RS.ok();
     }
 
     public RS edit(TCollege college) {
@@ -67,8 +66,14 @@ public class CollegeService extends BaseService {
     }
 
     public RS save(TCollege model) {
-        int insert = collegeMapper.insert(model);
-        return insert == 1 ? RS.ok() : RS.error("添加失败");
+        int count;
+        TCollege tCollege = collegeMapper.selectById(model.getId());
+        if (tCollege != null) {
+            count = collegeMapper.updateById(model);
+        } else {
+            count = collegeMapper.insert(model);
+        }
+        return count == 0 ? RS.error("更新或修改失败") : RS.ok();
     }
 
 }

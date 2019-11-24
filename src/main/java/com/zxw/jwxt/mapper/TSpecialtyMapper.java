@@ -1,12 +1,13 @@
 package com.zxw.jwxt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.jwxt.domain.TSpecialty;
+import com.zxw.jwxt.vo.QuerySpecialtyVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-
-import java.util.List;
 
 /**
  * <p>
@@ -20,7 +21,7 @@ import java.util.List;
 public interface TSpecialtyMapper extends BaseMapper<TSpecialty> {
     @Select("  SELECT DISTINCT s.`id`,\n" +
             "                        s.`name`,\n" +
-            "                        s.`status`,\n" +
+            "                        s.`status`,s.`time`,s.`category`,\n" +
             "                        s.`college_id`,\n" +
             "                        c.`name` cname,\n" +
             "                        c.`status`\n" +
@@ -29,7 +30,7 @@ public interface TSpecialtyMapper extends BaseMapper<TSpecialty> {
             "        FROM `t_specialty` s\n" +
             "                 LEFT JOIN `t_college` c ON\n" +
             "            s.`college_id` = c.`id` ORDER BY c.`name`")
-    List<TSpecialty> findAll();
+    IPage<QuerySpecialtyVO> findAll(Page page);
 
     @Update(" update t_specialty\n" +
             "        set status=1\n" +

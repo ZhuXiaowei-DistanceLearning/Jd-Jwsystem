@@ -6,9 +6,12 @@ import com.zxw.common.pojo.RS;
 import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.domain.TSpecialty;
 import com.zxw.jwxt.service.SpecialtyService;
-import com.zxw.jwxt.vo.BaseQueryParam;
+import com.zxw.jwxt.vo.QuerySpecialtyVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
@@ -26,17 +29,17 @@ public class TSpecialtyController extends BaseController {
     @Autowired
     private SpecialtyService specialtyService;
 
-    @GetMapping("redoSpecialty")
+    @GetMapping("/redoSpecialty")
     public RS redoSpecialty(String id) {
         RS rs = specialtyService.redoSpecialty(id);
         return rs;
     }
 
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(BaseQueryParam baseQueryParam) throws IOException {
+    public TableReponse pageQuery(QuerySpecialtyVO baseQueryParam) throws IOException {
         IPage result = specialtyService.pageQuery(baseQueryParam);
-        TableReponse reponse = TableReponse.of(result);
-        return reponse;
+        TableReponse response = TableReponse.of(result);
+        return response;
     }
 
     @PostMapping("/addSpecialty")

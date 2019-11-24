@@ -27,7 +27,7 @@ public class TestController {
 
     @Test
     public void query(){
-        IPage iPage = collegeService.BaseQuery(new BaseQueryParam());
+        IPage iPage = collegeService.pageQuery(new BaseQueryParam());
         System.out.println(iPage.toString());
     }
     @Test

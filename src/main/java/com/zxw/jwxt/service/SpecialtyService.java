@@ -1,18 +1,13 @@
 package com.zxw.jwxt.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TSpecialty;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.zxw.jwxt.mapper.TSpecialtyMapper;
-import com.zxw.jwxt.vo.BaseQueryParam;
+import com.zxw.jwxt.vo.QuerySpecialtyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * <p>
@@ -50,10 +45,9 @@ public class SpecialtyService extends BaseService {
         return specialtyMapper.updateById(tSpecialty) == 0 ? RS.error("作废失败") : RS.ok();
     }
 
-    public IPage pageQuery(BaseQueryParam baseQueryParam) {
-        Page page = getPage(baseQueryParam);
-        QueryWrapper wrapper = getWrapper(baseQueryParam);
-        IPage iPage = specialtyMapper.selectPage(page, wrapper);
+    public IPage pageQuery(QuerySpecialtyVO baseQueryParam) {
+        Page<QuerySpecialtyVO> page = getPage(baseQueryParam);
+        IPage<QuerySpecialtyVO> iPage = specialtyMapper.findAll(page);
         return iPage;
     }
 
@@ -68,7 +62,8 @@ public class SpecialtyService extends BaseService {
 
     public RS saveOrUpdateSpeciatly(TSpecialty specialty) {
         int count;
-        if (specialty.getId() != null) {
+        TSpecialty tSpecialty = specialtyMapper.selectById(specialty.getId());
+        if (tSpecialty != null) {
             count = specialtyMapper.updateById(specialty);
         } else {
             count = specialtyMapper.insert(specialty);

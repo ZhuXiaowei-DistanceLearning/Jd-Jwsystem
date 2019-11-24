@@ -16,7 +16,6 @@ import java.util.Set;
 public class BaseService {
     public Page getPage(BaseQueryParam baseQueryParam) {
         Page page = new Page(baseQueryParam.getOffset(), baseQueryParam.getLimit());
-        QueryWrapper queryWrapper = new QueryWrapper();
         if (baseQueryParam.getSort() != null) {
             OrderItem orderItems = new OrderItem();
             orderItems.setColumn(baseQueryParam.getSort());
@@ -41,7 +40,7 @@ public class BaseService {
         if (baseQueryParam.getStatus() != null) {
             queryWrapper.eq("status", baseQueryParam.getStatus());
         }
-        if (params != null) {
+        if (params.length != 0) {
             Map<String, Object> map = (Map<String, Object>) params[0];
             Set<String> strings = map.keySet();
             Iterator<String> iterator = strings.iterator();

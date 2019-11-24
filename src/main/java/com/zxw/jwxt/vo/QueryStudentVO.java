@@ -15,8 +15,6 @@ import java.util.List;
  * @date 2019/11/21 13:51:07
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class QueryStudentVO extends BaseQueryParam {
     List<String> studentIds;
     String id;

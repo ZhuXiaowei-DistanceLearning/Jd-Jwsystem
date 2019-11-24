@@ -47,7 +47,7 @@ let collegeLib = {
                         field: 'status', //json对应的key
                         title: '状态',   //列名
                         templet(res) {
-                            return res.status == "0" ? "正在使用" : "作废";
+                            return res.status == "1" ? "正在使用" : "作废";
                         }
                     }
                 ]]

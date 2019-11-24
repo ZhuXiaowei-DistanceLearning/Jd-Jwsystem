@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
  * @date 2019/11/21 13:51:07
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class QueryCourseVO extends BaseQueryParam {
     private String id;
 
