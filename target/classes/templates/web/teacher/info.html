@@ -30,6 +30,13 @@
 <div id="addWindow" style="display: none;margin-top: 30px">
     <form class="layui-form" action="" lay-filter="fromTest">
         <div class="layui-form-item">
+            <label class="layui-form-label">专业编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="id" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">专业名称</label>
             <div class="layui-input-block">
                 <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入标题"
@@ -37,7 +44,21 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">选择学院</label>
+            <label class="layui-form-label">学制</label>
+            <div class="layui-input-block">
+                <input type="text" name="time" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">授予学位</label>
+            <div class="layui-input-block">
+                <input type="text" name="category" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属学院</label>
             <div class="layui-input-block">
                 <select name="parentSelect" lay-filter="aihao">
                 </select>
@@ -80,11 +101,11 @@
                 layui.use('form', function () {
                     var form = layui.form;
                     let dataForm = form.val("fromTest");
-                    dataForm.collegeId = $("select option:selected").val();
+                    dataForm.collegeId = dataForm.parentSelect;
                     $.ajax({
                         type: "post",
-                        url: "http://localhost:8080/college/saveOrUpdateSpeciatly",
-                        data: {specialty: dataForm},
+                        url: "http://localhost:8080/specialty/addSpecialty",
+                        data: dataForm,
                         success(data) {
                             if (data.status == 1) {
                                 ajaxSuccess(data)
@@ -111,13 +132,14 @@
     function confrimWindow(content, data) {
         layer.confirm(content, {
             btn: ["确定", "取消"]
-        }, function () {
+        }, function (index, layero) {
             $.ajax({
-                type: "post",
-                url: "http://localhost:8080/college/delete?id=" + data.id,
+                type: "get",
+                url: "http://localhost:8080/specialty/delete?id=" + data.id,
                 success(data) {
                     if (data.status == 1) {
-                        ajaxSuccess(data)
+                        layer.close(index);
+                        ajaxSuccess(index,data)
                     }
                 },
                 error(data) {

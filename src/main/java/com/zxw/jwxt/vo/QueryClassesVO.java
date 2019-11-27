@@ -1,11 +1,7 @@
 package com.zxw.jwxt.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -29,11 +25,14 @@ public class QueryClassesVO extends BaseQueryParam {
 
     private String gradeId;
 
-    private LocalDate year;
+    private String year;
 
     // 院系名称
     private String cname;
 
     // 专业名称
     private String sname;
+
+    // 年级
+    private String gname;
 }

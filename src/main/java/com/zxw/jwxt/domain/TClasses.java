@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 /**
  * <p>
@@ -45,7 +44,7 @@ public class TClasses implements Serializable {
     private String gradeId;
 
     @ApiModelProperty(value = "入学年份")
-    private LocalDate year;
+    private String year;
 
 
 }

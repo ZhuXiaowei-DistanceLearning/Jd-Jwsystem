@@ -12,7 +12,7 @@ let classLib = {
             let table = layui.table;
             table.render({
                 elem: '#exampleTable',//指定表格元素
-                url: specialtyLib.prefix + '/classes/pageQuery',  //请求路径
+                url: classLib.prefix + '/classes/pageQuery',  //请求路径
                 toolbar: "#toolbarDemo"
                 , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
                 , even: true    //隔行换色

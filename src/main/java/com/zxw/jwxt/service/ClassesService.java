@@ -1,20 +1,15 @@
 package com.zxw.jwxt.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TClasses;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.mapper.TClassesMapper;
 import com.zxw.jwxt.vo.QueryClassesVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * <p>
@@ -38,9 +33,9 @@ public class ClassesService extends BaseService {
         IPage<QueryClassesVO> iPage = null;
         Page page = getPage(queryClassesVO);
         if (StringUtils.isNotEmpty(realm.getCollegeId())) {
-            iPage = classesMapper.findAll(page);
-        } else {
             iPage = classesMapper.findByJwUser(page, realm.getCollegeId());
+        } else {
+            iPage = classesMapper.findAll(page);
         }
         return iPage;
     }

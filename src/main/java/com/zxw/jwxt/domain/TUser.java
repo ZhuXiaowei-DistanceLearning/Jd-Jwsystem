@@ -1,13 +1,12 @@
 package com.zxw.jwxt.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
@@ -29,14 +28,12 @@ public class TUser extends UserRealm implements Serializable {
 
     private String password;
 
-    private String remark;
-
     private String qx;
 
     private String id;
 
     private String status;
-
+    @TableField(value = "collegeId")
     private String collegeId;
 
     @Override

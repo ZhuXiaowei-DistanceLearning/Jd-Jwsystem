@@ -70,6 +70,11 @@ public class TTeacher extends UserRealm implements Serializable {
     private String idcard;
 
     @Override
+    public void setCollegeId(String collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    @Override
     public void setUsername(String username) {
         this.username = username;
     }

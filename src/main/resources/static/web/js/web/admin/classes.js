@@ -1,4 +1,4 @@
-let specialtyLib = {
+let classLib = {
     prefix: "http://localhost:8080/",
     queryParams: {
         limit: 0,
@@ -12,7 +12,7 @@ let specialtyLib = {
             let table = layui.table;
             table.render({
                 elem: '#exampleTable',//指定表格元素
-                url: specialtyLib.prefix + '/classes/pageQuery',  //请求路径
+                url: classLib.prefix + '/classes/pageQuery',  //请求路径
                 toolbar: "#toolbarDemo"
                 , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
                 , even: true    //隔行换色
@@ -40,15 +40,23 @@ let specialtyLib = {
                         title: 'ID',   //列名
                     },
                     {
-                        field: 'name', //json对应的key
-                        title: '名称',   //列名
+                        field: 'cname', //json对应的key
+                        title: '所属学院',   //列名
                     },
                     {
-                        field: 'status', //json对应的key
-                        title: '状态',   //列名
-                        templet(res) {
-                            return res.status == "0" ? "正在使用" : "作废";
-                        }
+                        field: 'sname', //json对应的key
+                        title: '所属专业',   //列名
+                    }, {
+                        field: 'gname', //json对应的key
+                        title: '年级',   //列名
+                    },
+                    {
+                        field: 'classname', //json对应的key
+                        title: '班级名称',   //列名
+                    },
+                    {
+                        field: 'people', //json对应的key
+                        title: '班级人数',   //列名
                     }
                 ]]
             });
