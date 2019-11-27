@@ -28,8 +28,7 @@ public interface TStudentMapper extends BaseMapper<TStudent> {
      * @param cid
      * @return
      */
-    @Select("SELECT DISTINCT * FROM `t_student` s LEFT JOIN `t_classes` c ON\n" +
-            "\t\ts.`classes_id`=c.`id` WHERE c.`id`=#{value}")
-    Page<QueryStudentVO> findAll(Page page, @Param("cid") String cid);
+    @Select("select * FROM `t_student` s,`t_classes` c where s.`classes_id`=c.`id` WHERE c.`id`=#{cid}")
+    Page<QueryStudentVO> findStudentByClassesId(Page page, @Param("cid") String cid);
 
 }

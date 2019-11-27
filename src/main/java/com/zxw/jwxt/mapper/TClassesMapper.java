@@ -2,6 +2,7 @@ package com.zxw.jwxt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.jwxt.domain.TClasses;
 import com.zxw.jwxt.domain.TCollege;
 import com.zxw.jwxt.vo.QueryClassesVO;
@@ -22,12 +23,9 @@ import java.util.List;
 @Mapper
 public interface TClassesMapper extends BaseMapper<TClasses> {
 
-    @Select("SELECT DISTINCT\n" +
-            "\t\tc.*,s.`name`,s.`status`,s.`college_id`,t.`name` tname,t.`status`\n" +
-            "\t\ttstatus FROM\n" +
-            "\t\t`t_classes` c LEFT JOIN `t_specialty`\n" +
-            "\t\ts ON\n" +
-            "\t\tc.`specialty_id`\n" +
-            "\t\t= s.`id` LEFT JOIN `t_college` t ON s.`college_id`=t.`id`")
-    List<QueryClassesVO> findAll(IPage page);
+    @Select("select cs.*,s.name sname,c.name cname,g.name gname from `t_classes` cs,`t_specialty` s,`t_college` c,`t_grade` g where cs.`collegeId` = c.`id` and cs.`specialtyId` = s.`id` and g.`id` = cs.`gradeId`")
+    IPage<QueryClassesVO> findAll(Page page);
+
+    @Select("select cs.*,s.name sname,c.name cname,g.name gname from `t_classes` cs,`t_specialty` s,`t_college` c,`t_grade` g where cs.`collegeId` = c.`id` and cs.`specialtyId` = s.`id` and g.`id` = cs.`gradeId` where cs.`collegeId` = #{collegeId}")
+    IPage<QueryClassesVO> findByJwUser(Page page, @Param("collegeId") String collegeId);
 }

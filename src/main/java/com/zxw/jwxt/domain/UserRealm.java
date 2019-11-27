@@ -23,6 +23,8 @@ public class UserRealm {
     private String salt;
     @TableField(exist = false)
     private String qx;
+    @TableField(exist = false)
+    private String collegeId;
 
     /**
      * 用户所有角色值，用于shiro做角色权限的判断

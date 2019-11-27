@@ -37,7 +37,7 @@ public class TClassesController extends BaseController {
      */
     @GetMapping("/pageQuery")
     public TableReponse pageQuery(QueryClassesVO queryClassesVO) {
-        IPage result = classesService.pageQuery(queryClassesVO);
+        IPage result = classesService.pageQuery(queryClassesVO, getRealm());
         TableReponse reponse = TableReponse.of(result);
         return reponse;
     }

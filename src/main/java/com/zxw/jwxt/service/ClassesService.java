@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TClasses;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.mapper.TClassesMapper;
 import com.zxw.jwxt.vo.QueryClassesVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,10 +34,14 @@ public class ClassesService extends BaseService {
         return classesMapper.insert(classes) == 0 ? RS.error("保存失败") : RS.ok("保存成功");
     }
 
-    public IPage pageQuery(QueryClassesVO queryClassesVO) {
+    public IPage pageQuery(QueryClassesVO queryClassesVO, UserRealm realm) {
+        IPage<QueryClassesVO> iPage = null;
         Page page = getPage(queryClassesVO);
-        QueryWrapper wrapper = getWrapper(queryClassesVO);
-        IPage iPage = classesMapper.selectPage(page, wrapper);
+        if (StringUtils.isNotEmpty(realm.getCollegeId())) {
+            iPage = classesMapper.findAll(page);
+        } else {
+            iPage = classesMapper.findByJwUser(page, realm.getCollegeId());
+        }
         return iPage;
     }
 

@@ -56,11 +56,11 @@ public class StudentService extends BaseService {
     }
 
     /**
-     * 找到课程中的学生名单
+     * 查询班级中的所有学生信息
      */
     public IPage findStudentByclass(QueryStudentVO queryStudentVO) {
         Page page = getPage(queryStudentVO);
-        IPage iPage = studentMapper.findAll(page, queryStudentVO.getCid());
+        IPage<QueryStudentVO> iPage = studentMapper.findStudentByClassesId(page, queryStudentVO.getCid());
         return iPage;
     }
 

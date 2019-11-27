@@ -37,7 +37,7 @@ public class TSpecialtyController extends BaseController {
 
     @GetMapping("/pageQuery")
     public TableReponse pageQuery(QuerySpecialtyVO baseQueryParam) throws IOException {
-        IPage result = specialtyService.pageQuery(baseQueryParam);
+        IPage result = specialtyService.pageQuery(baseQueryParam, getRealm());
         TableReponse response = TableReponse.of(result);
         return response;
     }

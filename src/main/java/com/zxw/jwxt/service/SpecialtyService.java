@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TSpecialty;
+import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.mapper.TSpecialtyMapper;
 import com.zxw.jwxt.vo.QuerySpecialtyVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +36,13 @@ public class SpecialtyService extends BaseService {
         return specialtyMapper.updateById(model) == 0 ? RS.error("更新失败") : RS.ok("更新成功");
     }
 
+    /**
+     * 作废专业信息
+     *
+     * @param ids
+     * @return
+     */
     public RS deleteBatch(String ids) {
-
         TSpecialty tSpecialty = specialtyMapper.selectById(ids);
         if (tSpecialty.getStatus().equals("1")) {
             tSpecialty.setStatus("0");
@@ -45,9 +52,14 @@ public class SpecialtyService extends BaseService {
         return specialtyMapper.updateById(tSpecialty) == 0 ? RS.error("作废失败") : RS.ok();
     }
 
-    public IPage pageQuery(QuerySpecialtyVO baseQueryParam) {
+    public IPage pageQuery(QuerySpecialtyVO baseQueryParam, UserRealm realm) {
         Page<QuerySpecialtyVO> page = getPage(baseQueryParam);
-        IPage<QuerySpecialtyVO> iPage = specialtyMapper.findAll(page);
+        IPage<QuerySpecialtyVO> iPage = null;
+        if (StringUtils.isNotEmpty(realm.getCollegeId())) {
+            iPage = specialtyMapper.findByJwUser(page, realm.getCollegeId());
+        } else {
+            iPage = specialtyMapper.findAll(page);
+        }
         return iPage;
     }
 

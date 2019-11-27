@@ -18,7 +18,7 @@
     <div class="layui-row layui-col-space10">
         <div class="layui-col-md12">
             <div class="item_head border_all">
-                <h3 class="item_tit">专业管理</h3>
+                <h3 class="item_tit">班级管理</h3>
             </div>
             <div class="item_box mT5">
                 <table class="layui-hide" id="exampleTable" lay-filter="demo"></table>
@@ -37,14 +37,14 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">专业名称</label>
+            <label class="layui-form-label">班级名称</label>
             <div class="layui-input-block">
                 <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入标题"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">学制</label>
+            <label class="layui-form-label">所属年级</label>
             <div class="layui-input-block">
                 <input type="text" name="time" lay-verify="title" autocomplete="off" placeholder="请输入标题"
                        class="layui-input">
@@ -60,7 +60,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">所属学院</label>
             <div class="layui-input-block">
-                <select name="parentSelect" lay-filter="aihao">
+                <select name="parentSelect" lay-filter="aihao"
+                        th:attr="${com.zxw.jwxt.controller.BaseController.getRealm().getCollegeId()!=null?'disable':'null'}">
                 </select>
             </div>
         </div>
@@ -139,7 +140,7 @@
                 success(data) {
                     if (data.status == 1) {
                         layer.close(index);
-                        ajaxSuccess(index,data)
+                        ajaxSuccess(index, data)
                     }
                 },
                 error(data) {

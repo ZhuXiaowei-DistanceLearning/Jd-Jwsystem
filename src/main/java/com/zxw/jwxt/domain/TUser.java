@@ -29,17 +29,6 @@ public class TUser extends UserRealm implements Serializable {
 
     private String password;
 
-    private Double salary;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
-
-    private String gender;
-
-    private String station;
-
-    private String telephone;
-
     private String remark;
 
     private String qx;
@@ -47,6 +36,13 @@ public class TUser extends UserRealm implements Serializable {
     private String id;
 
     private String status;
+
+    private String collegeId;
+
+    @Override
+    public void setCollegeId(String collegeId) {
+        this.collegeId = collegeId;
+    }
 
     @Override
     public void setUsername(String username) {
