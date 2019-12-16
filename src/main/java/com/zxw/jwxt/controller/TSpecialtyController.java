@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * <p>
@@ -58,5 +59,10 @@ public class TSpecialtyController extends BaseController {
     public RS delete(String id) {
         RS rs = specialtyService.deleteBatch(id);
         return rs;
+    }
+
+    @GetMapping("/listajax")
+    public List listajax(QuerySpecialtyVO querySpecialtyVO) {
+        return specialtyService.listajax(querySpecialtyVO);
     }
 }

@@ -1,14 +1,16 @@
-function selectAjaxData(id, url) {
+function selectAjaxData(id, url, layFilter, data) {
     $.ajax({
         type: "get",
         url: url,
+        data: data,
         success: function (data) {
+            $("select[name=" + id + "]").empty();
             $.each(data, function (index, item) {
                 $("select[name=" + id + "]").append("<option value='" + item.id + "'>" + item.name + "</option>")
-            })
+            });
             layui.use('form', function () {
                 var form = layui.form;
-                form.render("select")
+                form.render("select", layFilter)
                 let dataFrom = form.val("fromTest", data == null ? [] : data);
             })
         },
@@ -24,7 +26,7 @@ function layerFormCustom(emptyData, data) {
     });
 }
 
-function ajaxSuccess(index,data) {
+function ajaxSuccess(index, data) {
     layui.table.reload('exampleTable')
     layer.alert(data.msg)
 }

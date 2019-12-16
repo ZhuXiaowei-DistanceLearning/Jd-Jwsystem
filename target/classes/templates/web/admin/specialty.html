@@ -60,7 +60,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">所属学院</label>
             <div class="layui-input-block">
-                <select name="parentSelect" lay-filter="aihao">
+                <select name="parentSelect" lay-filter="college">
                 </select>
             </div>
         </div>
@@ -123,7 +123,8 @@
             shadeClose: true
             , scrollbar: true
             , success: function (layero, index) {
-                selectAjaxData("parentSelect", "http://localhost:8080/college/listajax")
+                data = "status=1"
+                selectAjaxData("parentSelect", "http://localhost:8080/college/listajax","college",data)
                 layerFormCustom({id:"",name: "",time:"",category:""}, data)
             }
         })

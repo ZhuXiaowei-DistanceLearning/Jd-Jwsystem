@@ -13,6 +13,7 @@ public class BaseQueryParam {
     private Integer offset = 0;
     private Integer limit = -1;
     private String sort;
+    private String groupBy;
     private boolean ASC = true;
     private Map<String, Object> keyword;
     private String status;

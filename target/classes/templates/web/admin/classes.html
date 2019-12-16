@@ -2,83 +2,118 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="utf-8">
-	<title>教务管理系统</title>
-	<link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all" th:href="@{/web/layui/css/layui.css}">
-	<link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all" th:href="@{/web/css/admin.css}">
-	<link rel="stylesheet" href="css/l-style.css" th:href="@{/web/css/l-style.css}"/>
-	<script type="text/javascript" src="js/echarts.js" th:src="@{/web/js/echarts.js}"></script>
-	<link rel="stylesheet" href="css/l-style_8.css" th:href="@{/web/css/l-style_8.css}"/>
+    <meta charset="utf-8">
+    <title>教务管理系统</title>
+    <link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all" th:href="@{/web/layui/css/layui.css}">
+    <link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all" th:href="@{/web/css/admin.css}">
+    <link rel="stylesheet" href="css/l-style.css" th:href="@{/web/css/l-style.css}"/>
+    <script type="text/javascript" src="js/echarts.js" th:src="@{/web/js/echarts.js}"></script>
+    <link rel="stylesheet" href="css/l-style_8.css" th:href="@{/web/css/l-style_8.css}"/>
 </head>
 
 <body>
 
 <!-- 主体内容 -->
 <div class="layui-fluid dang_fluid" lay-title="表格列表1">
-	<div class="layui-row layui-col-space10">
-		<div class="layui-col-md12">
-			<div class="item_head border_all">
-				<h3 class="item_tit">班级管理</h3>
-			</div>
-			<div class="item_box mT5">
-				<table class="layui-hide" id="exampleTable" lay-filter="demo"></table>
-			</div>
-		</div>
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md12">
+            <div class="item_head border_all">
+                <h3 class="item_tit">班级管理</h3>
+            </div>
+            <div class="item_box mT5">
+                <table class="layui-hide" id="exampleTable" lay-filter="demo"></table>
+            </div>
+        </div>
 
-	</div>
+    </div>
 </div>
 <div id="addWindow" style="display: none;margin-top: 30px">
-	<form class="layui-form" action="" lay-filter="fromTest">
-		<div class="layui-form-item">
-			<label class="layui-form-label">专业编号</label>
-			<div class="layui-input-block">
-				<input type="text" name="id" lay-verify="title" autocomplete="off" placeholder="请输入标题"
-					   class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">班级名称</label>
-			<div class="layui-input-block">
-				<input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入标题"
-					   class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">所属年级</label>
-			<div class="layui-input-block">
-				<input type="text" name="time" lay-verify="title" autocomplete="off" placeholder="请输入标题"
-					   class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">授予学位</label>
-			<div class="layui-input-block">
-				<input type="text" name="category" lay-verify="title" autocomplete="off" placeholder="请输入标题"
-					   class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">所属学院</label>
-			<div class="layui-input-block">
-			</div>
-		</div>
-	</form>
+    <form class="layui-form" action="" lay-filter="fromTest">
+        <div class="layui-form-item">
+            <label class="layui-form-label">班级名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属学院</label>
+            <div class="layui-input-block">
+                <select name="college" lay-filter="college">
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属专业</label>
+            <div class="layui-input-block">
+                <select name="specialty" lay-filter="specialty">
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属年级</label>
+            <div class="layui-input-block">
+                <select name="grade" lay-filter="grade">
+                </select>
+            </div>
+        </div>
+
+    </form>
 </div>
 <script type="text/html" id="toolbarDemo">
-	<div class="layui-btn-container">
-		<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i
-				class="layui-icon">&#xe608;</i> 添加
-		</button>
-		<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckLength">
-			<i class="layui-icon">&#xe642;</i>修改
-		</button>
-		<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="deleteData">
-			<i class="layui-icon">&#xe640;</i>作废
-		</button>
-		<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="redoData">
-			<i class="layui-icon">&#xe666;</i>复原
-		</button>
-	</div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px">选择学院</label>
+            <div class="layui-input-inline">
+                <select name="college" lay-filter="college">
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px">选择专业</label>
+            <div class="layui-input-inline">
+                <select name="specialty">
+                    <option value="">选择专业</option>
+                    <optgroup label="城市记忆">
+                        <option value="你工作的第一个城市">你工作的第一个城市</option>
+                    </optgroup>
+                    <optgroup label="学生时代">
+                        <option value="你的工号">你的工号</option>
+                        <option value="你最喜欢的老师">你最喜欢的老师</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px">选择班级</label>
+            <div class="layui-input-inline">
+                <select name="grade">
+                    <option value="">选择年级</option>
+                    <optgroup label="城市记忆">
+                        <option value="你工作的第一个城市">你工作的第一个城市</option>
+                    </optgroup>
+                    <optgroup label="学生时代">
+                        <option value="你的工号">你的工号</option>
+                        <option value="你最喜欢的老师">你最喜欢的老师</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-btn-container" style="margin-top: 20px">
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i
+                class="layui-icon">&#xe608;</i> 添加班级
+        </button>
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckLength">
+            <i class="layui-icon">&#xe642;</i>修改
+        </button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="deleteData">
+            <i class="layui-icon">&#xe640;</i>作废
+        </button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="redoData">
+            <i class="layui-icon">&#xe666;</i>复原
+        </button>
+    </div>
 </script>
 <script th:src="@{/web/js/jquery.min.js}"></script>
 <script th:src="@{/web/layui/layui.js}"></script>
@@ -86,121 +121,145 @@
 <script type="text/javascript" th:src="@{/web/js/l-index.js}"></script>
 <script type="text/javascript" th:src="@{/web/js/web/common/common.js}"></script>
 <script>
-	function collegeWindos(title, content, data) {
-		layer.open({
-			type: 1 //此处以iframe举例
-			, title: title
-			, area: ['350px', '500px']
-			, shade: 0
-			, maxmin: true
-			, content: $(content)
-			, btn: ['确定'],
-			yes: function (index, layero) {
-				layui.use('form', function () {
-					var form = layui.form;
-					let dataForm = form.val("fromTest");
-					dataForm.collegeId = dataForm.parentSelect;
-					$.ajax({
-						type: "post",
-						url: "http://localhost:8080/specialty/addSpecialty",
-						data: dataForm,
-						success(data) {
-							if (data.status == 1) {
-								ajaxSuccess(data)
-							}
-						}, error(data) {
+    function collegeWindos(title, content, data) {
+        layer.open({
+            type: 1 //此处以iframe举例
+            , title: title
+            , area: ['350px', '500px']
+            , shade: 0
+            , maxmin: true
+            , content: $(content)
+            , btn: ['确定'],
+            yes: function (index, layero) {
+                layui.use('form', function () {
+                    var form = layui.form;
+                    let dataForm = form.val("fromTest");
+                    dataForm.collegeId = dataForm.parentSelect;
+                    $.ajax({
+                        type: "post",
+                        url: "http://localhost:8080/classes/add",
+                        data: dataForm,
+                        success(data) {
+                            if (data.status == 1) {
+                                ajaxSuccess(data)
+                            }
+                        }, error(data) {
 
-						}
-					});
-				});
-				layer.close(index)
-			},
-			btnAlign: 'c',
-			closeBtn: 1,
-			shade: 0.8,
-			shadeClose: true
-			, scrollbar: true
-			, success: function (layero, index) {
-				selectAjaxData("parentSelect", "http://localhost:8080/college/listajax")
-				layerFormCustom({name: "",}, data)
-			}
-		})
-	}
+                        }
+                    });
+                });
+                layer.close(index)
+            },
+            btnAlign: 'c',
+            closeBtn: 1,
+            shade: 0.8,
+            shadeClose: true
+            , scrollbar: true
+            , success: function (layero, index) {
+                let promise = new Promise((resolve, reject) => {
+                    selectAjaxData("college", "http://localhost:8080/college/listajax", "college", {"status": 1})
+                    resolve("success")
+                })
+                promise.then(res => {
+                    layui.use('element', function(){
+                        var element = layui.element;
+                        //一些事件监听
+                        element.on('select(college)', function(data){
+                            console.log(data);
+                        });
+                    });
+                })
+                selectAjaxData("grade", "http://localhost:8080/grade/listajax", "grade", {"groupBy": "name"})
+                layerFormCustom({name: "",}, data)
+            }
+        })
+    }
 
-	function confrimWindow(content, data) {
-		layer.confirm(content, {
-			btn: ["确定", "取消"]
-		}, function (index, layero) {
-			$.ajax({
-				type: "get",
-				url: "http://localhost:8080/specialty/delete?id=" + data.id,
-				success(data) {
-					if (data.status == 1) {
-						layer.close(index);
-						ajaxSuccess(index, data)
-					}
-				},
-				error(data) {
+    function confrimWindow(content, data) {
+        layer.confirm(content, {
+            btn: ["确定", "取消"]
+        }, function (index, layero) {
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8080/specialty/delete?id=" + data.id,
+                success(data) {
+                    if (data.status == 1) {
+                        layer.close(index);
+                        ajaxSuccess(index, data)
+                    }
+                },
+                error(data) {
 
-				}
-			})
-			;
-		}, function () {
-			layer.close()
-		})
-	}
+                }
+            })
+            ;
+        }, function () {
+            layer.close()
+        })
+    }
 
-	layui.use('table', function () {
-		var table = layui.table;
-		//监听表格复选框选择
-		table.on('checkbox(demo)', function (obj) {
-		});
+    layui.use('table', function () {
+        var table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function (obj) {
+        });
 
-		//头工具栏事件
-		table.on('toolbar(demo)', function (obj) {
-			let checkStatus = table.checkStatus(obj.config.id);
-			let data = checkStatus.data;
-			switch (obj.event) {
-				case 'getCheckData':
-					if (data.length == 1) {
-						layer.alert("请勿选择记录");
-					} else {
-						collegeWindos("专业添加", "#addWindow", data[0]);
-					}
-					break;
-				case 'getCheckLength':
-					if (data.length == 0) {
-						layer.alert("请选择一条记录");
-					} else {
-						collegeWindos("专业修改", "#addWindow", data[0]);
-					}
-					break;
-				case 'deleteData':
-					if (data.length == 0) {
-						layer.alert("请选择一条记录");
-					} else {
-						confrimWindow("是否确定作废该条记录", data[0])
-					}
-					break;
-				case 'redoData':
-					if (data.length == 0) {
-						layer.alert("请选择一条记录");
-					} else {
-						confrimWindow("是否确定恢复该条记录", data[0])
-					}
-					break;
+        //头工具栏事件
+        table.on('toolbar(demo)', function (obj) {
+            let checkStatus = table.checkStatus(obj.config.id);
+            let data = checkStatus.data;
+            switch (obj.event) {
+                case 'getCheckData':
+                    if (data.length == 1) {
+                        layer.alert("请勿选择记录");
+                    } else {
+                        collegeWindos("专业添加", "#addWindow", data[0]);
+                    }
+                    break;
+                case 'getCheckLength':
+                    if (data.length == 0) {
+                        layer.alert("请选择一条记录");
+                    } else {
+                        collegeWindos("专业修改", "#addWindow", data[0]);
+                    }
+                    break;
+                case 'deleteData':
+                    if (data.length == 0) {
+                        layer.alert("请选择一条记录");
+                    } else {
+                        confrimWindow("是否确定作废该条记录", data[0])
+                    }
+                    break;
+                case 'redoData':
+                    if (data.length == 0) {
+                        layer.alert("请选择一条记录");
+                    } else {
+                        confrimWindow("是否确定恢复该条记录", data[0])
+                    }
+                    break;
 
-					//自定义头工具栏右侧图标 - 提示
-				case 'LAYTABLE_TIPS':
-					layer.alert('这是工具栏右侧自定义的一个图标按钮');
-					break;
-			}
-		});
-	});
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    layui.use('form', function () {
+        var form = layui.form;
+        form.on('select(college)', function (data) {
+            selectAjaxData("specialty", "http://localhost:8080/specialty/listajax", "specialty", {
+                "status": 1,
+                "collegeId": data.value,
+            })
+        });
+    });
 </script>
 <script th:src="@{/web/js/web/admin/classes.js}"></script>
 <script th:inline="javascript">
-	classLib.load();
+    classLib.load();
 </script>
 </body>
 

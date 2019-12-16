@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.jwxt.vo.BaseQueryParam;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -37,8 +38,11 @@ public class BaseService {
                 queryWrapper.like(next, o);
             }
         }
-        if (baseQueryParam.getStatus() != null) {
+        if (StringUtils.isNotEmpty(baseQueryParam.getStatus())) {
             queryWrapper.eq("status", baseQueryParam.getStatus());
+        }
+        if (StringUtils.isNotEmpty(baseQueryParam.getGroupBy())) {
+            queryWrapper.groupBy(baseQueryParam.getGroupBy());
         }
         if (params.length != 0) {
             Map<String, Object> map = (Map<String, Object>) params[0];
@@ -46,7 +50,7 @@ public class BaseService {
             Iterator<String> iterator = strings.iterator();
             while (iterator.hasNext()) {
                 String next = iterator.next();
-                Object o = map.get("next");
+                Object o = map.get(next);
                 queryWrapper.eq(next, o);
             }
         }

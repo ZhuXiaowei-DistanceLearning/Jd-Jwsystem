@@ -8,9 +8,9 @@ import com.zxw.jwxt.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
-import com.zxw.jwxt.controller.BaseController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -36,5 +36,13 @@ public class TGradeController extends BaseController {
         IPage iPage = gradeService.pageQuery(baseQueryParam);
         TableReponse result = TableReponse.of(iPage);
         return result;
+    }
+
+    /**
+     * ajax列表
+     */
+    @GetMapping("/listajax")
+    public List listajax(BaseQueryParam baseQueryParam){
+        return gradeService.listajax(baseQueryParam);
     }
 }

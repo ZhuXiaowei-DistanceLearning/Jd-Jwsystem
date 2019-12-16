@@ -11,6 +11,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 服务类
@@ -81,5 +85,13 @@ public class SpecialtyService extends BaseService {
             count = specialtyMapper.insert(specialty);
         }
         return count == 0 ? RS.error("更新或修改失败") : RS.ok();
+    }
+
+    public List listajax(QuerySpecialtyVO querySpecialtyVO) {
+        Map<String, Object> map = new HashMap<>();
+        if (querySpecialtyVO.getCollegeId() != null) {
+            map.put("college_id", querySpecialtyVO.getCollegeId());
+        }
+        return specialtyMapper.selectList(getWrapper(querySpecialtyVO, map));
     }
 }
