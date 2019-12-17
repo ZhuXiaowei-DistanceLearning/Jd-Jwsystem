@@ -14,8 +14,8 @@ let classLib = {
                 elem: '#exampleTable',//指定表格元素
                 url: classLib.prefix + '/classes/pageQuery',  //请求路径
                 toolbar: "#toolbarDemo"
-                , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                , even: true    //隔行换色
+                , skin: 'line ', //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                even: true    //隔行换色
                 , page: true  //开启分页
                 , limits: [10, 20, 50]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
                 , limit: 15 //每页默认显示的数量

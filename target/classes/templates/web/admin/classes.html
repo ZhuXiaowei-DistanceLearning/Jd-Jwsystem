@@ -27,6 +27,7 @@
 
     </div>
 </div>
+<!--窗口HTML-->
 <div id="addWindow" style="display: none;margin-top: 30px">
     <form class="layui-form" action="" lay-filter="fromTest">
         <div class="layui-form-item">
@@ -83,6 +84,9 @@
                 </select>
             </div>
         </div>
+        <div class="layui-inline">
+            <button class="layui-btn layui-btn-sm" lay-event="add">搜索</button>
+        </div>
     </div>
     <div class="layui-btn-container" style="margin-top: 00px">
         <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i
@@ -119,18 +123,18 @@
                     var form = layui.form;
                     let dataForm = form.val("fromTest");
                     console.log(dataForm)
-                    // $.ajax({
-                    //     type: "post",
-                    //     url: "http://localhost:8080/classes/add",
-                    //     data: dataForm,
-                    //     success(data) {
-                    //         if (data.status == 1) {
-                    //             ajaxSuccess(data)
-                    //         }
-                    //     }, error(data) {
-                    //
-                    //     }
-                    // });
+                    $.ajax({
+                        type: "post",
+                        url: "http://localhost:8080/classes/add",
+                        data: dataForm,
+                        success(data) {
+                            if (data.status == 1) {
+                                ajaxSuccess(data)
+                            }
+                        }, error(data) {
+
+                        }
+                    });
                 });
                 layer.close(index)
             },
@@ -230,24 +234,9 @@
             })
         });
         form.on('select(index-college)', function (data) {
-            $.ajax({
-                url: "http://localhost:8080/classes/pageQuery",
-                data: {"collegeId": data.value},
-                success: function (res) {
-                    layui.table.reload('exampleTable')
-                }
-            })
-        });
-        form.on('select(index-specialty)', function (data) {
-            selectAjaxData("specialtyId", "http://localhost:8080/specialty/listajax", "specialty", {
-                "status": 1,
-                "collegeId": data.value,
-            })
-        });
-        form.on('select(index-grade)', function (data) {
-            selectAjaxData("specialtyId", "http://localhost:8080/specialty/listajax", "specialty", {
-                "status": 1,
-                "collegeId": data.value,
+            selectAjaxData("specialtyId", "http://localhost:8080/specialty/listajax", "index-specialty", {
+                "collegeId": $("select[lay-filter='index-college'] > option:selected").val(),
+                "status": 1
             })
         });
     });
@@ -257,7 +246,6 @@
     classLib.load();
     selectAjaxData("collegeId", "http://localhost:8080/college/listajax", null, {"status": 1})
     selectAjaxData("gradeId", "http://localhost:8080/grade/listajax", null, {"groupBy": "name"})
-    console.log($("select[lay-filter='index-college'] option"))
 </script>
 </body>
 
