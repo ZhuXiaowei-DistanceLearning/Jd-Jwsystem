@@ -6,11 +6,12 @@ function selectAjaxData(id, url, layFilter, data) {
         success: function (data) {
             $("select[name=" + id + "]").empty();
             $.each(data, function (index, item) {
-                $("select[name=" + id + "]").append("<option value='" + item.id + "'>" + item.name + "</option>")
+                // $("select[name=" + id + "]").append("<option value='" + item.id + "'>" + item.name + "</option>")
+                $("select[name=" + id + "]").append(new Option(item.name,item.id))
             });
             layui.use('form', function () {
                 var form = layui.form;
-                form.render("select", layFilter)
+                form.render("select",layFilter)
                 let dataFrom = form.val("fromTest", data == null ? [] : data);
             })
         },

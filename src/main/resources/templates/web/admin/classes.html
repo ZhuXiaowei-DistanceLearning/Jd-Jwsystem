@@ -39,21 +39,21 @@
         <div class="layui-form-item">
             <label class="layui-form-label">所属学院</label>
             <div class="layui-input-block">
-                <select name="college" lay-filter="college">
+                <select name="collegeId" lay-filter="college">
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">所属专业</label>
             <div class="layui-input-block">
-                <select name="specialty" lay-filter="specialty">
+                <select name="specialtyId" lay-filter="specialty">
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">所属年级</label>
             <div class="layui-input-block">
-                <select name="grade" lay-filter="grade">
+                <select name="gradeId" lay-filter="grade">
                 </select>
             </div>
         </div>
@@ -65,53 +65,37 @@
         <div class="layui-inline">
             <label class="layui-form-label" style="width: 100px">选择学院</label>
             <div class="layui-input-inline">
-                <select name="college" lay-filter="college">
+                <select name="collegeId" lay-filter="index-college">
                 </select>
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label" style="width: 100px">选择专业</label>
             <div class="layui-input-inline">
-                <select name="specialty">
-                    <option value="">选择专业</option>
-                    <optgroup label="城市记忆">
-                        <option value="你工作的第一个城市">你工作的第一个城市</option>
-                    </optgroup>
-                    <optgroup label="学生时代">
-                        <option value="你的工号">你的工号</option>
-                        <option value="你最喜欢的老师">你最喜欢的老师</option>
-                    </optgroup>
+                <select name="specialtyId" lay-filter="index-specialty">
                 </select>
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label" style="width: 100px">选择班级</label>
+            <label class="layui-form-label" style="width: 100px">选择年级</label>
             <div class="layui-input-inline">
-                <select name="grade">
-                    <option value="">选择年级</option>
-                    <optgroup label="城市记忆">
-                        <option value="你工作的第一个城市">你工作的第一个城市</option>
-                    </optgroup>
-                    <optgroup label="学生时代">
-                        <option value="你的工号">你的工号</option>
-                        <option value="你最喜欢的老师">你最喜欢的老师</option>
-                    </optgroup>
+                <select name="gradeId" lay-filter="index-grade">
                 </select>
             </div>
         </div>
     </div>
-    <div class="layui-btn-container" style="margin-top: 20px">
+    <div class="layui-btn-container" style="margin-top: 00px">
         <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i
                 class="layui-icon">&#xe608;</i> 添加班级
         </button>
-        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckLength">
-            <i class="layui-icon">&#xe642;</i>修改
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i
+                class="layui-icon">&#xe608;</i> 导出模板
         </button>
-        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="deleteData">
-            <i class="layui-icon">&#xe640;</i>作废
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i
+                class="layui-icon">&#xe608;</i> 导入模板
         </button>
-        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="redoData">
-            <i class="layui-icon">&#xe666;</i>复原
+        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i
+                class="layui-icon">&#xe608;</i> 导出学生信息
         </button>
     </div>
 </script>
@@ -134,19 +118,19 @@
                 layui.use('form', function () {
                     var form = layui.form;
                     let dataForm = form.val("fromTest");
-                    dataForm.collegeId = dataForm.parentSelect;
-                    $.ajax({
-                        type: "post",
-                        url: "http://localhost:8080/classes/add",
-                        data: dataForm,
-                        success(data) {
-                            if (data.status == 1) {
-                                ajaxSuccess(data)
-                            }
-                        }, error(data) {
-
-                        }
-                    });
+                    console.log(dataForm)
+                    // $.ajax({
+                    //     type: "post",
+                    //     url: "http://localhost:8080/classes/add",
+                    //     data: dataForm,
+                    //     success(data) {
+                    //         if (data.status == 1) {
+                    //             ajaxSuccess(data)
+                    //         }
+                    //     }, error(data) {
+                    //
+                    //     }
+                    // });
                 });
                 layer.close(index)
             },
@@ -156,20 +140,10 @@
             shadeClose: true
             , scrollbar: true
             , success: function (layero, index) {
-                let promise = new Promise((resolve, reject) => {
-                    selectAjaxData("college", "http://localhost:8080/college/listajax", "college", {"status": 1})
-                    resolve("success")
+                selectAjaxData("specialtyId", "http://localhost:8080/specialty/listajax", "specialty", {
+                    "status": 1,
+                    "collegeId": $("select[lay-filter='college'] > option:first").val(),
                 })
-                promise.then(res => {
-                    layui.use('element', function(){
-                        var element = layui.element;
-                        //一些事件监听
-                        element.on('select(college)', function(data){
-                            console.log(data);
-                        });
-                    });
-                })
-                selectAjaxData("grade", "http://localhost:8080/grade/listajax", "grade", {"groupBy": "name"})
                 layerFormCustom({name: "",}, data)
             }
         })
@@ -250,7 +224,28 @@
     layui.use('form', function () {
         var form = layui.form;
         form.on('select(college)', function (data) {
-            selectAjaxData("specialty", "http://localhost:8080/specialty/listajax", "specialty", {
+            selectAjaxData("specialtyId", "http://localhost:8080/specialty/listajax", "specialty", {
+                "status": 1,
+                "collegeId": data.value,
+            })
+        });
+        form.on('select(index-college)', function (data) {
+            $.ajax({
+                url: "http://localhost:8080/classes/pageQuery",
+                data: {"collegeId": data.value},
+                success: function (res) {
+                    layui.table.reload('exampleTable')
+                }
+            })
+        });
+        form.on('select(index-specialty)', function (data) {
+            selectAjaxData("specialtyId", "http://localhost:8080/specialty/listajax", "specialty", {
+                "status": 1,
+                "collegeId": data.value,
+            })
+        });
+        form.on('select(index-grade)', function (data) {
+            selectAjaxData("specialtyId", "http://localhost:8080/specialty/listajax", "specialty", {
                 "status": 1,
                 "collegeId": data.value,
             })
@@ -260,6 +255,9 @@
 <script th:src="@{/web/js/web/admin/classes.js}"></script>
 <script th:inline="javascript">
     classLib.load();
+    selectAjaxData("collegeId", "http://localhost:8080/college/listajax", null, {"status": 1})
+    selectAjaxData("gradeId", "http://localhost:8080/grade/listajax", null, {"groupBy": "name"})
+    console.log($("select[lay-filter='index-college'] option"))
 </script>
 </body>
 

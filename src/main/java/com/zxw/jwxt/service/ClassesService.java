@@ -8,8 +8,12 @@ import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.mapper.TClassesMapper;
 import com.zxw.jwxt.vo.QueryClassesVO;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -32,8 +36,12 @@ public class ClassesService extends BaseService {
     public IPage pageQuery(QueryClassesVO queryClassesVO, UserRealm realm) {
         IPage<QueryClassesVO> iPage = null;
         Page page = getPage(queryClassesVO);
-        if (StringUtils.isNotEmpty(realm.getCollegeId())) {
-            iPage = classesMapper.findByJwUser(page, realm.getCollegeId());
+        Map<String, Object> map = new HashMap<>();
+        map.put("cs.`college_id`", queryClassesVO.getCollegeId());
+        map.put("cs.`specialty_id`", queryClassesVO.getSpecialtyId());
+        map.put("cs.`grade_id`", queryClassesVO.getGradeId());
+        if (StringUtils.isNotEmpty(queryClassesVO.getCollegeId()) || StringUtils.isNotEmpty(queryClassesVO.getSpecialtyId()) || StringUtils.isNotEmpty(queryClassesVO.getGradeId())) {
+            iPage = classesMapper.findByParams(page, this.getWrapper(queryClassesVO, map));
         } else {
             iPage = classesMapper.findAll(page);
         }

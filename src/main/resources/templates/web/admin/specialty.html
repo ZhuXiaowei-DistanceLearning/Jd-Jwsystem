@@ -123,9 +123,8 @@
             shadeClose: true
             , scrollbar: true
             , success: function (layero, index) {
-                data = "status=1"
-                selectAjaxData("parentSelect", "http://localhost:8080/college/listajax","college",data)
-                layerFormCustom({id:"",name: "",time:"",category:""}, data)
+                selectAjaxData("parentSelect", "http://localhost:8080/college/listajax", "college", {"status": "1"})
+                layerFormCustom({id: "", name: "", time: "", category: ""}, data)
             }
         })
     }
@@ -140,7 +139,7 @@
                 success(data) {
                     if (data.status == 1) {
                         layer.close(index);
-                        ajaxSuccess(index,data)
+                        ajaxSuccess(index, data)
                     }
                 },
                 error(data) {
