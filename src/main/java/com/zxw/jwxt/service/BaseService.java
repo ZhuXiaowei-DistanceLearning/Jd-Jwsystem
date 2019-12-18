@@ -44,6 +44,9 @@ public class BaseService {
         if (StringUtils.isNotEmpty(baseQueryParam.getGroupBy())) {
             queryWrapper.groupBy(baseQueryParam.getGroupBy());
         }
+        if (StringUtils.isNotEmpty(baseQueryParam.getSort())) {
+            queryWrapper.orderBy(true, baseQueryParam.isASC(), baseQueryParam.getSort());
+        }
         if (params.length != 0) {
             Map<String, Object> map = (Map<String, Object>) params[0];
             Set<String> strings = map.keySet();
@@ -51,7 +54,7 @@ public class BaseService {
             while (iterator.hasNext()) {
                 String next = iterator.next();
                 Object o = map.get(next);
-                if (!"".equals(o) || o != null) {
+                if (!"".equals(o) && o != null) {
                     queryWrapper.eq(next, o);
                 }
             }
