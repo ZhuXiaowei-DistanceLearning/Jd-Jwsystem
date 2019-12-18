@@ -85,7 +85,7 @@
             </div>
         </div>
         <div class="layui-inline">
-            <button class="layui-btn layui-btn-sm" lay-event="add">搜索</button>
+            <button class="layui-btn layui-btn-sm" lay-event="search">搜索</button>
         </div>
     </div>
     <div class="layui-btn-container" style="margin-top: 00px">
@@ -214,6 +214,19 @@
                     } else {
                         confrimWindow("是否确定恢复该条记录", data[0])
                     }
+                    break;
+                case 'search':
+                    layui.table.reload('exampleTable',{
+                        url: 'http://localhost:8080/classes/pageQuery'
+                        , where: {
+                            "collegeId": $("select[lay-filter='index-college'] > option:selected").val(),
+                            "specialtyId": null,
+                            "gradeId": null
+                        } //设定异步数据接口的额外参数
+                        , height: 300
+                    });
+                    selectAjaxData("collegeId", "http://localhost:8080/college/listajax", null, {"status": 1})
+                    selectAjaxData("gradeId", "http://localhost:8080/grade/listajax", null, {"groupBy": "name"})
                     break;
 
                 //自定义头工具栏右侧图标 - 提示

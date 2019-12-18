@@ -51,7 +51,7 @@ public class BaseService {
             while (iterator.hasNext()) {
                 String next = iterator.next();
                 Object o = map.get(next);
-                if (o != null) {
+                if (!"".equals(o) || o != null) {
                     queryWrapper.eq(next, o);
                 }
             }
