@@ -4,7 +4,6 @@ package com.zxw.jwxt.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.MenuNode;
 import com.zxw.common.pojo.RS;
-import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.domain.AuthFunction;
 import com.zxw.jwxt.service.AuthFunctionService;
 import com.zxw.jwxt.vo.QueryFunctionVO;
@@ -41,10 +40,18 @@ public class AuthFunctionController extends BaseController {
      * @throws IOException
      */
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(QueryFunctionVO functionQueryParam) {
-        IPage pageUtils = functionSerivce.pageQuery(functionQueryParam);
-        TableReponse reponse = TableReponse.of(pageUtils);
-        return reponse;
+    public List<MenuNode> pageQuery(QueryFunctionVO functionQueryParam) {
+        List<MenuNode> menuNodes = new ArrayList<>();
+        IPage iPage = functionSerivce.pageQuery(functionQueryParam);
+        List<AuthFunction> list = iPage.getRecords();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getPid() == null) {
+                MenuNode menuNode = new MenuNode(list.get(i), new ArrayList<>());
+                menuNodes.add(menuNode);
+            }
+        }
+        List<MenuNode> nodes = this.generateMenu(menuNodes, list);
+        return nodes;
     }
 
     /**

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all" th:href="@{/web/layui/css/layui.css}">
     <link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all" th:href="@{/web/css/admin.css}">
     <link rel="stylesheet" href="css/l-style.css" th:href="@{/web/css/l-style.css}"/>
+    <link rel="stylesheet" th:href="@{/web/js/ztree/zTreeStyle.css}"/>
+    <link rel="stylesheet" th:href="@{/web/js/ztree/metroStyle/metroStyle.css}"/>
     <script type="text/javascript" src="js/echarts.js" th:src="@{/web/js/echarts.js}"></script>
     <link rel="stylesheet" href="css/l-style_8.css" th:href="@{/web/css/l-style_8.css}"/>
 </head>
@@ -25,10 +27,14 @@
                 <h3 class="item_tit">功能权限管理</h3>
             </div>
             <div class="item_box mT5">
-                <table class="layui-hide" id="exampleTable" lay-filter="demo"></table>
+                <div style="margin: 20px 50px;display: inline-block">
+                    <button class="layui-btn layui-btn-normal" id="addFunction">添加权限</button>
+                </div>
+                <div style="padding:5px;margin-left: 30%;margin-bottom: 50px">
+                    <ul id="functionTree" class="ztree"></ul>
+                </div>
             </div>
         </div>
-
     </div>
 </div>
 <div id="addWindow" style="display: none;margin-top: 30px">
@@ -99,7 +105,19 @@
 <script th:src="@{/web/layui/layui.all.js}"></script>
 <script type="text/javascript" th:src="@{/web/js/l-index.js}"></script>
 <script type="text/javascript" th:src="@{/web/js/web/common/common.js}"></script>
+<script type="text/javascript" th:src="@{/web/js/ztree/jquery.ztree.all-3.5.js}"></script>
 <script>
+</script>
+<script th:src="@{/web/js/web/admin/functionLib.js}"></script>
+<script th:inline="javascript">
+    functionLib.load();
+
+    $(function () {
+        $("#addFunction").click(function () {
+                collegeWindos("添加权限", "#addWindow", null)
+            }
+        )
+    })
     function collegeWindos(title, content, data) {
         layer.open({
             type: 1 //此处以iframe举例
@@ -113,23 +131,23 @@
                 layui.use('form', function () {
                     var form = layui.form;
                     let dataForm = form.val("fromTest");
-                });
-                $.ajax({
-                    type: "post",
-                    url: "http://localhost:8080/college/saveOrUpdateCollege",
-                    success(data) {
-                        if (data.status == 1) {
-                            layer.alert(data.msg)
-                            parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index)
-                            window.parent.location.reload()
-                            layer.alert(data.msg)
+                    $.ajax({
+                        type: "post",
+                        url: "http://localhost:8080/college/saveOrUpdateCollege",
+                        data: dataForm,
+                        success(data) {
+                            if (data.status == 1) {
+                                layui.table.reload('exampleTable')
+                                layer.close(index);
+                                layer.alert(data.msg)
+                            }
+                        }, error(data) {
+                            layui.table.reload('exampleTable')
+                            layer.close(index)
+                            layer.alert("操作失败")
                         }
-                    }, error(data) {
-
-                    }
+                    });
                 });
-                layer.close(index)
             },
             btnAlign: 'c',
             closeBtn: 1,
@@ -137,7 +155,6 @@
             shadeClose: true
             , scrollbar: true
             , success: function (layero, index) {
-                selectAjaxData("parentSelect", "http://localhost:8080/function/listajax")
                 layui.use('form', function () {
                     var form = layui.form;
                     let dataFrom = form.val("fromTest", data == null ? {
@@ -149,77 +166,6 @@
             }
         })
     }
-
-    function confrimWindow(content, data) {
-        layer.confirm(content, {
-            btn: ["确定", "取消"]
-        }, function () {
-            $.ajax({
-                type: "post",
-                url: "http://localhost:8080/college/deleteCollege?id=" + data.id,
-                success(data) {
-                    if (data.status == 1) {
-                        layer.alert(data.msg)
-                        parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index)
-                        window.parent.location.reload()
-                        layer.alert(data.msg)
-                    }
-                },
-                error(data) {
-
-                }
-            })
-            ;
-        }, function () {
-            layer.close()
-        })
-    }
-
-    layui.use('table', function () {
-        var table = layui.table;
-        //监听表格复选框选择
-        table.on('checkbox(demo)', function (obj) {
-        });
-
-        //头工具栏事件
-        table.on('toolbar(demo)', function (obj) {
-            let checkStatus = table.checkStatus(obj.config.id);
-            let data = checkStatus.data;
-            switch (obj.event) {
-                case 'getCheckData':
-                    if (data.length == 1) {
-                        layer.alert("请勿选择记录");
-                    } else {
-                        collegeWindos("功能权限信息", "#addWindow", data[0]);
-                    }
-                    break;
-                case 'getCheckLength':
-                    if (data.length == 0) {
-                        layer.alert("请选择一条记录");
-                    } else {
-                        collegeWindos("功能权限信息", "#addWindow", data[0]);
-                    }
-                    break;
-                case 'isAll':
-                    if (data.length == 0) {
-                        layer.alert("请选择一条记录");
-                    } else {
-                        collegeWindos("功能权限信息", "#addWindow", data[0]);
-                    }
-                    break;
-
-                //自定义头工具栏右侧图标 - 提示
-                case 'LAYTABLE_TIPS':
-                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                    break;
-            }
-        });
-    });
-</script>
-<script th:src="@{/web/js/web/admin/functionLib.js}"></script>
-<script th:inline="javascript">
-    functionLib.load();
 </script>
 </body>
 

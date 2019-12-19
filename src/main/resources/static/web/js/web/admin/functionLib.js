@@ -7,60 +7,73 @@ let functionLib = {
         status: null
     },
     load() {
-        let that = this;
-        layui.use('table', function () {
-            let table = layui.table;
-            table.render({
-                elem: '#exampleTable',//指定表格元素
-                url: functionLib.prefix + '/function/pageQuery',  //请求路径
-                toolbar: "#toolbarDemo"
-                , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                , even: true    //隔行换色
-                , page: true  //开启分页
-                , limits: [10, 20, 50]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
-                , limit: 15 //每页默认显示的数量
-                , method: 'get',  //提交方式
-                loading: true,
-                request: {
-                    pageName: 'offset' //页码的参数名称，默认：page
-                },
-                parseData: function (res) { //res 即为原始返回的数据
-                    return {
-                        "code": 0,
-                        "msg": "",
-                        "count": res.realTotal, //解析数据长度
-                        "data": res.records //解析数据列表
-                    };
-                },
-                cols: [[
-                    {
-                        type: "checkbox"
-                    }, {
-                        field: 'id', //json对应的key
-                        title: 'ID',   //列名
-                    },
-                    {
-                        field: 'name',
-                        title: '名称',
-                    },
-                    {
-                        field: 'description',
-                        title: '描述',
-                    },
-                    {
-                        field: 'generatemenu',
-                        title: '是否生成菜单',
-                    },
-                    {
-                        field: 'zindex',
-                        title: '优先级',
-                    },
-                    {
-                        field: 'page',
-                        title: '路径',
-                    }
-                ]]
+        let arr = [];
+        let p = new Promise(function (resolve, reject) {
+            $.ajax({
+                url: functionLib.prefix + '/function/listajax',
+                type: "get",
+                success: function (data) {
+                    arr = data;
+                    resolve(arr)
+                }
             });
-        });
-    }
+        })
+        p.then(function (res) {
+            var setting = {
+                data: {
+                    key: {
+                        title: "title"
+                    },
+                    simpleData: {//使用简单json数据构造节点数据
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pid",
+                        rootPid: 0
+                    }
+                },
+                check: {//使用ztree勾选效果
+                    enable: true
+                },
+                view: {
+                    showLine: true,
+                },
+                callback: {
+                    beforeEditName: functionLib.editNode,
+                    beforeRemove: functionLib.removeNode
+                },
+                edit: {
+                    showRemoveBtn: true,
+                    showRenameBtn: true,
+                    enable: true
+                }
+            };
+            $.ajax({
+                url: functionLib.prefix + '/function/listajax.action',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    let tree = $.fn.zTree.init($("#functionTree"), setting, data);
+                    tree.expandAll(true)
+                    $.each(res, function (index, val) {
+                        let node = tree.getNodeByParam("id", val);
+                        tree.checkNode(node, true, false)
+                    });
+                },
+                error: function (msg) {
+                    alert('树加载异常!');
+                }
+            });
+            // 点击保存
+            $('#save').click(function () {
+
+            });
+            // resolve(1);
+        })
+    },
+    editNode(treeId, treeNode, newName, isCancel) {
+        collegeWindos("修改权限", "#addWindow", null)
+    },
+    removeNode(treeId, treeNode, newName, isCancel) {
+        collegeWindos("添加权限", "#addWindow", null)
+    },
 }
