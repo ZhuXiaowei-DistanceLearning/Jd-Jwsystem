@@ -206,13 +206,7 @@
                     }
                     break;
                 case 'exportTemplate':
-                    $.ajax({
-                        url: "http://localhost:8080/export/exportXlsModel",
-                        success(data) {
-                        }, error(data) {
-
-                        }
-                    });
+                    window.location.href = "http://localhost:8080/export/exportXlsModel"
                     break;
                 case 'importTemplate':
                     if (data.length == 0) {
