@@ -54,10 +54,9 @@ public class ExportController extends BaseController {
      * @throws Exception
      */
     @PostMapping("/importXlsStudent")
-    public RS ImportXlsStudent(@RequestParam("myFile") MultipartFile myFile, QueryStudentVO queryStudentVO) throws Exception {
-//        String flag = studentService.importXlsStudent(myFile, cid, response);
-//        return flag;
-        return null;
+    public RS ImportXlsStudent(@RequestParam("myFile") MultipartFile myFile, QueryStudentVO queryStudentVO, HttpServletResponse response) throws Exception {
+        RS flag = studentService.importXlsStudent(myFile, queryStudentVO);
+        return RS.ok();
     }
 
 

@@ -156,8 +156,8 @@ public class StudentService extends BaseService {
         XSSFSheet sheet = workbook.createSheet(list.getRecords().get(0).getClasses().getClassname() + "学生信息");
         XSSFCellStyle cellStyle = workbook.createCellStyle();
         cellStyle.setWrapText(true);
-        cellStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER); // 居中
-        cellStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+//        cellStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER); // 居中
+//        cellStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
         // 第一行表头
         XSSFRow headRow = sheet.createRow(0);
         headRow.createCell(0).setCellValue("学号");

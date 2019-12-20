@@ -29,13 +29,17 @@ public class XssfUtils {
         headRow.createCell(2).setCellValue("密码");
         headRow.createCell(3).setCellValue("性别");
         headRow.createCell(4).setCellValue("户籍");
+        headRow.createCell(4).setCellValue("手机");
+        headRow.createCell(4).setCellValue("身份证");
+        headRow.createCell(4).setCellValue("家庭住址");
+        headRow.createCell(4).setCellValue("政治面貌");
         String filename = "学生信息模板.xlsx";
         String agent = request.getHeader("User-Agent");
         filename = FileUtils.encodeDownloadFilename(filename, agent);
         // 一个流两个头
         OutputStream out = response.getOutputStream();
         String contentType = request.getSession().getServletContext().getMimeType(filename);
-        response.setContentType("APPLICATION/OCTET-STREAM");
+//        response.setContentType("APPLICATION/OCTET-STREAM");
         response.setContentType(contentType);
         response.setHeader("content-disposition", "attchment;filename=" + filename);
         workbook.write(out);
