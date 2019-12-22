@@ -1,4 +1,4 @@
-function selectAjaxData(id, url, layFilter, data) {
+function selectAjaxData(id, url, layFilter, data, selected) {
     $.ajax({
         type: "get",
         url: url,
@@ -7,8 +7,11 @@ function selectAjaxData(id, url, layFilter, data) {
             if (layFilter != null) {
                 $("select[lay-filter=" + layFilter + "]").empty();
                 $.each(data, function (index, item) {
-                    // $("select[name=" + id + "]").append("<option value='" + item.id + "'>" + item.name + "</option>")
-                    $("select[lay-filter=" + layFilter + "]").append(new Option(item.name, item.id))
+                    if (item.id == selected) {
+                        $("select[lay-filter=" + layFilter + "]").append(new Option(item.name, item.id, true))
+                    } else {
+                        $("select[lay-filter=" + layFilter + "]").append(new Option(item.name, item.id))
+                    }
                 });
             } else {
                 $("select[name=" + id + "]").empty();

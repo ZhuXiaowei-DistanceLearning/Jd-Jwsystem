@@ -65,4 +65,8 @@ public class AuthRoleService extends BaseService {
         IPage iPage = roleMapper.selectPage(page, queryWrapper);
         return iPage;
     }
+
+    public List<AuthRole> listajax(QueryRoleVO roleQueryParam) {
+        return roleMapper.selectList(this.getWrapper(roleQueryParam));
+    }
 }

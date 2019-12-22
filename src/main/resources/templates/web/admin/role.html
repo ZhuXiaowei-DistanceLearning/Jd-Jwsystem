@@ -7,10 +7,16 @@
     <link rel="stylesheet" href="layui/css/layui.css?t=20180530-2" media="all" th:href="@{/web/layui/css/layui.css}">
     <link rel="stylesheet" href="css/admin.css?t=20180530-2" media="all" th:href="@{/web/css/admin.css}">
     <link rel="stylesheet" href="css/l-style.css" th:href="@{/web/css/l-style.css}"/>
+    <link rel="stylesheet" th:href="@{/web/js/ztree/zTreeStyle.css}"/>
+    <link rel="stylesheet" th:href="@{/web/js/ztree/metroStyle/metroStyle.css}"/>
     <script type="text/javascript" src="js/echarts.js" th:src="@{/web/js/echarts.js}"></script>
     <link rel="stylesheet" href="css/l-style_8.css" th:href="@{/web/css/l-style_8.css}"/>
 </head>
-
+<style>
+    .layui-input-block {
+        margin-right: 50px;
+    }
+</style>
 <body>
 
 <!-- 主体内容 -->
@@ -21,14 +27,12 @@
                 <h3 class="item_tit">角色管理</h3>
             </div>
             <div class="item_box mT5">
-                <table class="layui-hide" id="exampleTable" lay-filter="demo"></table>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">选择学院</label>
-            <div class="layui-input-block">
-                <select name="parentSelect" lay-filter="aihao">
-                </select>
+                <div style="margin: 20px 50px;display: inline-block">
+                    <button class="layui-btn layui-btn-normal" id="addFunction">添加权限</button>
+                </div>
+                <div style="padding:5px;margin-left: 30%;margin-bottom: 50px">
+                    <ul id="functionTree" class="ztree"></ul>
+                </div>
             </div>
         </div>
     </div>
@@ -36,32 +40,27 @@
 <div id="addWindow" style="display: none;margin-top: 30px">
     <form class="layui-form" action="" lay-filter="fromTest">
         <div class="layui-form-item">
-            <label class="layui-form-label">关键字</label>
+            <label class="layui-form-label">名称</label>
             <div class="layui-input-block">
-                <input type="text" name="id" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入名称"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">名称</label>
+            <label class="layui-form-label">代码</label>
             <div class="layui-input-block">
-                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                <input type="text" name="code" lay-verify="title" autocomplete="off" placeholder="请输入名称"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                <input type="text" name="description" lay-verify="title" autocomplete="off" placeholder="请输入描述"
                        class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">授权</label>
-            <div class="layui-input-block">
-                <ul id="functionTree" class="ztree"></ul>
-            </div>
-        </div>
+        <input type="hidden" name="id"/>
     </form>
 </div>
 <script type="text/html" id="toolbarDemo">
@@ -76,22 +75,22 @@
 <script th:src="@{/web/layui/layui.js}"></script>
 <script th:src="@{/web/layui/layui.all.js}"></script>
 <script type="text/javascript" th:src="@{/web/js/l-index.js}"></script>
+<script type="text/javascript" th:src="@{/web/js/web/common/common.js}"></script>
+<script type="text/javascript" th:src="@{/web/js/ztree/jquery.ztree.all-3.5.js}"></script>
 <script>
-    // //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
-    // !function () {
-    //     var layer = layui.layer,
-    //         form = layui.form;
-    //     form.on('checkbox(layTableAllChoose)', function (data) {
-    //         $("input[name='layTableCheckbox']").each(function () {
-    //             this.checked = data.elem.checked;
-    //             // console.log(data);
-    //         });
-    //         form.render('checkbox');
-    //     });
-    //
-    // }();
 </script>
-<script>
+<script th:src="@{/web/js/web/admin/roleLib.js}"></script>
+<script th:inline="javascript">
+    selectAjaxData("select", "http://localhost:8080/role/listajax", "parentFunction", null)
+    roleLib.load();
+
+    $(function () {
+        $("#addFunction").click(function () {
+                collegeWindos("添加权限", "#addWindow", null)
+            }
+        )
+    })
+
     function collegeWindos(title, content, data) {
         layer.open({
             type: 1 //此处以iframe举例
@@ -105,19 +104,23 @@
                 layui.use('form', function () {
                     var form = layui.form;
                     let dataForm = form.val("fromTest");
-                });
-                $.ajax({
-                    type: "post",
-                    url: "http://localhost:8080/college/saveOrUpdateRole",
-                    success(data) {
-                        if (data.status == "1") {
-                            ajaxSuccess(data)
+                    $.ajax({
+                        type: "post",
+                        url: "http://localhost:8080/role/update",
+                        data: dataForm,
+                        success(data) {
+                            if (data.status == 1) {
+                                layer.close(index);
+                                layer.alert(data.msg)
+                                window.location.reload()
+                            }
+                        }, error(data) {
+                            layui.table.reload('exampleTable')
+                            layer.close(index)
+                            layer.alert("操作失败")
                         }
-                    }, error(data) {
-
-                    }
+                    });
                 });
-                layer.close(index)
             },
             btnAlign: 'c',
             closeBtn: 1,
@@ -130,7 +133,11 @@
                     let dataFrom = form.val("fromTest", data == null ? {
                         "id": null,
                         "name": null,
-                        "status": null
+                        "pid": null,
+                        "code": null,
+                        "description": null,
+                        "page": null,
+                        "zindex": null,
                     } : data);
                 });
             }
@@ -140,17 +147,14 @@
     function confrimWindow(content, data) {
         layer.confirm(content, {
             btn: ["确定", "取消"]
-        }, function () {
+        }, function (index, layero) {
             $.ajax({
-                type: "post",
-                url: "http://localhost:8080/college/deleteCollege?id=" + data.id,
+                type: "get",
+                url: "http://localhost:8080/role/delete?id=" + data.id,
                 success(data) {
                     if (data.status == 1) {
-                        layer.alert(data.msg)
-                        parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index)
-                        window.parent.location.reload()
-                        layer.alert(data.msg)
+                        layer.close(index);
+                        window.location.reload()
                     }
                 },
                 error(data) {
@@ -162,51 +166,6 @@
             layer.close()
         })
     }
-
-    layui.use('table', function () {
-        var table = layui.table;
-        //监听表格复选框选择
-        table.on('checkbox(demo)', function (obj) {
-        });
-
-        //头工具栏事件
-        table.on('toolbar(demo)', function (obj) {
-            let checkStatus = table.checkStatus(obj.config.id);
-            let data = checkStatus.data;
-            switch (obj.event) {
-                case 'getCheckData':
-                    if (data.length == 1) {
-                        layer.alert("请勿选择记录");
-                    } else {
-                        collegeWindos("学院修改", "#addWindow", data[0]);
-                    }
-                    break;
-                case 'getCheckLength':
-                    if (data.length == 0) {
-                        layer.alert("请选择一条记录");
-                    } else {
-                        collegeWindos("学院修改", "#addWindow", data[0]);
-                    }
-                    break;
-                case 'isAll':
-                    if (data.length == 0) {
-                        layer.alert("请选择一条记录");
-                    } else {
-                        collegeWindos("学院添加", "#addWindow", data[0]);
-                    }
-                    break;
-
-                //自定义头工具栏右侧图标 - 提示
-                case 'LAYTABLE_TIPS':
-                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                    break;
-            }
-        });
-    });
-</script>
-<script th:src="@{/web/js/web/admin/roleLib.js}"></script>
-<script th:inline="javascript">
-    roleLib.load();
 </script>
 </body>
 

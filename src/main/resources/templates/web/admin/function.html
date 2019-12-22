@@ -42,7 +42,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">名称</label>
             <div class="layui-input-block">
-                <input type="text" name="id" lay-verify="title" autocomplete="off" placeholder="请输入名称"
+                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入名称"
                        class="layui-input">
             </div>
         </div>
@@ -58,38 +58,39 @@
         <div class="layui-form-item">
             <label class="layui-form-label">优先级</label>
             <div class="layui-input-block">
-                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入优先级"
+                <input type="text" name="zindex" lay-verify="title" autocomplete="off" placeholder="请输入优先级"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">代码</label>
             <div class="layui-input-block">
-                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入代码"
+                <input type="text" name="code" lay-verify="title" autocomplete="off" placeholder="请输入代码"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">父功能点</label>
             <div class="layui-input-block">
-                <select name="parentSelect" lay-filter="aihao">
+                <select name="pid" lay-filter="parentFunction">
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入描述"
+                <input type="text" name="description" lay-verify="title" autocomplete="off" placeholder="请输入描述"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">访问路径</label>
             <div class="layui-input-block">
-                <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入访问路径"
+                <input type="text" name="page" lay-verify="title" autocomplete="off" placeholder="请输入访问路径"
                        class="layui-input">
             </div>
         </div>
+        <input type="hidden" name="id"/>
     </form>
 </div>
 <script type="text/html" id="toolbarDemo">
@@ -110,6 +111,7 @@
 </script>
 <script th:src="@{/web/js/web/admin/functionLib.js}"></script>
 <script th:inline="javascript">
+    selectAjaxData("select", "http://localhost:8080/function/listajax", "parentFunction", null)
     functionLib.load();
 
     $(function () {
@@ -118,6 +120,7 @@
             }
         )
     })
+
     function collegeWindos(title, content, data) {
         layer.open({
             type: 1 //此处以iframe举例
@@ -133,13 +136,13 @@
                     let dataForm = form.val("fromTest");
                     $.ajax({
                         type: "post",
-                        url: "http://localhost:8080/college/saveOrUpdateCollege",
+                        url: "http://localhost:8080/function/update",
                         data: dataForm,
                         success(data) {
                             if (data.status == 1) {
-                                layui.table.reload('exampleTable')
                                 layer.close(index);
                                 layer.alert(data.msg)
+                                window.location.reload()
                             }
                         }, error(data) {
                             layui.table.reload('exampleTable')
@@ -160,10 +163,37 @@
                     let dataFrom = form.val("fromTest", data == null ? {
                         "id": null,
                         "name": null,
-                        "status": null
+                        "pid": null,
+                        "code": null,
+                        "description": null,
+                        "page": null,
+                        "zindex": null,
                     } : data);
                 });
             }
+        })
+    }
+
+    function confrimWindow(content, data) {
+        layer.confirm(content, {
+            btn: ["确定", "取消"]
+        }, function (index, layero) {
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8080/function/delete?id=" + data.id,
+                success(data) {
+                    if (data.status == 1) {
+                        layer.close(index);
+                        window.location.reload()
+                    }
+                },
+                error(data) {
+
+                }
+            })
+            ;
+        }, function () {
+            layer.close()
         })
     }
 </script>

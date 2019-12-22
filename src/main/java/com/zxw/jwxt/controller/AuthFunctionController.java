@@ -92,16 +92,26 @@ public class AuthFunctionController extends BaseController {
     }
 
     /**
+     * 删除权限
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/delete")
+    public RS delete(String id) {
+        RS rs = functionSerivce.delete(id);
+        return rs;
+    }
+
+    /**
      * 更新权限
      *
-     * @param ids
-     * @param roleId
+     * @param function
      */
     @PostMapping("/update")
-    public RS update(String ids, String roleId) {
-        System.out.println(ids);
-        System.out.println(roleId.toString());
-        return RS.ok();
+    public RS update(AuthFunction function) {
+        RS rs = functionSerivce.updateFunction(function);
+        return rs;
     }
 
     /**
