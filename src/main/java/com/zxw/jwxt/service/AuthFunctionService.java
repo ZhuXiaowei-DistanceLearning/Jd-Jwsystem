@@ -2,7 +2,6 @@ package com.zxw.jwxt.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.AuthFunction;
@@ -13,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * <p>
@@ -87,5 +83,31 @@ public class AuthFunctionService extends BaseService {
         QueryWrapper wrapper = getWrapper(baseQueryParam);
         IPage iPage = functionMapper.selectPage(page, wrapper);
         return iPage;
+    }
+
+    public RS updateFunction(AuthFunction function) {
+        int i;
+        if (function.getId() != null) {
+            i = functionMapper.insert(function);
+        } else {
+            i = functionMapper.updateById(function);
+        }
+        return i == 1 ? RS.ok() : RS.error("更新权限失败");
+    }
+
+    public RS delete(String id) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("pid", id);
+        queryWrapper.or(true);
+        queryWrapper.eq("id", id);
+        queryWrapper.orderByDesc("id");
+        List<AuthFunction> list = functionMapper.selectList(queryWrapper);
+        int i = 0;
+        if (list.size() != 0) {
+            for (int j = 0; j < list.size(); j++) {
+                i = functionMapper.deleteById(list.get(i).getId());
+            }
+        }
+        return i == 0 ? RS.error("删除权限失败") : RS.ok();
     }
 }

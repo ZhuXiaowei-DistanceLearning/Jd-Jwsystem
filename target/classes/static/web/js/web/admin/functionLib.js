@@ -39,7 +39,7 @@ let functionLib = {
                 },
                 callback: {
                     beforeEditName: functionLib.editNode,
-                    beforeRemove: functionLib.removeNode
+                    beforeRemove : functionLib.removeNode,
                 },
                 edit: {
                     showRemoveBtn: true,
@@ -71,9 +71,10 @@ let functionLib = {
         })
     },
     editNode(treeId, treeNode, newName, isCancel) {
-        collegeWindos("修改权限", "#addWindow", null)
+        collegeWindos("修改权限", "#addWindow", treeNode)
     },
-    removeNode(treeId, treeNode, newName, isCancel) {
-        collegeWindos("添加权限", "#addWindow", null)
+    removeNode(treeId, treeNode) {
+        // confrimWindow("是否删除该权限", treeNode)
+        return false;
     },
 }

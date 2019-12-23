@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -50,16 +49,17 @@ public class AuthRoleController extends BaseController {
     }
 
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(QueryRoleVO roleQueryParam) throws IOException {
+    public TableReponse pageQuery(QueryRoleVO roleQueryParam) {
         IPage result = roleService.pageQuery(roleQueryParam);
         TableReponse response = TableReponse.of(result);
         return response;
     }
 
     @GetMapping("/listajax")
-    public List<AuthRole> listajax() throws IOException {
+    public List<AuthRole> listajax(QueryRoleVO roleQueryParam)  {
 //        List<AuthRole> list = roleSerivce.findAll();
 //        return list;
-        return null;
+        List<AuthRole> list = roleService.listajax(roleQueryParam);
+        return list;
     }
 }
