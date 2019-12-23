@@ -92,14 +92,14 @@
         <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i
                 class="layui-icon">&#xe608;</i> 添加班级
         </button>
-        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="exportTemplate"><i
-                class="layui-icon">&#xe608;</i> 导出模板
+        <button class="layui-btn layui-btn-sm" lay-event="exportTemplate" id="export"><i
+                class="layui-icon"></i> 导出模板
         </button>
-        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="importTemplate"><i
-                class="layui-icon">&#xe608;</i> 导入模板
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="importTemplate" id="import"><i
+                class="layui-icon"></i>导入模板
         </button>
-        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="exportInfo"><i
-                class="layui-icon">&#xe608;</i> 导出学生信息
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="exportInfo" id="exportStudent"><i
+                class="layui-icon"></i>导出学生信息
         </button>
     </div>
 </script>
@@ -186,67 +186,6 @@
             layer.close()
         })
     }
-
-    layui.use('table', function () {
-        var table = layui.table;
-        //监听表格复选框选择
-        table.on('checkbox(demo)', function (obj) {
-        });
-
-        //头工具栏事件
-        table.on('toolbar(demo)', function (obj) {
-            let checkStatus = table.checkStatus(obj.config.id);
-            let data = checkStatus.data;
-            switch (obj.event) {
-                case 'getCheckData':
-                    if (data.length == 1) {
-                        layer.alert("请勿选择记录");
-                    } else {
-                        collegeWindos("专业添加", "#addWindow", data[0]);
-                    }
-                    break;
-                case 'exportTemplate':
-                    window.location.href = "http://localhost:8080/export/exportXlsModel"
-                    break;
-                case 'importTemplate':
-                    if (data.length == 0) {
-                        layer.alert("请选择一个班级");
-                    } else {
-                        confrimWindow("是否确定作废该条记录", data[0])
-                    }
-                    break;
-                case 'exportInfo':
-                    if (data.length == 0) {
-                        layer.alert("请选择一个班级");
-                    } else {
-                        confrimWindow("是否确定恢复该条记录", data[0])
-                    }
-                    break;
-                case 'search':
-                    layui.table.reload('exampleTable', {
-                        url: 'http://localhost:8080/classes/pageQuery'
-                        , where: {
-                            "collegeId": $("select[lay-filter='index-college'] > option:selected").val(),
-                            "specialtyId": $("select[lay-filter='index-specialty'] > option:selected").val(),
-                            "gradeId": $("select[lay-filter='index-grade'] > option:selected").val()
-                        } //设定异步数据接口的额外参数
-                        , height: "full"
-                    });
-                    selectAjaxData("collegeId", "http://localhost:8080/college/listajax", null, {"status": 1})
-                    selectAjaxData("gradeId", "http://localhost:8080/common/grade/listajax", null, {
-                        "groupBy": "name",
-                        "sort": "name",
-                        "ASC": false
-                    })
-                    break;
-
-                //自定义头工具栏右侧图标 - 提示
-                case 'LAYTABLE_TIPS':
-                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                    break;
-            }
-        });
-    });
 </script>
 <script type="text/javascript">
     layui.use('form', function () {
@@ -273,6 +212,107 @@
         "groupBy": "name",
         "sort": "name",
         "ASC": false
+    })
+
+</script>
+<script>
+    $(function () {
+        layui.use(['form', 'upload'], function () {
+            let table = layui.table, upload = layui.upload;
+            //监听表格复选框选择
+            table.on('checkbox(demo)', function (obj) {
+            });
+            //头工具栏事件
+            table.on('toolbar(demo)', function (obj) {
+                    let checkStatus = table.checkStatus(obj.config.id);
+                    let data = checkStatus.data;
+                    switch (obj.event) {
+                        case 'getCheckData':
+                            if (data.length == 1) {
+                                layer.alert("请勿选择记录");
+                            } else {
+                                collegeWindos("专业添加", "#addWindow", data[0]);
+                            }
+                            break;
+                        case 'exportTemplate':
+                            window.location.href = "http://localhost:8080/export/exportXlsModel"
+                            break;
+                        case 'importTemplate':
+                            if (data.length == 0) {
+                                layer.alert("请选择一个班级");
+                            } else {
+                                /*upload.render({
+                                    elem: "#import",
+                                    // type: "post",
+                                    url: "http://localhost:8080/export/importXlsStudent",
+                                    /!*data: {
+                                        cid: function(){
+                                            return data[0].id
+                                        }
+                                    },*!/
+                                    // exts: "/xlsx/xls",
+                                    // field: "myFile",
+                                    // accept: 'file', //普通文件
+                                    done: function (res) {
+                                        console.log(res)
+                                    },
+                                    error(res) {
+                                        alert("文件上传失败")
+                                    },
+                                    choose(res) {
+                                        alert("文件上传")
+                                    }
+                                })*/
+                                layui.use('upload', function(){
+                                    var upload = layui.upload;
+
+                                    //执行实例
+                                    var uploadInst = upload.render({
+                                        elem: '#import' //绑定元素
+                                        ,url: '/upload/' //上传接口
+                                        ,done: function(res){
+                                            //上传完毕回调
+                                        }
+                                        ,error: function(){
+                                            //请求异常回调
+                                        }
+                                    });
+                                });
+                            }
+                            break;
+                        case 'exportInfo':
+                            if (data.length == 0) {
+                                layer.alert("请选择一个班级");
+                            } else {
+                                confrimWindow("是否确定恢复该条记录", data[0])
+                            }
+                            break;
+                        case 'search':
+                            layui.table.reload('exampleTable', {
+                                url: 'http://localhost:8080/classes/pageQuery'
+                                , where: {
+                                    "collegeId": $("select[lay-filter='index-college'] > option:selected").val(),
+                                    "specialtyId": $("select[lay-filter='index-specialty'] > option:selected").val(),
+                                    "gradeId": $("select[lay-filter='index-grade'] > option:selected").val()
+                                } //设定异步数据接口的额外参数
+                                , height: "full"
+                            });
+                            selectAjaxData("collegeId", "http://localhost:8080/college/listajax", null, {"status": 1})
+                            selectAjaxData("gradeId", "http://localhost:8080/common/grade/listajax", null, {
+                                "groupBy": "name",
+                                "sort": "name",
+                                "ASC": false
+                            })
+                            break;
+
+                        //自定义头工具栏右侧图标 - 提示
+                        case 'LAYTABLE_TIPS':
+                            layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                            break;
+                    }
+                }
+            );
+        });
     })
 </script>
 </body>
