@@ -81,7 +81,7 @@ public class AuthFunctionService extends BaseService {
 
     public IPage BaseQuery(QueryFunctionVO baseQueryParam) {
         Page page = getPage(baseQueryParam);
-        QueryWrapper wrapper = getWrapper(baseQueryParam);
+        QueryWrapper wrapper = getWrapper(baseQueryParam,null);
         IPage iPage = functionMapper.selectPage(page, wrapper);
         return iPage;
     }

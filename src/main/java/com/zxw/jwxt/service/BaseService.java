@@ -26,10 +26,9 @@ public class BaseService {
         return page;
     }
 
-    public QueryWrapper getWrapper(BaseQueryParam baseQueryParam, Object... params) {
+    public QueryWrapper getWrapper(BaseQueryParam baseQueryParam, Map<String, Object> keyword, Object... params) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        if (baseQueryParam.getKeyword() != null) {
-            Map<String, Object> keyword = baseQueryParam.getKeyword();
+        if (keyword != null && keyword.size() != 0) {
             Set<String> strings = keyword.keySet();
             Iterator<String> iterator = strings.iterator();
             while (iterator.hasNext()) {

@@ -28,7 +28,7 @@ public class WeekService extends BaseService {
 
     public IPage pageQuery(BaseQueryParam baseQueryParam) {
         Page page = getPage(baseQueryParam);
-        QueryWrapper queryWrapper = getWrapper(baseQueryParam);
+        QueryWrapper queryWrapper = getWrapper(baseQueryParam,null);
         IPage iPage = weekMapper.selectPage(page, queryWrapper);
         return iPage;
     }

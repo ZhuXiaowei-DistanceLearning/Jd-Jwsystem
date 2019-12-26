@@ -38,7 +38,7 @@ public class TeacherService extends BaseService {
 
     public IPage pageQuery(QueryTeacherVO teacherVO) {
         Page page = getPage(teacherVO);
-        QueryWrapper wrapper = getWrapper(teacherVO);
+        QueryWrapper wrapper = getWrapper(teacherVO,null);
         IPage iPage = teacherMapper.selectPage(page, wrapper);
         return iPage;
     }

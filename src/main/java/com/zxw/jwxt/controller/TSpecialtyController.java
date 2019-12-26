@@ -8,10 +8,7 @@ import com.zxw.jwxt.domain.TSpecialty;
 import com.zxw.jwxt.service.SpecialtyService;
 import com.zxw.jwxt.vo.QuerySpecialtyVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,8 +27,8 @@ public class TSpecialtyController extends BaseController {
     @Autowired
     private SpecialtyService specialtyService;
 
-    @GetMapping("/redoSpecialty")
-    public RS redoSpecialty(String id) {
+    @DeleteMapping("/redoSpecialty")
+    public RS redoSpecialty(@RequestParam("id") String id) {
         RS rs = specialtyService.redoSpecialty(id);
         return rs;
     }
@@ -44,19 +41,19 @@ public class TSpecialtyController extends BaseController {
     }
 
     @PostMapping("/addSpecialty")
-    public RS saveOrUpdateSpeciatly(TSpecialty specialty) {
+    public RS saveOrUpdateSpeciatly(@RequestBody TSpecialty specialty) {
         RS rs = specialtyService.saveOrUpdateSpeciatly(specialty);
         return rs;
     }
 
     @PostMapping("/updateSpecialty")
-    public RS updateSpecialty(TSpecialty specialty) {
+    public RS updateSpecialty(@RequestBody TSpecialty specialty) {
         RS rs = specialtyService.update(specialty);
         return rs;
     }
 
-    @GetMapping("/delete")
-    public RS delete(String id) {
+    @DeleteMapping("/delete")
+    public RS delete(@RequestParam("id") String id) {
         RS rs = specialtyService.deleteBatch(id);
         return rs;
     }

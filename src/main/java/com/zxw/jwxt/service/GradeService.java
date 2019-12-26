@@ -27,12 +27,12 @@ public class GradeService extends BaseService {
 
     public IPage pageQuery(BaseQueryParam baseQueryParam) {
         Page page = getPage(baseQueryParam);
-        QueryWrapper queryWrapper = getWrapper(baseQueryParam);
+        QueryWrapper queryWrapper = getWrapper(baseQueryParam,null);
         IPage iPage = gradeMapper.selectPage(page, queryWrapper);
         return iPage;
     }
 
     public List listajax(BaseQueryParam baseQueryParam) {
-        return gradeMapper.selectList(this.getWrapper(baseQueryParam));
+        return gradeMapper.selectList(this.getWrapper(baseQueryParam,null));
     }
 }

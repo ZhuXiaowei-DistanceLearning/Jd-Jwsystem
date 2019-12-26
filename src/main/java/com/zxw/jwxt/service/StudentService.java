@@ -69,7 +69,7 @@ public class StudentService extends BaseService {
      */
     public IPage pageQuery(QueryStudentVO queryStudentVO) {
         Page page = getPage(queryStudentVO);
-        QueryWrapper wrapper = getWrapper(queryStudentVO);
+        QueryWrapper wrapper = getWrapper(queryStudentVO, null);
         IPage iPage = studentMapper.selectPage(page, wrapper);
         return iPage;
     }

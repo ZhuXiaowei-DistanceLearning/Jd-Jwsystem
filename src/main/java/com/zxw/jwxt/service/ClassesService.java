@@ -41,7 +41,7 @@ public class ClassesService extends BaseService {
         map.put("cs.`specialty_id`", queryClassesVO.getSpecialtyId());
         map.put("cs.`grade_id`", queryClassesVO.getGradeId());
         if (StringUtils.isNotEmpty(queryClassesVO.getCollegeId()) || StringUtils.isNotEmpty(queryClassesVO.getSpecialtyId()) || StringUtils.isNotEmpty(queryClassesVO.getGradeId())) {
-            iPage = classesMapper.findByParams(page, this.getWrapper(queryClassesVO, map));
+            iPage = classesMapper.findByParams(page, this.getWrapper(queryClassesVO,null, map));
         } else {
             iPage = classesMapper.findAll(page);
         }
