@@ -24,7 +24,7 @@ import java.io.IOException;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/classes")
+@RequestMapping("/api/classes")
 public class TClassesController extends BaseController {
     @Autowired
     private ClassesService classesService;

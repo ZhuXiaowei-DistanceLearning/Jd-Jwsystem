@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public enum ExceptionEnums {
-    NO_DATA(400, "没有数据")
+    NO_DATA(400, "验证码错误")
     ;
     private Integer code;
     private String msg;

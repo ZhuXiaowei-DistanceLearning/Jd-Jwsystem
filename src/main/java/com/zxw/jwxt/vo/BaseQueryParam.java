@@ -15,6 +15,6 @@ public class BaseQueryParam {
     private String sort;
     private String groupBy;
     private boolean ASC = true;
-    private Map<String, Object> keyword;
+    private String keyword;
     private String status;
 }

@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author zxw
  * @date 2019/11/6 20:23
  */
-@RequestMapping("/")
+@RequestMapping("/api/main")
 @Controller
 public class IndexController extends BaseController {
 
@@ -26,12 +26,12 @@ public class IndexController extends BaseController {
         return "web/login";
     }
 
-    @GetMapping("/main")
+    @GetMapping("/main0")
     public String main(Model model) {
         return "/web/index0";
     }
 
-    @GetMapping("/main/data")
+    @GetMapping("/data")
     @ResponseBody
     public Map<String, Object> mainData() {
         Map<String, Object> map = new ConcurrentHashMap<>();

@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication
 @ImportResource(locations = {"classpath:config/kaptcha.xml"})
-@MapperScan("com.zxw.jwxt.mapper")
+@MapperScan({"com.zxw.jwxt.mapper","com.zxw.monitor.mapper"})
 @EnableTransactionManagement
 public class JwSystemApplication {
     public static void main(String[] args) {

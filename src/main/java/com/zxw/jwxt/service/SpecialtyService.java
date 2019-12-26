@@ -69,8 +69,8 @@ public class SpecialtyService extends BaseService {
 
     public RS redoSpecialty(String id) {
         TSpecialty tSpecialty = specialtyMapper.selectById(id);
-        if (tSpecialty.getStatus().equals("1")) {
-            tSpecialty.setStatus("0");
+        if (tSpecialty.getStatus().equals("0")) {
+            tSpecialty.setStatus("1");
             specialtyMapper.updateById(tSpecialty);
         }
         return RS.ok();
@@ -92,6 +92,6 @@ public class SpecialtyService extends BaseService {
         if (querySpecialtyVO.getCollegeId() != null) {
             map.put("college_id", querySpecialtyVO.getCollegeId());
         }
-        return specialtyMapper.selectList(getWrapper(querySpecialtyVO, map));
+        return specialtyMapper.selectList(getWrapper(querySpecialtyVO, null, map));
     }
 }

@@ -1,20 +1,24 @@
 package com.zxw.jwxt.controller;
 
+import com.zxw.common.enums.ExceptionEnums;
+import com.zxw.common.exception.BadRequestException;
+import com.zxw.common.exception.JwException;
 import com.zxw.common.pojo.RS;
+import com.zxw.jwxt.domain.UserRealm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.StringJoiner;
+import java.util.UUID;
 
 /**
  * @author zxw
@@ -36,7 +40,7 @@ public class LoginController extends BaseController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public RS login(String username, String password, String checkcode, String RadioButtonList1, HttpServletRequest request) {
+    public ResponseEntity login(String username, String password, String checkcode, String RadioButtonList1, HttpServletRequest request) {
         if (checkcode != null && !"".equals(checkcode)) {
             HttpSession session = request.getSession();
             String code = (String) session.getAttribute(new StringJoiner("_").add("code").add(session.getId()).toString());
@@ -47,14 +51,14 @@ public class LoginController extends BaseController {
                     subject.getSession().setAttribute("RadioButtonList1", RadioButtonList1);
                     subject.login(token);
                 } catch (AuthenticationException e) {
-                    e.printStackTrace();
-                    return RS.error("用户名或密码错误");
+                    throw new BadRequestException("用户名或密码错误");
                 }
-                return RS.ok();
+                getRealm().setToken(UUID.randomUUID().toString());
+                return ResponseEntity.ok(getRealm());
             }
-            return RS.error("验证码错误");
+            throw new BadRequestException("验证码错误");
         }
-        return RS.error("验证码不能为空");
+        throw new BadRequestException("验证码不能为空");
     }
 
     /**
@@ -62,11 +66,22 @@ public class LoginController extends BaseController {
      *
      * @return
      */
-    @GetMapping("logout")
+    @DeleteMapping("logout")
     public String logout(HttpSession session) {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return "redirect:/login";
+    }
+
+    /**
+     * 用户退出时，销毁Session
+     *
+     * @return
+     */
+    @GetMapping("/info")
+    public ResponseEntity info() {
+        UserRealm realm = getRealm();
+        return ResponseEntity.ok(realm);
     }
 
 }

@@ -8,9 +8,11 @@ import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TCollege;
 import com.zxw.jwxt.mapper.TCollegeMapper;
 import com.zxw.jwxt.vo.BaseQueryParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,7 +49,7 @@ public class CollegeService extends BaseService {
     }
 
     public RS edit(TCollege college) {
-        int update = collegeMapper.update(college, new UpdateWrapper<>());
+        int update = collegeMapper.updateById(college);
         return update == 1 ? RS.ok() : RS.error("修改失败");
     }
 
@@ -59,8 +61,12 @@ public class CollegeService extends BaseService {
     }
 
     public IPage pageQuery(BaseQueryParam baseQueryParam) {
+        HashMap keyword = new HashMap();
+        if (StringUtils.isNotEmpty(baseQueryParam.getKeyword())) {
+            keyword.put("name", baseQueryParam.getKeyword());
+        }
         Page page = getPage(baseQueryParam);
-        QueryWrapper queryWrapper = getWrapper(baseQueryParam);
+        QueryWrapper queryWrapper = getWrapper(baseQueryParam, keyword);
         IPage iPage = collegeMapper.selectPage(page, queryWrapper);
         return iPage;
     }

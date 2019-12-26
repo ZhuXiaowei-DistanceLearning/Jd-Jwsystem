@@ -24,7 +24,7 @@ import java.util.List;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/college")
+@RequestMapping("/api/college")
 public class TCollegeController extends BaseController {
 
     @Autowired
@@ -49,7 +49,7 @@ public class TCollegeController extends BaseController {
      * @return
      */
     @PostMapping("/saveOrUpdateCollege")
-    public RS addCollege(TCollege model) {
+    public RS addCollege(@RequestBody TCollege model) {
         if (model == null) {
             throw new JwException(ExceptionEnums.NO_DATA);
         }
@@ -61,8 +61,8 @@ public class TCollegeController extends BaseController {
      *
      * @return
      */
-    @GetMapping("/deleteCollege")
-    public RS delete(String id) {
+    @DeleteMapping("/deleteCollege")
+    public RS delete(@RequestParam("id") String id) {
         RS result = collegeService.delete(id);
         return result;
     }

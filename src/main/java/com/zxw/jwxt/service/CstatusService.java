@@ -28,7 +28,7 @@ public class CstatusService extends BaseService {
 
     public IPage pageQuery(BaseQueryParam baseQueryParam) {
         Page page = getPage(baseQueryParam);
-        QueryWrapper wrapper = getWrapper(baseQueryParam);
+        QueryWrapper wrapper = getWrapper(baseQueryParam,null);
         return cstatusMapper.selectPage(page, wrapper);
     }
 }
