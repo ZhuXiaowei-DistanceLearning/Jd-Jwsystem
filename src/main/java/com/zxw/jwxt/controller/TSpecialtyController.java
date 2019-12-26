@@ -25,7 +25,7 @@ import java.util.List;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/specialty")
+@RequestMapping("/api/specialty")
 public class TSpecialtyController extends BaseController {
     @Autowired
     private SpecialtyService specialtyService;

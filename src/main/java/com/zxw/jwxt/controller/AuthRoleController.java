@@ -24,7 +24,7 @@ import java.util.List;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/api/role")
 public class AuthRoleController extends BaseController {
 
     @Autowired

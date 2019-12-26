@@ -61,4 +61,10 @@ public class BaseService {
         }
         return queryWrapper;
     }
+
+    public QueryWrapper queryOne(String key, String value) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq(key, value);
+        return queryWrapper;
+    }
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.AuthFunction;
+import com.zxw.jwxt.domain.Menu;
 import com.zxw.jwxt.mapper.AuthFunctionMapper;
 import com.zxw.jwxt.vo.QueryFunctionVO;
 import org.apache.shiro.SecurityUtils;
@@ -50,9 +51,9 @@ public class AuthFunctionService extends BaseService {
         return null;
     }
 
-    public List<AuthFunction> findMenu(String userId) {
+    public List<Menu> findMenu(String userId) {
         String RadioButtonList1 = (String) SecurityUtils.getSubject().getSession().getAttribute("RadioButtonList1");
-        List<AuthFunction> list = null;
+        List list = null;
         if ("管理员".equals(RadioButtonList1)) {
             list = functionMapper.findMenuByUserid(userId);
         } else if ("教师".equals(RadioButtonList1)) {

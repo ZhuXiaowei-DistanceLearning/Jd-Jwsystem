@@ -2,7 +2,9 @@ package com.zxw.jwxt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zxw.jwxt.domain.AuthFunction;
+import com.zxw.jwxt.domain.Menu;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -81,32 +83,14 @@ public interface AuthFunctionMapper extends BaseMapper<AuthFunction> {
             "\t\tf.zindex DESC")
     List<AuthFunction> findAllMenu();
 
-    @Select("SELECT\n" +
-            "\t\tDISTINCT\n" +
-            "\t\tf.`id`,f.NAME,f.CODE,f.description,f.page,f.generatemenu,f.zindex,f.pid\n" +
-            "\t\tFROM\n" +
-            "\t\t`auth_function` f LEFT OUTER JOIN\n" +
-            "\t\t`role_function` r ON\n" +
-            "\t\tr.`function_id`=f.`id`\n" +
-            "\t\tLEFT OUTER JOIN `auth_role`\n" +
-            "\t\tar ON\n" +
-            "\t\tr.`role_id`=ar.`id`\n" +
-            "\t\tLEFT OUTER JOIN `user_role` ON ar.`id`=\n" +
-            "\t\t`user_role`.`role_id`\n" +
-            "\t\tLEFT OUTER JOIN `t_user` ON\n" +
-            "\t\t`user_role`.`user_id`=`t_user`.`id`\n" +
-            "\t\tWHERE\n" +
-            "\t\t`t_user`.`id`=#{value} AND\n" +
-            "\t\tf.`generatemenu` = '1' ORDER\n" +
-            "\t\tBY f.`zindex`\n" +
-            "\t\tDESC;")
-    List<AuthFunction> findMenuByUserid(String id);
+    @Select("select m.* from menu m,roles_menus rm,auth_role r,user_role ur where m.id = rm.menu_id and r.id = rm.role_id and ur.role_id = r.id and ur.user_id = #{id} order by m.pid;")
+    List<Menu> findMenuByUserid(@Param("id") String id);
 
     @Select("SELECT\n" +
-            "\t\tf.`id`,f.NAME,f.CODE,f.description,f.page,f.generatemenu,f.zindex,f.pid\n" +
+            "\t\tf.`id`,f.NAME,f.component,f.pid,f.page,f.generatemenu,f.zindex,f.pid\n" +
             "\t\tFROM\n" +
-            "\t\t`auth_function` f LEFT OUTER JOIN\n" +
-            "\t\t`role_function` r ON\n" +
+            "\t\t`menu` f LEFT OUTER JOIN\n" +
+            "\t\t`role_menus` r ON\n" +
             "\t\tr.`function_id`=f.`id`\n" +
             "\t\tLEFT OUTER JOIN `auth_role`\n" +
             "\t\tar ON\n" +

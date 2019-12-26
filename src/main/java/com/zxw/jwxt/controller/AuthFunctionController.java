@@ -2,11 +2,15 @@ package com.zxw.jwxt.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zxw.common.pojo.MenuMeta;
 import com.zxw.common.pojo.MenuNode;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.AuthFunction;
+import com.zxw.jwxt.domain.Menu;
 import com.zxw.jwxt.service.AuthFunctionService;
 import com.zxw.jwxt.vo.QueryFunctionVO;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +31,7 @@ import java.util.stream.Collectors;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/function")
+@RequestMapping("/api/function")
 public class AuthFunctionController extends BaseController {
     @Autowired
     private AuthFunctionService functionSerivce;
@@ -43,13 +47,13 @@ public class AuthFunctionController extends BaseController {
     public List<MenuNode> pageQuery(QueryFunctionVO functionQueryParam) {
         List<MenuNode> menuNodes = new ArrayList<>();
         IPage iPage = functionSerivce.pageQuery(functionQueryParam);
-        List<AuthFunction> list = iPage.getRecords();
-        for (int i = 0; i < list.size(); i++) {
+        List<Menu> list = iPage.getRecords();
+        /*for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getPid() == null) {
                 MenuNode menuNode = new MenuNode(list.get(i), new ArrayList<>());
                 menuNodes.add(menuNode);
             }
-        }
+        }*/
         List<MenuNode> nodes = this.generateMenu(menuNodes, list);
         return nodes;
     }
@@ -121,29 +125,48 @@ public class AuthFunctionController extends BaseController {
      * @throws IOException
      */
     @GetMapping("/menu")
-    public List<MenuNode> findMenu() {
+    public List findMenu() {
         List<MenuNode> menuNodes = new ArrayList<>();
-        List<AuthFunction> list = functionSerivce.findMenu(getUserId());
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getPid() == null) {
-                MenuNode menuNode = new MenuNode(list.get(i), new ArrayList<>());
+        List<Menu> list = functionSerivce.findMenu(getUserId());
+        list.forEach(menu -> {
+            if (menu.getPid() == 0) {
+                MenuNode menuNode = new MenuNode();
+                menuNode.setId(menu.getId());
+                menuNode.setName(ObjectUtils.isNotEmpty(menu.getComponentName()) ? menu.getComponentName() : menu.getName());
+                menuNode.setComponent(StringUtils.isEmpty(menu.getComponent()) ? "Layout" : menu.getComponent());
+                menuNode.setHidden(menu.getHidden());
+                menuNode.setPath("/" + menu.getPath());
+                menuNode.setAlwaysShow(true);
+                menuNode.setMeta(new MenuMeta(menu.getName(), menu.getIcon()));
+                menuNode.setRedirect("noredirect");
+                menuNode.setChildren(new ArrayList<>());
                 menuNodes.add(menuNode);
             }
-        }
+        });
         List<MenuNode> nodes = this.generateMenu(menuNodes, list);
         return nodes;
     }
 
-    private List<MenuNode> generateMenu(List<MenuNode> menuNodes, List<AuthFunction> list) {
+    private List<MenuNode> generateMenu(List<MenuNode> menuNodes, List<Menu> list) {
         List<MenuNode> collect = menuNodes.stream().map((e) -> {
             for (int i = 0; i < list.size(); i++) {
-                if (!"".equals(list.get(i).getPid()) && list.get(i).getPid() != null) {
-                    if (list.get(i).getPid().equals(e.getAuthFunction().getId())) {
-                        MenuNode menuNode = new MenuNode(list.get(i), new ArrayList<>());
-                        e.getList().add(menuNode);
+                if (!"".equals(list.get(i).getPid()) && list.get(i).getPid() != 0) {
+                    if (list.get(i).getPid().equals(e.getId())) {
+                        MenuNode menuNode = new MenuNode();
+                        menuNode.setId(list.get(i).getId());
+                        menuNode.setName(ObjectUtils.isNotEmpty(list.get(i).getComponentName()) ? list.get(i).getComponentName() : list.get(i).getName());
+                        menuNode.setComponent(list.get(i).getComponent());
+                        menuNode.setHidden(list.get(i).getHidden());
+                        menuNode.setPath(list.get(i).getPid() == 0 ? "/" : list.get(i).getPath());
+//                        menuNode.setAlwaysShow(true);
+//                        menuNode.setRedirect("noredirect");
+//                        menuNode.setChildren(null);
+                        menuNode.setMeta(new MenuMeta(list.get(i).getName(), list.get(i).getIcon()));
+                        e.getChildren().add(menuNode);
                     }
-                    if (e.getList().size() != 0) {
-                        generateMenu(e.getList(), list);
+                    // 递归进入子菜单
+                    if (e.getChildren() != null) {
+                        generateMenu(e.getChildren(), list);
                     }
                 }
             }

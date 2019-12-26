@@ -47,7 +47,7 @@ public class CollegeService extends BaseService {
     }
 
     public RS edit(TCollege college) {
-        int update = collegeMapper.update(college, new UpdateWrapper<>());
+        int update = collegeMapper.updateById(college);
         return update == 1 ? RS.ok() : RS.error("修改失败");
     }
 
