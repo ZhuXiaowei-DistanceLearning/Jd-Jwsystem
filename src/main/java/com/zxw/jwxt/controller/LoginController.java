@@ -21,6 +21,7 @@ import java.util.StringJoiner;
  * @date 2019/11/8 21:24
  */
 @Controller
+@RequestMapping("/api")
 public class LoginController extends BaseController {
 
     /**
