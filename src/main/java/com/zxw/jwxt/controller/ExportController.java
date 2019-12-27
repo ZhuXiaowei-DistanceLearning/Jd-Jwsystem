@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019/12/18 20:22
  */
 @RestController
-@RequestMapping("/export")
+@RequestMapping("/api/export")
 public class ExportController extends BaseController {
     @Autowired
     private StudentService studentService;
@@ -48,14 +48,14 @@ public class ExportController extends BaseController {
     /**
      * 导入学生信息
      *
-     * @param myFile
+     * @param file
      * @param queryStudentVO
      * @return
      * @throws Exception
      */
     @PostMapping("/importXlsStudent")
-    public RS ImportXlsStudent(@RequestParam("myFile") MultipartFile myFile, QueryStudentVO queryStudentVO, HttpServletResponse response) throws Exception {
-        RS flag = studentService.importXlsStudent(myFile, queryStudentVO);
+    public RS ImportXlsStudent(@RequestParam MultipartFile file, QueryStudentVO queryStudentVO) {
+        RS flag = studentService.importXlsStudent(file, queryStudentVO);
         return RS.ok();
     }
 

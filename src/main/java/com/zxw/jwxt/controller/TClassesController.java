@@ -49,7 +49,7 @@ public class TClassesController extends BaseController {
      * @return
      */
     @PostMapping("/add")
-    public RS add(TClasses classes) {
+    public RS add(@RequestBody TClasses classes) {
         return classesService.save(classes);
     }
 

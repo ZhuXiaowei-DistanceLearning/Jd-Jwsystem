@@ -29,10 +29,10 @@ public class XssfUtils {
         headRow.createCell(2).setCellValue("密码");
         headRow.createCell(3).setCellValue("性别");
         headRow.createCell(4).setCellValue("户籍");
-        headRow.createCell(4).setCellValue("手机");
-        headRow.createCell(4).setCellValue("身份证");
-        headRow.createCell(4).setCellValue("家庭住址");
-        headRow.createCell(4).setCellValue("政治面貌");
+        headRow.createCell(5).setCellValue("手机");
+        headRow.createCell(6).setCellValue("身份证号码");
+        headRow.createCell(7).setCellValue("家庭住址");
+        headRow.createCell(8).setCellValue("政治面貌");
         String filename = "学生信息模板.xlsx";
         String agent = request.getHeader("User-Agent");
         filename = FileUtils.encodeDownloadFilename(filename, agent);
@@ -41,6 +41,7 @@ public class XssfUtils {
         String contentType = request.getSession().getServletContext().getMimeType(filename);
 //        response.setContentType("APPLICATION/OCTET-STREAM");
         response.setContentType(contentType);
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
         response.setHeader("content-disposition", "attchment;filename=" + filename);
         workbook.write(out);
     }

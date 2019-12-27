@@ -1,12 +1,15 @@
 package com.zxw.jwxt.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * <p>
@@ -23,7 +26,7 @@ public class TStudent extends UserRealm implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "学号")
-    @TableField(value = "sid")
+    @TableId(value = "sid",type = IdType.UUID)
     private String id;
 
     @ApiModelProperty(value = "密码")
@@ -53,11 +56,11 @@ public class TStudent extends UserRealm implements Serializable {
 
     @ApiModelProperty(value = "入学日期")
     @TableField("beginTime")
-    private LocalDate beginTime;
+    private Date beginTime;
 
     @ApiModelProperty(value = "离校日期")
     @TableField("endTime")
-    private LocalDate endTime;
+    private Date endTime;
 
     @ApiModelProperty(value = "手机")
     private String phone;

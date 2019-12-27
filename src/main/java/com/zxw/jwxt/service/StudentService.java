@@ -3,6 +3,8 @@ package com.zxw.jwxt.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zxw.common.enums.ExceptionEnums;
+import com.zxw.common.exception.JwException;
 import com.zxw.common.pojo.PageUtils;
 import com.zxw.common.pojo.RS;
 import com.zxw.common.utils.FileUtils;
@@ -10,6 +12,7 @@ import com.zxw.jwxt.domain.StudentRole;
 import com.zxw.jwxt.domain.TStudent;
 import com.zxw.jwxt.mapper.TStudentMapper;
 import com.zxw.jwxt.vo.QueryStudentVO;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,11 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
 /**
@@ -121,6 +128,12 @@ public class StudentService extends BaseService {
             String password = cell2.getStringCellValue();
             String sex = row.getCell(3).getStringCellValue();
             String scity = row.getCell(4).getStringCellValue();
+            row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);
+            row.getCell(6).setCellType(Cell.CELL_TYPE_STRING);
+            String phone = row.getCell(5).getStringCellValue();
+            String idcard = row.getCell(6).getStringCellValue();
+            String address = row.getCell(7).getStringCellValue();
+            String political = row.getCell(8).getStringCellValue();
             String roleId = "b762e0f84ec911e8bf5d34de1af4e65a";
             String qx = "学生";
             TStudent student = new TStudent();
@@ -132,6 +145,12 @@ public class StudentService extends BaseService {
             student.setQx(qx);
             student.setId(sid);
             student.setSex(sex);
+            student.setBeginTime(new Date());
+            student.setPhone(phone);
+            student.setPoliticalStatus(political);
+            student.setAddress(address);
+            student.setIdcard(idcard);
+            student.setGradeId(queryStudentVO.getGradeId());
             studentMapper.insert(student);
             StudentRole studentRole = new StudentRole();
             studentRole.setRoleId(roleId);
@@ -149,15 +168,18 @@ public class StudentService extends BaseService {
      */
     public void exportXlsStudent(HttpServletResponse response, HttpServletRequest request, QueryStudentVO queryStudentVO) throws IOException {
         Page page = getPage(queryStudentVO);
-        Page<QueryStudentVO> list = studentMapper.findAll(page, queryStudentVO.getCid());
+        Page<QueryStudentVO> list = studentMapper.findAll(page, queryStudentVO.getClassesId());
         // 在内存中创建一个Excel文件，通过输出流写到客户端提供下载
+        if (list.getTotal() == 0) {
+            throw new JwException(ExceptionEnums.NO_DATA);
+        }
         XSSFWorkbook workbook = new XSSFWorkbook();
         // 创建一个sheet页
-        XSSFSheet sheet = workbook.createSheet(list.getRecords().get(0).getClasses().getClassname() + "学生信息");
+        XSSFSheet sheet = workbook.createSheet(list.getRecords().get(0).getClassname() + "学生信息");
         XSSFCellStyle cellStyle = workbook.createCellStyle();
         cellStyle.setWrapText(true);
-//        cellStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER); // 居中
-//        cellStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
+        cellStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER); // 居中
+        cellStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
         // 第一行表头
         XSSFRow headRow = sheet.createRow(0);
         headRow.createCell(0).setCellValue("学号");
@@ -166,17 +188,30 @@ public class StudentService extends BaseService {
         headRow.createCell(3).setCellValue("性别");
         headRow.createCell(4).setCellValue("户籍");
         headRow.createCell(5).setCellValue("班级");
-        String classname = list.getRecords().get(0).getClasses().getClassname();
+        headRow.createCell(6).setCellValue("年级");
+        headRow.createCell(7).setCellValue("入学时间");
+        headRow.createCell(8).setCellValue("手机号码");
+        headRow.createCell(9).setCellValue("身份证号");
+        headRow.createCell(10).setCellValue("家庭住址");
+        headRow.createCell(11).setCellValue("政治面貌");
+        String classname = list.getRecords().get(0).getClassname();
         for (int i = 0; i < list.getRecords().size(); i++) {
+            QueryStudentVO vo = list.getRecords().get(i);
             XSSFRow dataRow = sheet.createRow(sheet.getLastRowNum() + 1);
-            dataRow.createCell(0).setCellValue(list.getRecords().get(i).getSid());
-            dataRow.createCell(1).setCellValue(list.getRecords().get(i).getUsername());
-            dataRow.createCell(2).setCellValue(list.getRecords().get(i).getPassword());
-            dataRow.createCell(3).setCellValue(list.getRecords().get(i).getSex());
-            dataRow.createCell(4).setCellValue(list.getRecords().get(i).getScity());
+            dataRow.createCell(0).setCellValue(vo.getSid());
+            dataRow.createCell(1).setCellValue(vo.getSname());
+            dataRow.createCell(2).setCellValue(vo.getPassword());
+            dataRow.createCell(3).setCellValue(vo.getSex());
+            dataRow.createCell(4).setCellValue(vo.getScity());
             dataRow.createCell(5).setCellValue(classname);
+            dataRow.createCell(6).setCellValue(vo.getGradeId());
+            dataRow.createCell(7).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(vo.getBeginTime()));
+            dataRow.createCell(8).setCellValue(vo.getPhone());
+            dataRow.createCell(9).setCellValue(vo.getIdcard());
+            dataRow.createCell(10).setCellValue(vo.getAddress());
+            dataRow.createCell(11).setCellValue(vo.getPoliticalStatus());
         }
-        String filename = list.getRecords().get(0).getClasses().getClassname() + "学生信息.xlsx";
+        String filename = list.getRecords().get(0).getClassname() + "学生信息.xlsx";
         String agent = request.getHeader("User-Agent");
         filename = FileUtils.encodeDownloadFilename(filename, agent);
         // 一个流两个头

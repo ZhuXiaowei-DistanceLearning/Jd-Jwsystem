@@ -9,10 +9,12 @@ import com.zxw.jwxt.mapper.TClassesMapper;
 import com.zxw.jwxt.vo.QueryClassesVO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.Hash;
+import org.junit.internal.Classes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,4 +53,5 @@ public class ClassesService extends BaseService {
     public RS deleteBatch(QueryClassesVO classesVO) {
         return RS.ok();
     }
+
 }
