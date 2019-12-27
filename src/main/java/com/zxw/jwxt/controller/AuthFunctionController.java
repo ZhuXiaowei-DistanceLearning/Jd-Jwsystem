@@ -8,6 +8,7 @@ import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.AuthFunction;
 import com.zxw.jwxt.domain.Menu;
 import com.zxw.jwxt.service.AuthFunctionService;
+import com.zxw.jwxt.service.MenuService;
 import com.zxw.jwxt.vo.QueryFunctionVO;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -36,6 +37,8 @@ public class AuthFunctionController extends BaseController {
     @Autowired
     private AuthFunctionService functionSerivce;
 
+    @Autowired
+    private MenuService menuService;
     /**
      * 权限列表
      *
@@ -46,15 +49,18 @@ public class AuthFunctionController extends BaseController {
     @GetMapping("/pageQuery")
     public List<MenuNode> pageQuery(QueryFunctionVO functionQueryParam) {
         List<MenuNode> menuNodes = new ArrayList<>();
-        IPage iPage = functionSerivce.pageQuery(functionQueryParam);
+        IPage iPage = menuService.pageQuery(functionQueryParam);
         List<Menu> list = iPage.getRecords();
-        /*for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getPid() == null) {
-                MenuNode menuNode = new MenuNode(list.get(i), new ArrayList<>());
+        list.forEach(menu -> {
+            if (menu.getPid() == 0) {
+                MenuNode menuNode = new MenuNode();
+                menuNode.setId(menu.getId());
+                menuNode.setName(menu.getName());
+                menuNode.setChildren(new ArrayList<>());
                 menuNodes.add(menuNode);
             }
-        }*/
-        List<MenuNode> nodes = this.generateMenu(menuNodes, list);
+        });
+        List<MenuNode> nodes = this.generateTree(menuNodes, list);
         return nodes;
     }
 
@@ -137,6 +143,7 @@ public class AuthFunctionController extends BaseController {
                 menuNode.setHidden(menu.getHidden());
                 menuNode.setPath("/" + menu.getPath());
                 menuNode.setAlwaysShow(true);
+                menuNode.setPid(menu.getPid());
                 menuNode.setMeta(new MenuMeta(menu.getName(), menu.getIcon()));
                 menuNode.setRedirect("noredirect");
                 menuNode.setChildren(new ArrayList<>());
@@ -158,10 +165,33 @@ public class AuthFunctionController extends BaseController {
                         menuNode.setComponent(list.get(i).getComponent());
                         menuNode.setHidden(list.get(i).getHidden());
                         menuNode.setPath(list.get(i).getPid() == 0 ? "/" : list.get(i).getPath());
+                        menuNode.setPid(list.get(i).getPid());
 //                        menuNode.setAlwaysShow(true);
 //                        menuNode.setRedirect("noredirect");
 //                        menuNode.setChildren(null);
                         menuNode.setMeta(new MenuMeta(list.get(i).getName(), list.get(i).getIcon()));
+                        e.getChildren().add(menuNode);
+                    }
+                    // 递归进入子菜单
+                    if (e.getChildren() != null) {
+                        generateMenu(e.getChildren(), list);
+                    }
+                }
+            }
+            return e;
+        }).collect(Collectors.toList());
+        return collect;
+    }
+
+    private List<MenuNode> generateTree(List<MenuNode> menuNodes, List<Menu> list) {
+        List<MenuNode> collect = menuNodes.stream().map((e) -> {
+            for (int i = 0; i < list.size(); i++) {
+                if (!"".equals(list.get(i).getPid()) && list.get(i).getPid() != 0) {
+                    if (list.get(i).getPid().equals(e.getId())) {
+                        MenuNode menuNode = new MenuNode();
+                        menuNode.setId(list.get(i).getId());
+                        menuNode.setName(list.get(i).getName());
+                        menuNode.setPid(list.get(i).getPid());
                         e.getChildren().add(menuNode);
                     }
                     // 递归进入子菜单

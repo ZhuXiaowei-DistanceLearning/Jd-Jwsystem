@@ -27,6 +27,7 @@ public class MenuNode implements Serializable {
     private String component;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Boolean alwaysShow;
+    private Long pid;
     private MenuMeta meta;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<MenuNode> children;

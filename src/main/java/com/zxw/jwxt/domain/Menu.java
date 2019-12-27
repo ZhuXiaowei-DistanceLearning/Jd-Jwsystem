@@ -41,6 +41,7 @@ public class Menu implements Serializable {
     private String name;
 
     @ApiModelProperty(value = "组件")
+    // 组件路径
     private String component;
 
     @ApiModelProperty(value = "上级菜单ID")
@@ -55,18 +56,22 @@ public class Menu implements Serializable {
     @ApiModelProperty(value = "链接地址")
     private String path;
 
+    // 是否缓存
     private Boolean cache;
 
+    // 是否隐藏
     private Boolean hidden;
 
+    // 组件名称
     private String componentName;
 
     @ApiModelProperty(value = "创建日期")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Timestamp createTime;
 
+    // 权限
     private String permission;
-
+    // 0：目录，1：页面
     private Integer type;
 
 
