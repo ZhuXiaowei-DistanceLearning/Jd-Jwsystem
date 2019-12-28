@@ -61,7 +61,7 @@ public class BaseService {
         return queryWrapper;
     }
 
-    public QueryWrapper queryOne(String key, String value) {
+    public QueryWrapper queryOne(Object key, Object value) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq(key, value);
         return queryWrapper;

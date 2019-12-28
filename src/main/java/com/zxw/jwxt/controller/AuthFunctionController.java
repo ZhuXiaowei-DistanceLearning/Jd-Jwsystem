@@ -13,10 +13,7 @@ import com.zxw.jwxt.vo.QueryFunctionVO;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,20 +44,17 @@ public class AuthFunctionController extends BaseController {
      * @throws IOException
      */
     @GetMapping("/pageQuery")
-    public List<MenuNode> pageQuery(QueryFunctionVO functionQueryParam) {
-        List<MenuNode> menuNodes = new ArrayList<>();
+    public List<Menu> pageQuery(QueryFunctionVO functionQueryParam) {
+        List<Menu> menuNodes = new ArrayList<>();
         IPage iPage = menuService.pageQuery(functionQueryParam);
         List<Menu> list = iPage.getRecords();
         list.forEach(menu -> {
             if (menu.getPid() == 0) {
-                MenuNode menuNode = new MenuNode();
-                menuNode.setId(menu.getId());
-                menuNode.setName(menu.getName());
-                menuNode.setChildren(new ArrayList<>());
-                menuNodes.add(menuNode);
+                menu.setChildren(new ArrayList<>());
+                menuNodes.add(menu);
             }
         });
-        List<MenuNode> nodes = this.generateTree(menuNodes, list);
+        List<Menu> nodes = this.generateTree(menuNodes, list);
         return nodes;
     }
 
@@ -68,7 +62,6 @@ public class AuthFunctionController extends BaseController {
      * 权限列表
      *
      * @return
-     * @throws IOException
      */
     @GetMapping("/listajax")
     public List<AuthFunction> listajax() {
@@ -96,7 +89,7 @@ public class AuthFunctionController extends BaseController {
      * @return
      */
     @PostMapping("/add")
-    public RS add(AuthFunction function) {
+    public RS add(@RequestBody AuthFunction function) {
         RS rs = functionSerivce.save(function);
         return rs;
     }
@@ -183,20 +176,16 @@ public class AuthFunctionController extends BaseController {
         return collect;
     }
 
-    private List<MenuNode> generateTree(List<MenuNode> menuNodes, List<Menu> list) {
-        List<MenuNode> collect = menuNodes.stream().map((e) -> {
+    private List<Menu> generateTree(List<Menu> menuNodes, List<Menu> list) {
+        List<Menu> collect = menuNodes.stream().map((e) -> {
             for (int i = 0; i < list.size(); i++) {
                 if (!"".equals(list.get(i).getPid()) && list.get(i).getPid() != 0) {
                     if (list.get(i).getPid().equals(e.getId())) {
-                        MenuNode menuNode = new MenuNode();
-                        menuNode.setId(list.get(i).getId());
-                        menuNode.setName(list.get(i).getName());
-                        menuNode.setPid(list.get(i).getPid());
-                        e.getChildren().add(menuNode);
+                        e.getChildren().add(list.get(i));
                     }
                     // 递归进入子菜单
                     if (e.getChildren() != null) {
-                        generateMenu(e.getChildren(), list);
+                        generateTree(e.getChildren(), list);
                     }
                 }
             }
