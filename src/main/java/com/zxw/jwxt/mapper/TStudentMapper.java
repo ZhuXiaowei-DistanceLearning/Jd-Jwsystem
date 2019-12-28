@@ -33,7 +33,7 @@ public interface TStudentMapper extends BaseMapper<TStudent> {
      * @param cid
      * @return
      */
-    @Select("select * FROM `t_student` s,`t_classes` c where s.`classes_id`=c.`id` WHERE c.`id`=#{cid}")
+    @Select("select * FROM `t_student` s,`t_classes` c where s.`classes_id`=c.`id` and c.`id`=#{cid}")
     Page<QueryStudentVO> findAll(Page page, @Param("cid") String cid);
 
 }

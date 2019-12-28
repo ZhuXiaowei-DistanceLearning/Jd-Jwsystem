@@ -1,13 +1,17 @@
 package com.zxw.jwxt.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,6 +45,7 @@ public class Menu implements Serializable {
     private String name;
 
     @ApiModelProperty(value = "组件")
+    // 组件路径
     private String component;
 
     @ApiModelProperty(value = "上级菜单ID")
@@ -55,19 +60,27 @@ public class Menu implements Serializable {
     @ApiModelProperty(value = "链接地址")
     private String path;
 
+    // 是否缓存
     private Boolean cache;
 
+    // 是否隐藏
     private Boolean hidden;
 
+    // 组件名称
     private String componentName;
 
     @ApiModelProperty(value = "创建日期")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Timestamp createTime;
 
+    // 权限
     private String permission;
-
+    // 0：目录，1：页面
     private Integer type;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @TableField(exist = false)
+    private List<Menu> children;
 
 
 }

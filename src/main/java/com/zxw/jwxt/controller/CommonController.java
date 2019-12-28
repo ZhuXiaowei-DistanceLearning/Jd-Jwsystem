@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2019/12/18 20:23
  */
 @RestController
-@RequestMapping("/common")
+@RequestMapping("/api")
 public class CommonController extends BaseController {
     @Autowired
     private TeamService teamService;

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,18 +24,18 @@ public class QueryStudentVO extends BaseQueryParam {
     // 成绩id
     private String sid;
     private String password;
-    private String username;
+    private String sname;
     private String sex;
     private String scity;
     private String qx;
     private Integer absent;
     private String classesId;
     private String gradeId;
-    private LocalDate beginTime;
-    private LocalDate endTime;
+    private Date beginTime;
+    private Date endTime;
     private String phone;
     private String idcard;
     private String address;
     private String politicalStatus;
-    private TClasses classes;
+    private String classname;
 }
