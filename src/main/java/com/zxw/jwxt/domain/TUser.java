@@ -1,6 +1,8 @@
 package com.zxw.jwxt.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,11 +32,15 @@ public class TUser extends UserRealm implements Serializable {
 
     private String qx;
 
+    @TableId(type = IdType.ID_WORKER_STR)
     private String id;
 
     private String status;
     @TableField(value = "collegeId")
     private String collegeId;
+
+    @TableField(exist = false)
+    private String collegeName;
 
     @Override
     public void setCollegeId(String collegeId) {
