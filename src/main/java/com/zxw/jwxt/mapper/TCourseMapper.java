@@ -44,5 +44,6 @@ public interface TCourseMapper extends BaseMapper<TCourse> {
     @Select("select c.*,w.time wname,n.`name` nname,s.`week` sw,s.section sse,cs.`name` csname,e.`name` ename,t.`name` tname,co.`name` collegeName from t_course c,t_nature n,t_week w,t_section s,t_cstatus cs, t_examway e,t_team t,t_college co,t_teacher teacher WHERE c.week_id = w.id and c.way_id = e.id and c.team_id = t.id and c.section_id = s.id and c.nature_id = n.id and c.cstatus_id = cs.id and c.college_id = co.id and c.teacher_id = teacher.tid and c.teacher_id = #{tid}")
     IPage<CourseDTO> findCourseByteacherId(Page page, @Param("tid") String tid);
 
+    @Select("select c.*,w.time wname,n.`name` nname,s.`week` sw,s.section sse,cs.`name` csname,e.`name` ename,t.`name` tname,co.`name` collegeName from t_course c,t_nature n,t_week w,t_section s,t_cstatus cs, t_examway e,t_team t,t_college co,t_teacher teacher WHERE c.week_id = w.id and c.way_id = e.id and c.team_id = t.id and c.section_id = s.id and c.nature_id = n.id and c.cstatus_id = cs.id and c.college_id = co.id and c.teacher_id = teacher.tid and c.teacher_id = #{tid} and c.team_id = #{teamId}")
     List<CourseDTO> findScheduleByTeacher(@Param("tid") String tid, @Param("teamId") String teamId);
 }

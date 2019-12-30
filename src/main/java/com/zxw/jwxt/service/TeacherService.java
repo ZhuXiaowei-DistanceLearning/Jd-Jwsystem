@@ -5,14 +5,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TTeacher;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.zxw.jwxt.domain.TeacherRole;
+import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.mapper.TTeacherMapper;
 import com.zxw.jwxt.vo.QueryCourseVO;
 import com.zxw.jwxt.vo.QueryTeacherVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -43,7 +42,7 @@ public class TeacherService extends BaseService {
 
     public IPage pageQuery(QueryTeacherVO teacherVO) {
         Page page = getPage(teacherVO);
-        QueryWrapper wrapper = getWrapper(teacherVO,null);
+        QueryWrapper wrapper = getWrapper(teacherVO, null);
         IPage iPage = teacherMapper.selectPage(page, wrapper);
         return iPage;
     }
@@ -72,6 +71,7 @@ public class TeacherService extends BaseService {
     }
 
     public List findSchedule(QueryCourseVO queryCourseVO, String userId) {
-        return null;
+        List<CourseDTO> list = courseService.findScheduleByTeacher(userId, queryCourseVO.getTeamId());
+        return list;
     }
 }
