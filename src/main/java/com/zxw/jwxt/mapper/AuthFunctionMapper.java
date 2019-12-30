@@ -86,41 +86,10 @@ public interface AuthFunctionMapper extends BaseMapper<AuthFunction> {
     @Select("select m.* from menu m,roles_menus rm,auth_role r,user_role ur where m.id = rm.menu_id and r.id = rm.role_id and ur.role_id = r.id and ur.user_id = #{id} order by m.pid;")
     List<Menu> findMenuByUserid(@Param("id") String id);
 
-    @Select("SELECT\n" +
-            "\t\tf.`id`,f.NAME,f.component,f.pid,f.page,f.generatemenu,f.zindex,f.pid\n" +
-            "\t\tFROM\n" +
-            "\t\t`menu` f LEFT OUTER JOIN\n" +
-            "\t\t`role_menus` r ON\n" +
-            "\t\tr.`function_id`=f.`id`\n" +
-            "\t\tLEFT OUTER JOIN `auth_role`\n" +
-            "\t\tar ON\n" +
-            "\t\tr.`role_id`=ar.`id`\n" +
-            "\t\tLEFT OUTER JOIN `teacher_role` ON ar.`id`=\n" +
-            "\t\tteacher_role.`role_id`\n" +
-            "\t\tLEFT OUTER JOIN `t_teacher` ON\n" +
-            "\t\tteacher_role.`teacher_id`=t_teacher.`tid`\n" +
-            "\t\tWHERE\n" +
-            "\t\tt_teacher.`tid`=#{value} AND f.`generatemenu` = '1' ORDER\n" +
-            "\t\tBY f.`zindex`\n" +
-            "\t\tDESC;")
-    List<AuthFunction> findMenuByTeacherid(String id);
+    @Select("select m.* from menu m,roles_menus rm,auth_role r,teacher_role ur where m.id = rm.menu_id and r.id = rm.role_id and ur.role_id = r.id and ur.teacher_id = #{id} order by m.pid;")
+    List<Menu> findMenuByTeacherid(@Param("id")String id);
 
-    @Select("SELECT\n" +
-            "\t\tf.`id`,f.NAME,f.CODE,f.description,f.page,f.generatemenu,f.zindex,f.pid\n" +
-            "\t\tFROM\n" +
-            "\t\t`auth_function` f LEFT OUTER JOIN\n" +
-            "\t\t`role_function` r ON\n" +
-            "\t\tr.`function_id`=f.`id`\n" +
-            "\t\tLEFT OUTER JOIN `auth_role`\n" +
-            "\t\tar ON\n" +
-            "\t\tr.`role_id`=ar.`id`\n" +
-            "\t\tLEFT OUTER JOIN `student_role` ON ar.`id`=\n" +
-            "\t\tstudent_role.`role_id`\n" +
-            "\t\tLEFT OUTER JOIN `t_student` ON\n" +
-            "\t\tstudent_role.`student_id`=t_student.`sid`\n" +
-            "\t\tWHERE\n" +
-            "\t\tt_student.`sid`=#{value} AND f.`generatemenu` = '1' ORDER\n" +
-            "\t\tBY f.`zindex`\n" +
-            "\t\tDESC;")
-    List<AuthFunction> findMenuByStudentid(String id);
+    @Select("select m.* from menu m,roles_menus rm,auth_role r,student_role\n" +
+            "ur where m.id = rm.menu_id and r.id = rm.role_id and ur.role_id = r.id and ur.student_id = #{id} order by m.pid;")
+    List<Menu> findMenuByStudentid(@Param("id") String id);
 }

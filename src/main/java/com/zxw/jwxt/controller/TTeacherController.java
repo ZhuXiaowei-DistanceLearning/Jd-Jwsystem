@@ -6,9 +6,11 @@ import com.zxw.common.pojo.RS;
 import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.domain.TTeacher;
 import com.zxw.jwxt.service.TeacherService;
+import com.zxw.jwxt.vo.QueryCourseVO;
 import com.zxw.jwxt.vo.QueryTeacherVO;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.zxw.jwxt.controller.BaseController;
@@ -25,7 +27,7 @@ import java.util.List;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/teacher")
+@RequestMapping("/api/teacher")
 public class TTeacherController extends BaseController {
 
     @Autowired
@@ -57,5 +59,17 @@ public class TTeacherController extends BaseController {
     public RS add(TTeacher teacher, String roleIds) {
         RS rs = teacherService.save(teacher, roleIds);
         return rs;
+    }
+
+    @GetMapping("/findInfo")
+    public ResponseEntity findInfo(String tid) {
+        TTeacher teacher = teacherService.findInfo(getUserId());
+        return ResponseEntity.ok(teacher);
+    }
+
+    @GetMapping("/findSchedule")
+    public ResponseEntity findSchedule(QueryCourseVO queryCourseVO){
+        List list = teacherService.findSchedule(queryCourseVO,getUserId());
+        return ResponseEntity.ok(list);
     }
 }

@@ -1,6 +1,8 @@
 package com.zxw.jwxt.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,6 +11,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -27,7 +30,7 @@ public class TTeacher extends UserRealm implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "教师编号")
-    @TableField(value = "tid")
+    @TableId(value = "tid", type = IdType.UUID)
     private String id;
 
     @ApiModelProperty(value = "密码")
@@ -54,7 +57,7 @@ public class TTeacher extends UserRealm implements Serializable {
 
     @ApiModelProperty(value = "工作日期")
     @TableField("beginTime")
-    private LocalDateTime beginTime;
+    private Date beginTime;
 
     @ApiModelProperty(value = "薪水")
     private Double salary;

@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zxw
@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="TComments对象", description="")
+@ApiModel(value = "TComments对象", description = "")
 public class TComments implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +35,9 @@ public class TComments implements Serializable {
     private String courseId;
 
     private String content;
+    private Long commentType;
+    private Long mark;
+    private Boolean isComment;
 
 
 }

@@ -8,6 +8,8 @@ import com.zxw.jwxt.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -26,6 +28,7 @@ public class MenuController extends BaseController {
 
     @PostMapping("/add")
     public RS add(@RequestBody Menu menu) {
+        menu.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
         return menuService.add(menu);
     }
 

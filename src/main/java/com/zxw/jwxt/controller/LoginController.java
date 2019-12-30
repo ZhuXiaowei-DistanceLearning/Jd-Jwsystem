@@ -24,7 +24,7 @@ import java.util.UUID;
  * @author zxw
  * @date 2019/11/8 21:24
  */
-@Controller
+@RestController
 @RequestMapping("/api")
 public class LoginController extends BaseController {
 
@@ -66,11 +66,11 @@ public class LoginController extends BaseController {
      *
      * @return
      */
-    @DeleteMapping("logout")
-    public String logout(HttpSession session) {
+    @DeleteMapping("/logout")
+    public RS logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return "redirect:/login";
+        return RS.ok();
     }
 
     /**
