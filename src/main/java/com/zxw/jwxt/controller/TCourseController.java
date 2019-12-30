@@ -28,7 +28,7 @@ import java.io.IOException;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/api/course")
 public class TCourseController extends BaseController {
     @Autowired
     private CourseService courseService;
@@ -50,10 +50,9 @@ public class TCourseController extends BaseController {
     }
 
     @GetMapping("/findCourseByteacherId")
-    public TableReponse findCourseByteacherId(QueryCourseVO courseVO, Model model) {
+    public TableReponse findCourseByteacherId(QueryCourseVO courseVO) {
         UserRealm realm = getRealm();
         IPage result = courseService.findCourseByteacherId(courseVO, realm.getId());
-        model.addAttribute("courseAndStudent", result);
         TableReponse reponse = TableReponse.of(result);
         return reponse;
     }

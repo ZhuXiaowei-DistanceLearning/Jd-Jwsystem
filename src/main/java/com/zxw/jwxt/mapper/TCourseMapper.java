@@ -1,9 +1,12 @@
 package com.zxw.jwxt.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.jwxt.domain.TCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zxw.jwxt.dto.CourseDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -36,27 +39,10 @@ public interface TCourseMapper extends BaseMapper<TCourse> {
             "          AND c.`team_id` = tm.`id`\n" +
             "          AND c.`way_id` = te.`id`\n" +
             "          AND c.`week_id` = tw.`id`")
-    IPage findAll(IPage page);
+    IPage findAll(Page page);
 
-    @Select("SELECT c.*,\n" +
-            "               w.`id` wid,\n" +
-            "               s.`id`\n" +
-            "                      sid,\n" +
-            "               n.`id` nid,\n" +
-            "               n.`name`\n" +
-            "                      nname,\n" +
-            "               s.`section`,\n" +
-            "               s.`week`,\n" +
-            "               w.`time`,\n" +
-            "               t.`tname`,\n" +
-            "               t.`tid`\n" +
-            "        FROM (`t_course`\n" +
-            "              c, `t_week` w, `t_section`\n" +
-            "              s, `t_nature` n, `t_teacher` t)\n" +
-            "        WHERE c.`week_id` = w.`id`\n" +
-            "          AND c.`section_id` = s.`id`\n" +
-            "          AND c.`nature_id` = n.`id`\n" +
-            "          AND c.`teacher_id` = t.`tid`\n" +
-            "          AND t.`tid` = #{value}")
-    IPage findCourseByteacherId(IPage page, String tid);
+    @Select("select c.*,w.time wname,n.`name` nname,s.`week` sw,s.section sse,cs.`name` csname,e.`name` ename,t.`name` tname,co.`name` collegeName from t_course c,t_nature n,t_week w,t_section s,t_cstatus cs, t_examway e,t_team t,t_college co,t_teacher teacher WHERE c.week_id = w.id and c.way_id = e.id and c.team_id = t.id and c.section_id = s.id and c.nature_id = n.id and c.cstatus_id = cs.id and c.college_id = co.id and c.teacher_id = teacher.tid and c.teacher_id = #{tid}")
+    IPage<CourseDTO> findCourseByteacherId(Page page, @Param("tid") String tid);
+
+    List<CourseDTO> findScheduleByTeacher(@Param("tid") String tid, @Param("teamId") String teamId);
 }

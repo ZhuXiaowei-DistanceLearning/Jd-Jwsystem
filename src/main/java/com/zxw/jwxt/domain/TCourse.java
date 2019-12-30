@@ -30,24 +30,23 @@ public class TCourse implements Serializable {
     private String id;
 
     private String name;
-
+    @ApiModelProperty(value = "学分")
     private Integer credit;
-
+    @ApiModelProperty(value = "教室")
     private String classroom;
-
+    @ApiModelProperty(value = "人数")
     private Integer people;
-
+    @ApiModelProperty(value = "上课时间")
     private String sectionId;
-
+    @ApiModelProperty(value = "上课周数")
     private String weekId;
-
+    @ApiModelProperty(value = "上课教师")
     private String teacherId;
-
+    @ApiModelProperty(value = "课程性质")
     private String natureId;
-
     @TableField("totalPeople")
     private Integer totalPeople;
-
+    @ApiModelProperty(value = "开学学期")
     private String teamId;
 
     @ApiModelProperty(value = "总学时")

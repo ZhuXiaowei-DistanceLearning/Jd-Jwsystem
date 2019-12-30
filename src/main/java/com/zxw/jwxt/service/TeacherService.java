@@ -8,6 +8,7 @@ import com.zxw.jwxt.domain.TTeacher;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zxw.jwxt.domain.TeacherRole;
 import com.zxw.jwxt.mapper.TTeacherMapper;
+import com.zxw.jwxt.vo.QueryCourseVO;
 import com.zxw.jwxt.vo.QueryTeacherVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +28,17 @@ import java.util.List;
 //@Transactional(rollbackFor = Exception.class)
 public class TeacherService extends BaseService {
     @Autowired
+    private CourseService courseService;
+
+    @Autowired
     private TTeacherMapper teacherMapper;
 
     @Autowired
     private TeacherRoleService teacherRoleService;
 
     public TTeacher findByUsername(String username) {
-        return null;
+        TTeacher tTeacher = teacherMapper.selectById(username);
+        return tTeacher;
     }
 
     public IPage pageQuery(QueryTeacherVO teacherVO) {
@@ -59,5 +64,14 @@ public class TeacherService extends BaseService {
             teacherRoleService.insertRole(record);
         }
         return RS.ok();
+    }
+
+    public TTeacher findInfo(String tid) {
+        TTeacher teacher = teacherMapper.selectById(tid);
+        return teacher;
+    }
+
+    public List findSchedule(QueryCourseVO queryCourseVO, String userId) {
+        return null;
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.zxw.jwxt.controller.BaseController;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -28,6 +30,7 @@ public class MenuController extends BaseController {
 
     @PostMapping("/add")
     public RS add(@RequestBody Menu menu) {
+        menu.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
         return menuService.add(menu);
     }
 

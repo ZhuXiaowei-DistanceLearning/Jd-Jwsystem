@@ -6,6 +6,7 @@ import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zxw.jwxt.domain.TScore;
+import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.mapper.TCourseMapper;
 import com.zxw.jwxt.vo.QueryCourseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class CourseService extends BaseService {
 
 
     public IPage findCourseByteacherId(QueryCourseVO courseVO, String id) {
-        IPage iPage = courseMapper.findCourseByteacherId(getPage(courseVO), courseVO.getTeacherId());
+        IPage iPage = courseMapper.findCourseByteacherId(getPage(courseVO), id);
         return iPage;
     }
 
@@ -59,5 +60,10 @@ public class CourseService extends BaseService {
             model.setIsExam(0);
         }
         return courseMapper.insert(model) == 0 ? RS.error("添加失败") : RS.ok();
+    }
+
+    public List<CourseDTO> findScheduleByTeacher(String tid, String teamId) {
+        List<CourseDTO> list = courseMapper.findScheduleByTeacher(tid,teamId);
+        return list;
     }
 }
