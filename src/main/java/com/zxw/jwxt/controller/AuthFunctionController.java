@@ -8,6 +8,7 @@ import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.AuthFunction;
 import com.zxw.jwxt.domain.Menu;
 import com.zxw.jwxt.service.AuthFunctionService;
+import com.zxw.jwxt.service.AuthRoleService;
 import com.zxw.jwxt.service.MenuService;
 import com.zxw.jwxt.vo.QueryFunctionVO;
 import org.apache.commons.lang3.ObjectUtils;
@@ -36,6 +37,9 @@ public class AuthFunctionController extends BaseController {
 
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private AuthRoleService roleService;
+
     /**
      * 权限列表
      *
@@ -46,8 +50,13 @@ public class AuthFunctionController extends BaseController {
     @GetMapping("/pageQuery")
     public List<Menu> pageQuery(QueryFunctionVO functionQueryParam) {
         List<Menu> menuNodes = new ArrayList<>();
+        List<Menu> list = null;
         IPage iPage = menuService.pageQuery(functionQueryParam);
-        List<Menu> list = iPage.getRecords();
+        if (functionQueryParam.getRoleId() != null) {
+            list = roleService.findMenuByRole(functionQueryParam.getRoleId());
+        } else {
+            list = iPage.getRecords();
+        }
         list.forEach(menu -> {
             if (menu.getPid() == 0) {
                 menu.setChildren(new ArrayList<>());

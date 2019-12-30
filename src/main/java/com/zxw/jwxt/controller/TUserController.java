@@ -8,10 +8,7 @@ import com.zxw.jwxt.domain.TUser;
 import com.zxw.jwxt.service.UserService;
 import com.zxw.jwxt.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -22,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class TUserController extends BaseController {
     @Autowired
     private UserService userService;
@@ -34,13 +31,19 @@ public class TUserController extends BaseController {
         return of;
     }
 
-    @PostMapping("/saveOrUpdate")
-    public RS saveOrUpdate(TUser user) {
+    @PostMapping("/add")
+    public RS saveOrUpdate(@RequestBody TUser user) {
         RS rs = userService.saveOrUpdate(user);
         return rs;
     }
 
-    @GetMapping("/delete")
+    @PutMapping("/edit")
+    public RS edit(@RequestBody TUser user){
+        RS  rs = userService.edit(user);
+        return rs;
+    }
+
+    @DeleteMapping("/delete")
     public RS delete(String id) {
         RS rs = userService.lock(id);
         return rs;

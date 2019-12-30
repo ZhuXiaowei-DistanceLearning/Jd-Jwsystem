@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.AuthRole;
+import com.zxw.jwxt.domain.Menu;
+import com.zxw.jwxt.domain.RolesMenus;
 import com.zxw.jwxt.mapper.AuthRoleMapper;
 import com.zxw.jwxt.vo.QueryRoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +29,17 @@ public class AuthRoleService extends BaseService {
     @Autowired
     private AuthRoleMapper roleMapper;
 
+    @Autowired
+    private RolesMenusService rolesMenusService;
+
     public IPage pageQuery(QueryRoleVO roleQueryParam) {
         IPage iPage = this.BaseQuery(roleQueryParam);
         return iPage;
     }
 
-    public RS save(AuthRole role, String ids) {
-        roleMapper.insert(role);
-        String[] id = ids.split(",");
-        for (String functionId : id) {
-            roleMapper.RoleinsertFunction(role.getId(), functionId);
-        }
-        return RS.ok();
+    public RS save(AuthRole role) {
+        int insert = roleMapper.insert(role);
+        return insert == 1 ? RS.ok() : RS.error("角色添加失败");
     }
 
     public RS update(String ids, String roleId) {
@@ -61,12 +62,26 @@ public class AuthRoleService extends BaseService {
 
     public IPage BaseQuery(QueryRoleVO baseQueryParam) {
         Page page = getPage(baseQueryParam);
-        QueryWrapper queryWrapper = getWrapper(baseQueryParam,null);
+        QueryWrapper queryWrapper = getWrapper(baseQueryParam, null);
         IPage iPage = roleMapper.selectPage(page, queryWrapper);
         return iPage;
     }
 
     public List<AuthRole> listajax(QueryRoleVO roleQueryParam) {
-        return roleMapper.selectList(this.getWrapper(roleQueryParam,null));
+        return roleMapper.selectList(this.getWrapper(roleQueryParam, null));
+    }
+
+    public List<Menu> findMenuByRole(String roleId) {
+        List<Menu> list = roleMapper.findMenuByRole(roleId);
+        return list;
+    }
+
+    public RS edit(AuthRole role) {
+        int i = roleMapper.updateById(role);
+        return i == 0 ? RS.ok() : RS.error("角色修改失败");
+    }
+
+    public RS saveMenu(RolesMenus rolesMenus) {
+        return rolesMenusService.saveMenu(rolesMenus);
     }
 }

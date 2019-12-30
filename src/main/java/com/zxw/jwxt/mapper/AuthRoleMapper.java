@@ -2,6 +2,7 @@ package com.zxw.jwxt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zxw.jwxt.domain.AuthRole;
+import com.zxw.jwxt.domain.Menu;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public interface AuthRoleMapper extends BaseMapper<AuthRole> {
 
     @Select("SELECT rf.`function_id` FROM `auth_role` ar,`role_function` rf WHERE ar.`id` = rf.`role_id` AND ar.`id`=#{id};")
     List<String> queryFunctionByRole(String roleId);
+
     @Delete("delete from role_function where function_id = #{id}")
     void deleteRoleFunction(@Param("id") String id);
 
@@ -32,4 +34,7 @@ public interface AuthRoleMapper extends BaseMapper<AuthRole> {
 
     @Delete("delete from role_function where role_id = #{roleId}")
     void deleteFunction(@Param("roleId") String roleId);
+
+    @Select("SELECT * FROM `roles_menus` rm,`menu` m WHERE rm.`menu_id` = m.`id` AND rm.`role_id` = #{roleId}")
+    List<Menu> findMenuByRole(@Param("roleId") String roleId);
 }

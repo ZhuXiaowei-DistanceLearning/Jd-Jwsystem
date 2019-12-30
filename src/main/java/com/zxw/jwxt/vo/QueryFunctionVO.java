@@ -1,8 +1,6 @@
 package com.zxw.jwxt.vo;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author zxw
@@ -10,4 +8,5 @@ import lombok.NoArgsConstructor;
  */
 @Data
 public class QueryFunctionVO extends BaseQueryParam {
+    private String roleId;
 }

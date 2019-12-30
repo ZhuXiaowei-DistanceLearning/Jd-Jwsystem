@@ -8,8 +8,6 @@ import com.zxw.jwxt.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.zxw.jwxt.controller.BaseController;
-
 import java.util.List;
 
 /**
@@ -29,6 +27,11 @@ public class MenuController extends BaseController {
     @PostMapping("/add")
     public RS add(@RequestBody Menu menu) {
         return menuService.add(menu);
+    }
+
+    @PutMapping("/edit")
+    public RS edit(@RequestBody Menu menu) {
+        return menuService.edit(menu);
     }
 
     @DeleteMapping("/delete")

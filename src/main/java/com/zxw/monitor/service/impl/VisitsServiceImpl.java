@@ -5,21 +5,18 @@ import com.zxw.jwxt.service.BaseService;
 import com.zxw.monitor.domain.Visits;
 import com.zxw.monitor.mapper.VisitsMapper;
 import com.zxw.monitor.service.VisitsService;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author Zheng Jie
- * @date 2018-12-13
+ * @author zxw
+ * @date 2019/12/18 20:23
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)

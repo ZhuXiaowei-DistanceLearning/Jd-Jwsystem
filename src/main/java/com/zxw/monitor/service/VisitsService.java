@@ -2,11 +2,9 @@ package com.zxw.monitor.service;
 
 import org.springframework.scheduling.annotation.Async;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
- * @author Zheng Jie
- * @date 2018-12-13
+ * @author zxw
+ * @date 2019/12/18 20:23
  */
 public interface VisitsService {
 

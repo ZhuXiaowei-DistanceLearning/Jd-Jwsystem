@@ -5,13 +5,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
 import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.domain.AuthRole;
+import com.zxw.jwxt.domain.Menu;
+import com.zxw.jwxt.domain.RolesMenus;
 import com.zxw.jwxt.service.AuthRoleService;
 import com.zxw.jwxt.vo.QueryRoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,20 +29,26 @@ public class AuthRoleController extends BaseController {
     @Autowired
     private AuthRoleService roleService;
 
-    @GetMapping("/add")
-    public RS add(String ids, AuthRole role) {
-        RS rs = roleService.save(role, ids);
+    @PostMapping("/add")
+    public RS add(@RequestBody AuthRole role) {
+        RS rs = roleService.save(role);
         return rs;
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public RS update(String ids, String roleId) {
         RS rs = roleService.update(ids, roleId);
         return rs;
     }
 
-    @GetMapping("/delete")
-    public RS delete(String roleId) {
+    @PutMapping("/edit")
+    public RS edit(@RequestBody AuthRole role) {
+        RS rs = roleService.edit(role);
+        return rs;
+    }
+
+    @DeleteMapping("/delete")
+    public RS delete(@RequestParam("roleId") String roleId) {
         RS rs = roleService.deleteRole(roleId);
         return rs;
     }
@@ -56,10 +61,22 @@ public class AuthRoleController extends BaseController {
     }
 
     @GetMapping("/listajax")
-    public List<AuthRole> listajax(QueryRoleVO roleQueryParam)  {
+    public List<AuthRole> listajax(QueryRoleVO roleQueryParam) {
 //        List<AuthRole> list = roleSerivce.findAll();
 //        return list;
         List<AuthRole> list = roleService.listajax(roleQueryParam);
         return list;
+    }
+
+    @GetMapping("/findMenuByRole")
+    public List<Menu> findMenuByRole(@RequestParam("roleId") String roleId) {
+        List<Menu> list = roleService.findMenuByRole(roleId);
+        return list;
+    }
+
+    @PostMapping("/saveMenu")
+    public RS saveMenu(@RequestBody RolesMenus rolesMenus) {
+        RS rs = roleService.saveMenu(rolesMenus);
+        return rs;
     }
 }

@@ -2,6 +2,7 @@ package com.zxw.jwxt.mapper;
 
 import com.zxw.jwxt.domain.RolesMenus;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author zxw
  * @since 2019-12-24
  */
+@Mapper
 public interface RolesMenusMapper extends BaseMapper<RolesMenus> {
 
 }
