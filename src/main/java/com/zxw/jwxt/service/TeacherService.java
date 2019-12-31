@@ -1,5 +1,6 @@
 package com.zxw.jwxt.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,10 +11,13 @@ import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.mapper.TTeacherMapper;
 import com.zxw.jwxt.vo.QueryCourseVO;
 import com.zxw.jwxt.vo.QueryTeacherVO;
+import com.zxw.jwxt.vo.ScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -70,8 +74,57 @@ public class TeacherService extends BaseService {
         return teacher;
     }
 
-    public List findSchedule(QueryCourseVO queryCourseVO, String userId) {
+    public Object[][] findSchedule(QueryCourseVO queryCourseVO, String userId) {
+        Object[][] arr = new Object[5][7];
         List<CourseDTO> list = courseService.findScheduleByTeacher(userId, queryCourseVO.getTeamId());
-        return list;
+        list.forEach(e -> {
+            ScheduleDTO scheduleDTO = new ScheduleDTO(e.getName(), e.getWname(), e.getNname(), e.getClassroom());
+            switch (e.getSse()) {
+                case "1-2节":
+                    parseSchedule(arr, e, scheduleDTO,0);
+                    break;
+                case "3-4节":
+                    parseSchedule(arr, e, scheduleDTO,1);
+                    break;
+                case "5-6节":
+                    parseSchedule(arr, e, scheduleDTO,2);
+                    break;
+                case "7-8节":
+                    parseSchedule(arr, e, scheduleDTO,3);
+                    break;
+                case "9-10节":
+                    parseSchedule(arr, e, scheduleDTO,4);
+                    break;
+            }
+        });
+        return arr;
     }
+
+    private void parseSchedule(Object[][] arr, CourseDTO e, ScheduleDTO scheduleDTO,int i) {
+        switch (e.getSw()) {
+            case "周一":
+                arr[i][0] = scheduleDTO;
+                break;
+            case "周二":
+                arr[i][1] = scheduleDTO;
+                break;
+            case "周三":
+                arr[i][2] = scheduleDTO;
+                break;
+            case "周四":
+                arr[i][3] = scheduleDTO;
+                break;
+            case "周五":
+                arr[i][4] = scheduleDTO;
+                break;
+            case "周六":
+                arr[i][5] = scheduleDTO;
+                break;
+            case "周日":
+                arr[i][6] = scheduleDTO;
+                break;
+        }
+    }
+
+
 }
