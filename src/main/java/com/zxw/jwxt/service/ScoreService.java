@@ -1,16 +1,12 @@
 package com.zxw.jwxt.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TScore;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.zxw.jwxt.mapper.TScoreMapper;
 import com.zxw.jwxt.vo.QueryScoreVO;
-import com.zxw.jwxt.vo.QueryStudentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,8 +24,9 @@ public class ScoreService extends BaseService {
     @Autowired
     private TScoreMapper scoreMapper;
 
-    public RS saveCourse(TScore model) {
-        return scoreMapper.insert(model) == 0 ? RS.error("插入失败") : RS.ok();
+    public RS saveCourse(QueryScoreVO model) {
+//        return scoreMapper.insert(model) == 0 ? RS.error("插入失败") : RS.ok();
+        return null;
     }
 
     /**
@@ -52,10 +49,20 @@ public class ScoreService extends BaseService {
         return list;
     }
 
-    public IPage addScore(QueryScoreVO scoreVO) {
-        Page page = getPage(scoreVO);
-        IPage iPage = scoreMapper.addStudentScore(page, scoreVO.getCourseId());
-        return iPage;
+    public RS addScore(QueryScoreVO scoreVO) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("student_id", scoreVO.getSid());
+        queryWrapper.eq("course_id", scoreVO.getCid());
+        TScore tScore = scoreMapper.selectOne(queryWrapper);
+        Double attendance = scoreVO.getAttendance() * 0.2;
+        Double usually = scoreVO.getUsually() * 0.2;
+        Double exam = scoreVO.getExam() * 0.6;
+        tScore.setAttendance(scoreVO.getAttendance().intValue());
+        tScore.setUsually(scoreVO.getUsually().intValue());
+        tScore.setExam(scoreVO.getExam().intValue());
+        tScore.setScore(attendance.intValue() + usually.intValue() + exam.intValue());
+        int i = scoreMapper.update(tScore, queryWrapper);
+        return i == 0 ? RS.error("操作失败") : RS.ok();
     }
 
     /**
@@ -82,20 +89,18 @@ public class ScoreService extends BaseService {
     }
 
     /**
-     * 添加缺席
+     * 记录缺勤
      *
      * @param scoreVO
+     * @return
      */
-    public void addAbsent(QueryScoreVO scoreVO) {
-        TScore record = new TScore();
-        record.setCourseId(scoreVO.getCourseId());
-        for (String studentId : scoreVO.getIdList()) {
-            record.setStudentId(studentId);
-            TScore score = scoreMapper.selectById(record);
-            String absent = score.getAbsent();
-            int times = Integer.valueOf(absent) + 1;
-            score.setAbsent(String.valueOf(times));
-            scoreMapper.updateById(score);
-        }
+    public RS addAbsent(QueryScoreVO scoreVO) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("course_id", scoreVO.getCid());
+        queryWrapper.eq("student_id", scoreVO.getSid());
+        TScore tScore = scoreMapper.selectOne(queryWrapper);
+        tScore.setAbsent(tScore.getAbsent() + 1);
+        int i = scoreMapper.update(tScore, queryWrapper);
+        return i == 1 ? RS.ok() : RS.error("添加缺勤失败");
     }
 }

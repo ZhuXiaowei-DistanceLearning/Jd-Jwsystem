@@ -1,25 +1,22 @@
 package com.zxw.jwxt.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
-import com.zxw.common.pojo.TableReponse;
-import com.zxw.jwxt.domain.TCourse;
 import com.zxw.jwxt.domain.TScore;
 import com.zxw.jwxt.domain.TStudent;
 import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.service.CourseService;
 import com.zxw.jwxt.service.ScoreService;
+import com.zxw.jwxt.service.StudentService;
 import com.zxw.jwxt.vo.QueryScoreVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.zxw.jwxt.controller.BaseController;
-
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +30,16 @@ import java.util.List;
  * @since 2019-11-07
  */
 @RestController
-@RequestMapping("/score")
+@RequestMapping("/api/score")
 public class TScoreController extends BaseController {
     @Autowired
     private ScoreService scoreService;
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private StudentService studentService;
 
     /**
      * 选课实现
@@ -52,12 +52,12 @@ public class TScoreController extends BaseController {
         UserRealm realm = getRealm();
 //        Subject subject = SecurityUtils.getSubject();
 //        TStudent student = (TStudent) subject.getPrincipal();
-        TScore score = new TScore();
-        score.setStudentId(realm.getId());
-        score.setCourseId(scoreVO.getCourseId());
-        scoreService.saveCourse(score);
-        int i = scoreVO.getPeople() + 1;
-        courseService.addPeople(i, score.getCourseId());
+//        TScore score = new TScore();
+//        score.setStudentId(realm.getId());
+//        score.setCourseId(scoreVO.getCourseId());
+//        scoreService.saveCourse(score);
+//        int i = scoreVO.getPeople() + 1;
+//        courseService.addPeople(i, score.getCourseId());
         return RS.ok();
 
     }
@@ -76,50 +76,16 @@ public class TScoreController extends BaseController {
     }
 
     /**
-     * 获取平和期
-     * 设置最终
-     * 保存
-     *
-     * @throws IOException
-     */
-    @GetMapping("/findTeacherCourseStudent")
-    public TableReponse findTeacherCourseStudent(QueryScoreVO scoreVO) {
-//        TCourse course = (TCourse) session.getAttribute("addStudentScore");
-        IPage result = scoreService.addScore(scoreVO);
-        TableReponse reponse = TableReponse.of(result);
-        return reponse;
-    }
-
-    /**
      * @param scoreVO
      * @return
      */
-    @PostMapping("/addStudentScore")
-    public RS addStudentScore(QueryScoreVO scoreVO) {
-        String peaceTime = scoreVO.getPeaceTime();
-        String endTime = scoreVO.getEndTime();
-        if (peaceTime.equals("A+") && endTime.equals("A+")) {
-            scoreVO.setScore("A+");
-        } else if (peaceTime.equals("A") && endTime.equals("A")) {
-            scoreVO.setScore("A");
-        } else if (peaceTime.equals("B+") && endTime.equals("B+")) {
-            scoreVO.setScore("B+");
-        } else if (peaceTime.equals("B") && endTime.equals("B")) {
-            scoreVO.setScore("B");
-        } else if (peaceTime.equals("C+") && endTime.equals("C+")) {
-            scoreVO.setScore("C+");
-        } else if (peaceTime.equals("C") && endTime.equals("C")) {
-            scoreVO.setScore("C");
-        } else if (peaceTime.equals("D+") && endTime.equals("D+")) {
-            scoreVO.setScore("D");
-        } else if (peaceTime.equals("D") && endTime.equals("D")) {
-            scoreVO.setScore("D");
-        } else if (peaceTime.equals("F") && endTime.equals("F")) {
-            scoreVO.setScore("F");
-        } else if (peaceTime.equals("F") && endTime.equals("A")) {
-            scoreVO.setScore("F");
+    @PostMapping("/addScore")
+    public ResponseEntity addStudentScore(@RequestBody QueryScoreVO scoreVO) {
+        RS rs = scoreService.addScore(scoreVO);
+        if (rs.get("status").equals("1")) {
+            return ResponseEntity.ok(rs);
         }
-        return scoreService.saveCourse(null);
+        throw new BadRequestException("添加成绩失败");
     }
 
     /**
@@ -142,7 +108,7 @@ public class TScoreController extends BaseController {
     public RS findAllCourseByStudentId(QueryScoreVO scoreVO, Model model) {
         Subject subject = SecurityUtils.getSubject();
         TStudent student = (TStudent) subject.getPrincipal();
-        List<TScore> list = scoreService.findAllCourseByStudentId(scoreVO.getStudentId());
+        List<TScore> list = scoreService.findAllCourseByStudentId(scoreVO.getSid());
 //        request.setAttribute("allCourse", list);
         model.addAttribute("allCourse", list);
         return RS.ok();
@@ -157,7 +123,7 @@ public class TScoreController extends BaseController {
     public List<TScore> findStudentScore(QueryScoreVO scoreVO) {
         Subject subject = SecurityUtils.getSubject();
         TStudent student = (TStudent) subject.getPrincipal();
-        List<TScore> list = scoreService.findStudentScore(scoreVO.getStudentId());
+        List<TScore> list = scoreService.findStudentScore(scoreVO.getSid());
         List<TScore> scores = new ArrayList<>();
         return list;
     }
@@ -167,9 +133,13 @@ public class TScoreController extends BaseController {
      *
      * @return
      */
-    @GetMapping("/addAbsent")
-    public String addAbsent(String[] lateStudentId, String cid) {
-//        scoreService.addAbsent(lateStudentId, cid);
-        return "forward:/student/addStudentAbsent.action?lateStudentId=" + lateStudentId;
+    @PostMapping("/addAbsent")
+    public ResponseEntity addAbsent(@RequestBody QueryScoreVO queryScoreVO) {
+        RS rs = scoreService.addAbsent(queryScoreVO);
+        RS absent = studentService.updateAbsent(queryScoreVO.getSid());
+        if (rs.get("status").equals("1") && absent.get("status").equals("1")) {
+            return ResponseEntity.ok(rs);
+        }
+        throw new BadRequestException("考勤更新失败");
     }
 }

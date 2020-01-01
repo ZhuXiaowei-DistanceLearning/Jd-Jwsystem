@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.enums.ExceptionEnums;
 import com.zxw.common.exception.JwException;
-import com.zxw.common.pojo.PageUtils;
 import com.zxw.common.pojo.RS;
 import com.zxw.common.utils.FileUtils;
 import com.zxw.jwxt.domain.StudentRole;
@@ -17,7 +16,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
@@ -25,10 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
 /**
@@ -220,5 +216,11 @@ public class StudentService extends BaseService {
         response.setContentType(contentType);
         response.setHeader("content-disposition", "attchment;filename=" + filename);
         workbook.write(out);
+    }
+
+    public RS updateAbsent(String sid) {
+        TStudent tStudent = studentMapper.selectById(sid);
+        tStudent.setAbsent(tStudent.getAbsent() + 1);
+        return studentMapper.updateById(tStudent) == 1 ? RS.ok() : RS.error("操作失败");
     }
 }

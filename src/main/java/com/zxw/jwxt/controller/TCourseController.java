@@ -6,9 +6,11 @@ import com.zxw.common.pojo.RS;
 import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.domain.TCourse;
 import com.zxw.jwxt.domain.UserRealm;
+import com.zxw.jwxt.dto.StudentDTO;
 import com.zxw.jwxt.service.CourseService;
 import com.zxw.jwxt.vo.QueryCourseVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +52,13 @@ public class TCourseController extends BaseController {
         IPage result = courseService.findCourseByteacherId(courseVO, realm.getId());
         TableReponse reponse = TableReponse.of(result);
         return reponse;
+    }
+
+    @GetMapping("/findStudentByCourseId")
+    public ResponseEntity findStudentByCourseId(QueryCourseVO courseVO){
+        IPage<StudentDTO> result = courseService.findStudentByCourseId(courseVO);
+        TableReponse reponse = TableReponse.of(result);
+        return ResponseEntity.ok(reponse);
     }
 
     @RequestMapping("/addScorePage")
