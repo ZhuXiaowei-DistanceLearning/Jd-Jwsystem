@@ -46,16 +46,8 @@ public class StudentService extends BaseService {
     private StudentRoleService studentRoleService;
 
     public TStudent findByUsername(String username) {
-//        TStudentExample studentExample = new TStudentExample();
-//        JW.pojo.TStudentExample.Criteria studentCriteria = studentExample.createCriteria();
-//        studentCriteria.andSidEqualTo(username);
-//        List<TStudent> student = studentMapper.selectByExample(studentExample);
-//        if (student.size() == 1) {
-//            return student.get(0);
-//        } else {
-//            return null;
-//        }
-        return null;
+        TStudent tStudent = studentMapper.selectById(username);
+        return tStudent;
     }
 
     /**
@@ -222,5 +214,10 @@ public class StudentService extends BaseService {
         TStudent tStudent = studentMapper.selectById(sid);
         tStudent.setAbsent(tStudent.getAbsent() + 1);
         return studentMapper.updateById(tStudent) == 1 ? RS.ok() : RS.error("操作失败");
+    }
+
+    public TStudent findInfo(String userId) {
+        TStudent tStudent = studentMapper.selectById(userId);
+        return tStudent;
     }
 }

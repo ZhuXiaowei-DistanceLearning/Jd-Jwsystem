@@ -8,14 +8,13 @@ import com.zxw.jwxt.domain.TTeacher;
 import com.zxw.jwxt.service.TeacherService;
 import com.zxw.jwxt.vo.QueryCourseVO;
 import com.zxw.jwxt.vo.QueryTeacherVO;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.zxw.jwxt.controller.BaseController;
-
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -62,7 +61,7 @@ public class TTeacherController extends BaseController {
     }
 
     @GetMapping("/findInfo")
-    public ResponseEntity findInfo(String tid) {
+    public ResponseEntity findInfo() {
         TTeacher teacher = teacherService.findInfo(getUserId());
         return ResponseEntity.ok(teacher);
     }
