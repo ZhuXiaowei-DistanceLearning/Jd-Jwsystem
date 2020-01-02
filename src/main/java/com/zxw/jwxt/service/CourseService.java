@@ -61,17 +61,24 @@ public class CourseService extends BaseService {
     }
 
     public List<CourseDTO> findScheduleByTeacher(String tid, String teamId) {
-        List<CourseDTO> list = courseMapper.findScheduleByTeacher(tid,teamId);
+        List<CourseDTO> list = courseMapper.findScheduleByTeacher(tid, teamId);
         return list;
     }
 
     public IPage findStudentByCourseId(QueryCourseVO courseVO) {
-        IPage<StudentDTO> page = courseMapper.findStudentByCourseId(this.getPage(courseVO),courseVO.getId());
+        IPage<StudentDTO> page = courseMapper.findStudentByCourseId(this.getPage(courseVO), courseVO.getId());
         return page;
     }
 
     public List<CourseDTO> findScheduleByStudent(String userId, String teamId) {
-        List<CourseDTO> list = courseMapper.findScheduleByStudent(userId,teamId);
+        List<CourseDTO> list = courseMapper.findScheduleByStudent(userId, teamId);
         return list;
+    }
+
+    public RS updatePeople(String cid) {
+        TCourse tCourse = courseMapper.selectOne(this.queryOne("id", cid));
+        tCourse.setPeople(tCourse.getPeople() + 1);
+        int i = courseMapper.updateById(tCourse);
+        return i == 1 ? RS.ok() : RS.error("操作失败");
     }
 }

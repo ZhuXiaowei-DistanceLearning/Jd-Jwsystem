@@ -3,9 +3,9 @@ package com.zxw.jwxt.controller;
 
 import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
+import com.zxw.jwxt.domain.TCourse;
 import com.zxw.jwxt.domain.TScore;
 import com.zxw.jwxt.domain.TStudent;
-import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.service.CourseService;
 import com.zxw.jwxt.service.ScoreService;
 import com.zxw.jwxt.service.StudentService;
@@ -41,6 +41,7 @@ public class TScoreController extends BaseController {
     @Autowired
     private StudentService studentService;
 
+
     /**
      * 选课实现
      *
@@ -48,18 +49,24 @@ public class TScoreController extends BaseController {
      * @return
      */
     @PostMapping("/save")
-    public RS save(QueryScoreVO scoreVO) {
-        UserRealm realm = getRealm();
-//        Subject subject = SecurityUtils.getSubject();
-//        TStudent student = (TStudent) subject.getPrincipal();
-//        TScore score = new TScore();
-//        score.setStudentId(realm.getId());
-//        score.setCourseId(scoreVO.getCourseId());
-//        scoreService.saveCourse(score);
-//        int i = scoreVO.getPeople() + 1;
-//        courseService.addPeople(i, score.getCourseId());
-        return RS.ok();
-
+    public ResponseEntity save(@RequestBody QueryScoreVO scoreVO) {
+        // 判断是否已经选修
+        Boolean b = scoreService.findIsSelect(getUserId(), scoreVO.getCid());
+        if (!b) {
+            // 判断人数是否已满
+            TCourse tCourse = courseService.findById(scoreVO.getCid());
+            if (!tCourse.getPeople().equals(tCourse.getTotalPeople())) {
+                // 选修
+                RS rs = scoreService.save(scoreVO,getUserId());
+                RS people = courseService.updatePeople(scoreVO.getCid());
+                if (rs.get("status").equals("1")) {
+                    return ResponseEntity.ok(rs);
+                }
+                throw new BadRequestException("选课失败");
+            }
+            throw new BadRequestException("课程人数已满");
+        }
+        throw new BadRequestException("已经选择了该门课程,不能重复下载");
     }
 
 
@@ -89,20 +96,7 @@ public class TScoreController extends BaseController {
     }
 
     /**
-     * @param scoreVO
-     * @return
-     * @throws IOException
-     */
-    @GetMapping("/findIdExist")
-    public RS findIdExist(QueryScoreVO scoreVO) throws IOException {
-        TStudent student = (TStudent) SecurityUtils.getSubject().getPrincipal();
-        String flag = "0";
-//        List<TScore> exit = scoreService.findStudentExit(student.getSid(), ids);
-        return null;
-    }
-
-    /**
-     * 转发到学生中的日期英语
+     * 查找选修的课程
      */
     @GetMapping("/findAllCourseByStudentId")
     public RS findAllCourseByStudentId(QueryScoreVO scoreVO, Model model) {

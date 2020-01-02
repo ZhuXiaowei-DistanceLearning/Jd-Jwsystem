@@ -66,18 +66,6 @@ public class ScoreService extends BaseService {
     }
 
     /**
-     * 查找选修了该门课程的学生
-     *
-     * @param sid
-     * @param ids
-     * @return
-     */
-    public List<TScore> findStudentExit(String sid, String ids) {
-        List<TScore> list = scoreMapper.findCourseStudentId(sid, ids);
-        return list;
-    }
-
-    /**
      * 查询学生成绩
      *
      * @param sid
@@ -102,5 +90,22 @@ public class ScoreService extends BaseService {
         tScore.setAbsent(tScore.getAbsent() + 1);
         int i = scoreMapper.update(tScore, queryWrapper);
         return i == 1 ? RS.ok() : RS.error("添加缺勤失败");
+    }
+
+    public Boolean findIsSelect(String userId, String cid) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("course_id", cid);
+        queryWrapper.eq("student_id", userId);
+        TScore tScore = scoreMapper.selectOne(queryWrapper);
+        return tScore == null ? false : true;
+    }
+
+    public RS save(QueryScoreVO scoreVO, String userId) {
+        TScore tScore = new TScore();
+        tScore.setStudentId(userId);
+        tScore.setTeacherId(scoreVO.getTid());
+        tScore.setCourseId(scoreVO.getCid());
+        int i = scoreMapper.insert(tScore);
+        return i == 0 ? RS.error("操作失败") : RS.ok();
     }
 }
