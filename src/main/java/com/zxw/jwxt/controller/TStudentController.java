@@ -68,8 +68,9 @@ public class TStudentController extends BaseController {
     }
 
     @GetMapping("/findSchedule")
-    public ResponseEntity findSchedule(){
-        return null;
+    public ResponseEntity findSchedule(QueryStudentVO queryCourseVO){
+        Object[][] schedule = studentService.findSchedule(queryCourseVO, getUserId());
+        return ResponseEntity.ok(schedule);
     }
 
     /**

@@ -29,16 +29,6 @@ public interface TScoreMapper extends BaseMapper<TScore> {
             "\t\ts.`course_id`=#{value};")
     List<TScore> findStudentId(String ids);
 
-    /**
-     * 查询学生是否含有本门课程
-     *
-     * @param id
-     * @param ids
-     * @return
-     */
-    @Select("SELECT * FROM `t_score` s LEFT JOIN `t_student` st ON\n" +
-            "\t\ts.`Student_id`=st.`sid` WHERE st.`sid`=#{0} AND s.`course_id`=#{1}")
-    List<TScore> findCourseStudentId(String id, String ids);
 
     /**
      * 查询出对应学生
@@ -112,4 +102,6 @@ public interface TScoreMapper extends BaseMapper<TScore> {
             "\t\t`t_college` cl ON\n" +
             "\t\tsp.`college_id`=cl.`id` WHERE course_id = #{value}")
     IPage addStudentScore(IPage iPage, String courseId);
+
+
 }

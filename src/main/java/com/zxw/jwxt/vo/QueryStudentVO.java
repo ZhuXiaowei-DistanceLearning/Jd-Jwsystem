@@ -1,13 +1,7 @@
 package com.zxw.jwxt.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.zxw.jwxt.domain.TClasses;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -38,4 +32,5 @@ public class QueryStudentVO extends BaseQueryParam {
     private String address;
     private String politicalStatus;
     private String classname;
+    private String teamId;
 }

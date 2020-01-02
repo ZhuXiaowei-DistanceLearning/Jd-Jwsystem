@@ -69,4 +69,9 @@ public class CourseService extends BaseService {
         IPage<StudentDTO> page = courseMapper.findStudentByCourseId(this.getPage(courseVO),courseVO.getId());
         return page;
     }
+
+    public List<CourseDTO> findScheduleByStudent(String userId, String teamId) {
+        List<CourseDTO> list = courseMapper.findScheduleByStudent(userId,teamId);
+        return list;
+    }
 }

@@ -9,8 +9,10 @@ import com.zxw.common.pojo.RS;
 import com.zxw.common.utils.FileUtils;
 import com.zxw.jwxt.domain.StudentRole;
 import com.zxw.jwxt.domain.TStudent;
+import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.mapper.TStudentMapper;
 import com.zxw.jwxt.vo.QueryStudentVO;
+import com.zxw.jwxt.vo.ScheduleDTO;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
@@ -41,6 +43,9 @@ public class StudentService extends BaseService {
 
     @Autowired
     private TStudentMapper studentMapper;
+
+    @Autowired
+    private CourseService courseService;
 
     @Autowired
     private StudentRoleService studentRoleService;
@@ -219,5 +224,57 @@ public class StudentService extends BaseService {
     public TStudent findInfo(String userId) {
         TStudent tStudent = studentMapper.selectById(userId);
         return tStudent;
+    }
+
+    public Object[][] findSchedule(QueryStudentVO queryCourseVO, String userId) {
+        Object[][] arr = new Object[5][7];
+        List<CourseDTO> list = courseService.findScheduleByStudent(userId, queryCourseVO.getTeamId());
+        list.forEach(e -> {
+            ScheduleDTO scheduleDTO = new ScheduleDTO(e.getName(), e.getWname(), e.getTeacherName(), e.getClassroom());
+            switch (e.getSse()) {
+                case "1-2节":
+                    parseSchedule(arr, e, scheduleDTO, 0);
+                    break;
+                case "3-4节":
+                    parseSchedule(arr, e, scheduleDTO, 1);
+                    break;
+                case "5-6节":
+                    parseSchedule(arr, e, scheduleDTO, 2);
+                    break;
+                case "7-8节":
+                    parseSchedule(arr, e, scheduleDTO, 3);
+                    break;
+                case "9-10节":
+                    parseSchedule(arr, e, scheduleDTO, 4);
+                    break;
+            }
+        });
+        return arr;
+    }
+
+    private void parseSchedule(Object[][] arr, CourseDTO e, ScheduleDTO scheduleDTO, int i) {
+        switch (e.getSw()) {
+            case "周一":
+                arr[i][0] = scheduleDTO;
+                break;
+            case "周二":
+                arr[i][1] = scheduleDTO;
+                break;
+            case "周三":
+                arr[i][2] = scheduleDTO;
+                break;
+            case "周四":
+                arr[i][3] = scheduleDTO;
+                break;
+            case "周五":
+                arr[i][4] = scheduleDTO;
+                break;
+            case "周六":
+                arr[i][5] = scheduleDTO;
+                break;
+            case "周日":
+                arr[i][6] = scheduleDTO;
+                break;
+        }
     }
 }

@@ -38,6 +38,7 @@ public class TCourseController extends BaseController {
     }
 
     /**
+     * 添加选课
      * @param courseVO
      * @return
      */
@@ -46,6 +47,11 @@ public class TCourseController extends BaseController {
         return courseService.add(courseVO);
     }
 
+    /**
+     * 查找教师的课程
+     * @param courseVO
+     * @return
+     */
     @GetMapping("/findCourseByteacherId")
     public TableReponse findCourseByteacherId(QueryCourseVO courseVO) {
         UserRealm realm = getRealm();
@@ -54,6 +60,11 @@ public class TCourseController extends BaseController {
         return reponse;
     }
 
+    /**
+     * 查询某门课程下的学生
+     * @param courseVO
+     * @return
+     */
     @GetMapping("/findStudentByCourseId")
     public ResponseEntity findStudentByCourseId(QueryCourseVO courseVO){
         IPage<StudentDTO> result = courseService.findStudentByCourseId(courseVO);
@@ -61,9 +72,4 @@ public class TCourseController extends BaseController {
         return ResponseEntity.ok(reponse);
     }
 
-    @RequestMapping("/addScorePage")
-    public TableReponse addScorePage(QueryCourseVO courseVO) {
-        TCourse course = courseService.findById(courseVO.getId());
-        return null;
-    }
 }
