@@ -3,6 +3,7 @@ package com.zxw.jwxt.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.jwxt.domain.TScore;
+import com.zxw.jwxt.dto.CourseDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -104,4 +105,6 @@ public interface TScoreMapper extends BaseMapper<TScore> {
     IPage addStudentScore(IPage iPage, String courseId);
 
 
+    @Select("SELECT c.`id`,c.`name`,c.`classroom`,t.`tname` teacherName,te.`name` tname,w.`time` wname,se.`section` sse,se.`week` sw FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_nature` n,`t_section` se WHERE s.`student_id` = ts.`sid` AND s.`course_id` = c.`id` AND c.`nature_id` = n.`id` AND c.`team_id` = te.`id` AND c.`week_id` = w.`id` AND c.`teacher_id` = t.`tid` AND se.`id`= c.`section_id` AND ts.`sid` = #{sid} AND s.`status` = 0")
+    List<CourseDTO> findSelectCourseByStudentId(String sid);
 }

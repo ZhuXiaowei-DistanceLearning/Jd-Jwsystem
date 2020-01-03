@@ -2,6 +2,7 @@ package com.zxw.jwxt.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TCourse;
 import com.zxw.jwxt.dto.CourseDTO;
@@ -80,5 +81,15 @@ public class CourseService extends BaseService {
         tCourse.setPeople(tCourse.getPeople() + 1);
         int i = courseMapper.updateById(tCourse);
         return i == 1 ? RS.ok() : RS.error("操作失败");
+    }
+
+    public RS deletePeople(String cid) {
+        TCourse tCourse = courseMapper.selectOne(this.queryOne("id", cid));
+        if (tCourse != null) {
+            tCourse.setPeople(tCourse.getPeople() - 1);
+            int i = courseMapper.update(tCourse, this.queryOne("id", cid));
+            return i == 1 ? RS.ok() : RS.error("操作失败");
+        }
+        throw new BadRequestException("该课程不存在");
     }
 }

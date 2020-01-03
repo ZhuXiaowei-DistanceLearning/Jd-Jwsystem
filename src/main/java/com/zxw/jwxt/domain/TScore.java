@@ -40,5 +40,7 @@ public class TScore implements Serializable {
 
     private Integer absent;
 
+    private Integer status;
+
 
 }

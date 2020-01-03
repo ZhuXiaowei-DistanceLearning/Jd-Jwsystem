@@ -3,6 +3,7 @@ package com.zxw.jwxt.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TScore;
+import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.mapper.TScoreMapper;
 import com.zxw.jwxt.vo.QueryScoreVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,8 @@ public class ScoreService extends BaseService {
      * @param sid
      * @return
      */
-    public List<TScore> findAllCourseByStudentId(String sid) {
-        List<TScore> list = scoreMapper.findAllCourseByStudentId(sid);
+    public List<CourseDTO> findSelectCourseByStudentId(String sid) {
+        List<CourseDTO> list = scoreMapper.findSelectCourseByStudentId(sid);
         return list;
     }
 
@@ -107,5 +108,13 @@ public class ScoreService extends BaseService {
         tScore.setCourseId(scoreVO.getCid());
         int i = scoreMapper.insert(tScore);
         return i == 0 ? RS.error("操作失败") : RS.ok();
+    }
+
+    public RS delete(String userId, String cid) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("course_id", cid);
+        queryWrapper.eq("student_id", userId);
+        int i = scoreMapper.delete(queryWrapper);
+        return i == 1 ? RS.ok() : RS.error("操作失败");
     }
 }

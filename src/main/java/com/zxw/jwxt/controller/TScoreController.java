@@ -6,6 +6,7 @@ import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TCourse;
 import com.zxw.jwxt.domain.TScore;
 import com.zxw.jwxt.domain.TStudent;
+import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.service.CourseService;
 import com.zxw.jwxt.service.ScoreService;
 import com.zxw.jwxt.service.StudentService;
@@ -14,7 +15,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -57,7 +57,7 @@ public class TScoreController extends BaseController {
             TCourse tCourse = courseService.findById(scoreVO.getCid());
             if (!tCourse.getPeople().equals(tCourse.getTotalPeople())) {
                 // 选修
-                RS rs = scoreService.save(scoreVO,getUserId());
+                RS rs = scoreService.save(scoreVO, getUserId());
                 RS people = courseService.updatePeople(scoreVO.getCid());
                 if (rs.get("status").equals("1")) {
                     return ResponseEntity.ok(rs);
@@ -98,14 +98,10 @@ public class TScoreController extends BaseController {
     /**
      * 查找选修的课程
      */
-    @GetMapping("/findAllCourseByStudentId")
-    public RS findAllCourseByStudentId(QueryScoreVO scoreVO, Model model) {
-        Subject subject = SecurityUtils.getSubject();
-        TStudent student = (TStudent) subject.getPrincipal();
-        List<TScore> list = scoreService.findAllCourseByStudentId(scoreVO.getSid());
-//        request.setAttribute("allCourse", list);
-        model.addAttribute("allCourse", list);
-        return RS.ok();
+    @GetMapping("/findSelectCourseByStudentId")
+    public ResponseEntity findSelectCourseByStudentId(QueryScoreVO scoreVO) {
+        List<CourseDTO> list = scoreService.findSelectCourseByStudentId(getUserId());
+        return ResponseEntity.ok(list);
     }
 
     /**
@@ -135,5 +131,20 @@ public class TScoreController extends BaseController {
             return ResponseEntity.ok(rs);
         }
         throw new BadRequestException("考勤更新失败");
+    }
+
+    /**
+     * 选课退选
+     *
+     * @return
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity delete(QueryScoreVO scoreVO) {
+        RS rs = scoreService.delete(getUserId(), scoreVO.getCid());
+        if (rs.get("status").equals("1")) {
+            RS delete = courseService.deletePeople(scoreVO.getCid());
+            return ResponseEntity.ok(rs);
+        }
+        throw new BadRequestException("退选失败");
     }
 }
