@@ -9,4 +9,9 @@ import lombok.Data;
  **/
 @Data
 public class QueryCommentVO extends BaseQueryParam {
+    private String cid;
+    private String sid;
+    private String tid;
+    private String teamId;
+    private String commentId;
 }

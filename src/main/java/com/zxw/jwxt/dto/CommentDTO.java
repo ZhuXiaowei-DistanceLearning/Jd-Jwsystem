@@ -20,11 +20,21 @@ public class CommentDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String id;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String cid;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String sid;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String tid;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String tname;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer commentType;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String commentBatch;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String teacherName;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String courseName;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date beginTime;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
