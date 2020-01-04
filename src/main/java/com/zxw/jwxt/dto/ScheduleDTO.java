@@ -1,4 +1,4 @@
-package com.zxw.jwxt.vo;
+package com.zxw.jwxt.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

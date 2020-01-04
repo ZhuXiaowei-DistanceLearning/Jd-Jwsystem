@@ -2,6 +2,7 @@ package com.zxw.jwxt.mapper;
 
 import com.zxw.jwxt.domain.TeamComment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -9,8 +10,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author zxw
- * @since 2019-12-30
+ * @since 2020-01-04
  */
+@Mapper
 public interface TeamCommentMapper extends BaseMapper<TeamComment> {
 
 }

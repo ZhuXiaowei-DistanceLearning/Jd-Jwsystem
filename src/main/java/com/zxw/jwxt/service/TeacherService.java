@@ -1,6 +1,5 @@
 package com.zxw.jwxt.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,13 +10,11 @@ import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.mapper.TTeacherMapper;
 import com.zxw.jwxt.vo.QueryCourseVO;
 import com.zxw.jwxt.vo.QueryTeacherVO;
-import com.zxw.jwxt.vo.ScheduleDTO;
+import com.zxw.jwxt.dto.ScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

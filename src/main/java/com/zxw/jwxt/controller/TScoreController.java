@@ -1,6 +1,7 @@
 package com.zxw.jwxt.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TCourse;
@@ -106,8 +107,8 @@ public class TScoreController extends BaseController {
      * @return
      */
     @GetMapping("/findStudentScore")
-    public List<TScore> findStudentScore(QueryScoreVO scoreVO) {
-        List<TScore> list = scoreService.findStudentScore(scoreVO,getUserId());
+    public IPage findStudentScore(QueryScoreVO scoreVO) {
+        IPage list = scoreService.findStudentScore(scoreVO,getUserId());
         return list;
     }
 

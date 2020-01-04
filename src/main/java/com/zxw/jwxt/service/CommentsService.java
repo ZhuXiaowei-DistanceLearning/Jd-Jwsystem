@@ -1,7 +1,12 @@
 package com.zxw.jwxt.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.jwxt.domain.TComments;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zxw.jwxt.dto.CommentDTO;
+import com.zxw.jwxt.mapper.TCommentsMapper;
+import com.zxw.jwxt.vo.QueryCommentVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2019-11-07
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
-public class CommentsService {
+public class CommentsService extends BaseService {
 
+    @Autowired
+    private TCommentsMapper commentsMapper;
+
+    public IPage pageQuery(QueryCommentVO commentVO) {
+        IPage<CommentDTO> iPage = commentsMapper.findAll(this.getPage(commentVO));
+        return iPage;
+    }
 }

@@ -1,43 +1,43 @@
 package com.zxw.jwxt.domain;
 
+import java.time.LocalDate;
 import java.io.Serializable;
+import java.util.Date;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author zxw
- * @since 2019-11-07
+ * @since 2020-01-04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "TComments对象", description = "")
+@ApiModel(value="TComments对象", description="")
 public class TComments implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @TableId(type = IdType.ID_WORKER_STR)
+
     private String id;
 
-    private String teacherId;
+    private String teamId;
 
-    private String studentId;
+    private Integer commentType;
 
-    private String courseId;
+    private String commentBatch;
 
-    private String content;
-    private Long commentType;
-    private Long mark;
-    private Boolean isComment;
-
-
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date beginTime;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date endTime;
 }

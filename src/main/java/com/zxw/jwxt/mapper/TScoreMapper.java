@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.jwxt.domain.TScore;
 import com.zxw.jwxt.dto.CourseDTO;
+import com.zxw.jwxt.dto.ScoreDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -60,8 +61,8 @@ public interface TScoreMapper extends BaseMapper<TScore> {
      *
      * @return
      */
-    @Select("SELECT c.`id`,c.`credit`,c.`isExam`,n.`name` nname,c.`name`,te.`name` tname,s.`score`,cs.`name` csname,c.`total_time` FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_nature` n,`t_section` se,`t_cstatus` cs WHERE s.`student_id` = ts.`sid` AND s.`course_id` = c.`id` AND c.`nature_id` = n.`id` AND c.`team_id` = te.`id` AND c.`week_id` = w.`id` AND c.`teacher_id` = t.`tid` AND se.`id`= c.`section_id` AND cs.`id` = c.`cstatus_id` AND ts.`sid` = #{sid} AND c.`status` = 1;")
-    IPage findStudentScore(Page page,@Param("sid") String sid);
+    @Select("SELECT c.`id`,c.`point`,c.`credit`,c.`isExam`,n.`name` nname,c.`name`,te.`name` tname,s.`score`,cs.`name` csname,c.`total_time` FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_nature` n,`t_section` se,`t_cstatus` cs WHERE s.`student_id` = ts.`sid` AND s.`course_id` = c.`id` AND c.`nature_id` = n.`id` AND c.`team_id` = te.`id` AND c.`week_id` = w.`id` AND c.`teacher_id` = t.`tid` AND se.`id`= c.`section_id` AND cs.`id` = c.`cstatus_id` AND ts.`sid` = #{sid} AND c.`status` = 1")
+    IPage<ScoreDTO> findStudentScore(Page page, @Param("sid") String sid);
 
     /**
      * 添加课程成绩对应页面

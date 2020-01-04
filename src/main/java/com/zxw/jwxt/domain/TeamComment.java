@@ -1,7 +1,6 @@
 package com.zxw.jwxt.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -16,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author zxw
- * @since 2019-12-30
+ * @since 2020-01-04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -29,19 +28,22 @@ public class TeamComment implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "学期")
-    private String teamId;
+    @ApiModelProperty(value = "课程编号")
+    private String cid;
 
-    @ApiModelProperty(value = "评价批次")
-    private String batch;
+    @ApiModelProperty(value = "学生编号")
+    private String sid;
 
-    @ApiModelProperty(value = "评价分类")
-    private Long commentType;
+    @ApiModelProperty(value = "教师编号")
+    private String tid;
 
-    private LocalDate beginTime;
+    @ApiModelProperty(value = "评分")
+    private Integer remark;
 
-    private LocalDate endTime;
+    @ApiModelProperty(value = "已评")
+    private Integer status;
 
+    @ApiModelProperty(value = "评价id")
     private String commentId;
 
 

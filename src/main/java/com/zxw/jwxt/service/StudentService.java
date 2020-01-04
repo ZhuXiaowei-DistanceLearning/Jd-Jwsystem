@@ -12,7 +12,7 @@ import com.zxw.jwxt.domain.TStudent;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.mapper.TStudentMapper;
 import com.zxw.jwxt.vo.QueryStudentVO;
-import com.zxw.jwxt.vo.ScheduleDTO;
+import com.zxw.jwxt.dto.ScheduleDTO;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TScore;
 import com.zxw.jwxt.dto.CourseDTO;
+import com.zxw.jwxt.dto.ScoreDTO;
 import com.zxw.jwxt.mapper.TScoreMapper;
 import com.zxw.jwxt.vo.QueryScoreVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class ScoreService extends BaseService {
      * @return
      */
     public IPage findStudentScore(QueryScoreVO scoreVO, String sid) {
-        IPage list = scoreMapper.findStudentScore(this.getPage(scoreVO),sid);
+        IPage<ScoreDTO> list = scoreMapper.findStudentScore(this.getPage(scoreVO),sid);
         return list;
     }
 

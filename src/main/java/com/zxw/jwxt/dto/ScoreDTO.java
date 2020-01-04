@@ -10,17 +10,23 @@ import lombok.Data;
 @Data
 public class ScoreDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String cid;
+    private String csname;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String sid;
+    private String score;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String sname;
+    private String tname;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String cname;
+    private String name;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String nname;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Integer exam;
+    private Integer isExam;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Integer score;
+    private Integer credit;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Integer id;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Integer totalTime;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Integer point;
 }
