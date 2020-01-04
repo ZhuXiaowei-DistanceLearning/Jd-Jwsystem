@@ -2,9 +2,11 @@ package com.zxw.jwxt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.jwxt.domain.TScore;
 import com.zxw.jwxt.dto.CourseDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -56,35 +58,10 @@ public interface TScoreMapper extends BaseMapper<TScore> {
     /**
      * 查询学生个人成绩
      *
-     * @param ids
      * @return
      */
-    @Select("SELECT s.*,se.*,w.*,n.*,sp.`name` spname,co.`name`\n" +
-            "\t\t\t\t\t\t\t\t\t\t  cname,c.`name` cousename,tm.`name` tmname,te.`name` ename,ct.`name` csname,n.`name` nname,c.`credit`\n" +
-            "\t\tFROM (`t_score` s,`t_student` st,`t_section`\n" +
-            "\t\t\tse,`t_week`\n" +
-            "\t\t\tw,`t_nature`\n" +
-            "\t\t\tn,`t_classes` cl,`t_college` co,`t_specialty`\n" +
-            "\t\t\tsp)\n" +
-            "\t\t\t\t LEFT JOIN `t_course` c\n" +
-            "\t\t\t\t\t\t   ON\n" +
-            "\t\t\t\t\t\t\t   s.`course_id`=c.`id`\n" +
-            "\t\t\t\t LEFT JOIN `t_examway` te\n" +
-            "\t\t\t\t\t\t   ON te.`id` = c.`way_id`\n" +
-            "\t\t\t\t LEFT JOIN `t_cstatus` ct\n" +
-            "\t\t\t\t\t\t   ON c.`cstatus_id` = ct.`id`\n" +
-            "\t\t\t\t LEFT JOIN `t_team` tm\n" +
-            "\t\t\t\t\t\t   ON tm.`id` = c.`team_id`\n" +
-            "\t\tWHERE\n" +
-            "\t\t\tc.`nature_id`=n.`id` AND c.`week_id`=w.`id`\n" +
-            "\t\t  AND\n" +
-            "\t\t\tc.`section_id`=se.`id`\n" +
-            "\t\t  AND st.`classes_id`=cl.`id` AND\n" +
-            "\t\t\tcl.`specialty_id` =sp.`id` AND\n" +
-            "\t\t\tsp.`college_id` = co.`id` AND\n" +
-            "\t\t\ts.`Student_id`=st.`sid` AND\n" +
-            "\t\t\tst.`sid`=#{value}")
-    List<TScore> findStudentScore(String ids);
+    @Select("SELECT c.`id`,c.`credit`,c.`isExam`,n.`name` nname,c.`name`,te.`name` tname,s.`score`,cs.`name` csname,c.`total_time` FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_nature` n,`t_section` se,`t_cstatus` cs WHERE s.`student_id` = ts.`sid` AND s.`course_id` = c.`id` AND c.`nature_id` = n.`id` AND c.`team_id` = te.`id` AND c.`week_id` = w.`id` AND c.`teacher_id` = t.`tid` AND se.`id`= c.`section_id` AND cs.`id` = c.`cstatus_id` AND ts.`sid` = #{sid} AND c.`status` = 1;")
+    IPage findStudentScore(Page page,@Param("sid") String sid);
 
     /**
      * 添加课程成绩对应页面

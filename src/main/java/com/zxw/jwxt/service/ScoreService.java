@@ -1,6 +1,7 @@
 package com.zxw.jwxt.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TScore;
 import com.zxw.jwxt.dto.CourseDTO;
@@ -69,11 +70,13 @@ public class ScoreService extends BaseService {
     /**
      * 查询学生成绩
      *
+     *
+     * @param scoreVO
      * @param sid
      * @return
      */
-    public List<TScore> findStudentScore(String sid) {
-        List<TScore> list = scoreMapper.findStudentScore(sid);
+    public IPage findStudentScore(QueryScoreVO scoreVO, String sid) {
+        IPage list = scoreMapper.findStudentScore(this.getPage(scoreVO),sid);
         return list;
     }
 

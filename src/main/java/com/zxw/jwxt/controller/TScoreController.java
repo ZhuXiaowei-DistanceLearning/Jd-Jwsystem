@@ -5,20 +5,16 @@ import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TCourse;
 import com.zxw.jwxt.domain.TScore;
-import com.zxw.jwxt.domain.TStudent;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.service.CourseService;
 import com.zxw.jwxt.service.ScoreService;
 import com.zxw.jwxt.service.StudentService;
 import com.zxw.jwxt.vo.QueryScoreVO;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -111,10 +107,7 @@ public class TScoreController extends BaseController {
      */
     @GetMapping("/findStudentScore")
     public List<TScore> findStudentScore(QueryScoreVO scoreVO) {
-        Subject subject = SecurityUtils.getSubject();
-        TStudent student = (TStudent) subject.getPrincipal();
-        List<TScore> list = scoreService.findStudentScore(scoreVO.getSid());
-        List<TScore> scores = new ArrayList<>();
+        List<TScore> list = scoreService.findStudentScore(scoreVO,getUserId());
         return list;
     }
 
