@@ -1,10 +1,6 @@
 package com.zxw.jwxt.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author zxw
@@ -39,4 +35,5 @@ public class QueryCourseVO extends BaseQueryParam {
     private Integer isExam;
 
     private String collegeId;
+    private String systemId;
 }

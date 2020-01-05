@@ -42,7 +42,7 @@ public class PlanDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer point;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Integer planId;
+    private String planId;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Integer courseId;
+    private String courseId;
 }

@@ -9,10 +9,13 @@ import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.dto.StudentDTO;
 import com.zxw.jwxt.mapper.TCourseMapper;
 import com.zxw.jwxt.vo.QueryCourseVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -91,5 +94,23 @@ public class CourseService extends BaseService {
             return i == 1 ? RS.ok() : RS.error("操作失败");
         }
         throw new BadRequestException("该课程不存在");
+    }
+
+    public List listajax(QueryCourseVO courseVO) {
+        Map<String, Object> params = new HashMap<>();
+        if (StringUtils.isNotEmpty(courseVO.getSystemId())) {
+            params.put("system_id", courseVO.getSystemId());
+        }
+        if (StringUtils.isNotEmpty(courseVO.getNatureId())) {
+            params.put("nature_id", courseVO.getNatureId());
+        }
+        if (StringUtils.isNotEmpty(courseVO.getNatureId())) {
+            params.put("cstatus_id", courseVO.getCstatusId());
+        }
+        Map<String, Object> keyword = new HashMap<>();
+        if (StringUtils.isNotEmpty(courseVO.getKeyword())) {
+            keyword.put("name", courseVO.getKeyword());
+        }
+        return courseMapper.selectList(this.getWrapper(courseVO, keyword, params));
     }
 }

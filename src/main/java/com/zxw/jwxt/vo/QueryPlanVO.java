@@ -9,5 +9,6 @@ import lombok.Data;
 @Data
 public class QueryPlanVO extends BaseQueryParam {
     private String specialtyId;
-    private String id;
+    private String planId;
+    private String[] cids;
 }

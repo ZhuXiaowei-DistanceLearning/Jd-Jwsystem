@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * <p>
  * 前端控制器
@@ -35,6 +37,12 @@ public class TCourseController extends BaseController {
         IPage result = courseService.pageQuery(courseVO);
         TableReponse reponse = TableReponse.of(result);
         return reponse;
+    }
+
+    @GetMapping("/listajax")
+    public ResponseEntity listajax(QueryCourseVO courseVO){
+        List list = courseService.listajax(courseVO);
+        return ResponseEntity.ok(list);
     }
 
     /**
