@@ -60,6 +60,6 @@ public class TSpecialtyController extends BaseController {
 
     @GetMapping("/listajax")
     public List listajax(QuerySpecialtyVO querySpecialtyVO) {
-        return specialtyService.listajax(querySpecialtyVO);
+        return specialtyService.listajax(querySpecialtyVO,getRealm());
     }
 }

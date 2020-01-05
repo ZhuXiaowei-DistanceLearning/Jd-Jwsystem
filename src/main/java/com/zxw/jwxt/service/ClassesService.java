@@ -8,13 +8,10 @@ import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.mapper.TClassesMapper;
 import com.zxw.jwxt.vo.QueryClassesVO;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.crypto.hash.Hash;
-import org.junit.internal.Classes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,10 +36,10 @@ public class ClassesService extends BaseService {
         IPage<QueryClassesVO> iPage = null;
         Page page = getPage(queryClassesVO);
         Map<String, Object> map = new HashMap<>();
-        map.put("cs.`college_id`", queryClassesVO.getCollegeId());
+        map.put("cs.`college_id`", realm.getCollegeId());
         map.put("cs.`specialty_id`", queryClassesVO.getSpecialtyId());
         map.put("cs.`grade_id`", queryClassesVO.getGradeId());
-        if (StringUtils.isNotEmpty(queryClassesVO.getCollegeId()) || StringUtils.isNotEmpty(queryClassesVO.getSpecialtyId()) || StringUtils.isNotEmpty(queryClassesVO.getGradeId())) {
+        if (StringUtils.isNotEmpty(realm.getCollegeId())) {
             iPage = classesMapper.findByParams(page, this.getWrapper(queryClassesVO,null, map));
         } else {
             iPage = classesMapper.findAll(page);

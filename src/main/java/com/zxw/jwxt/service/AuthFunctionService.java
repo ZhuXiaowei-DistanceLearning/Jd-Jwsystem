@@ -60,6 +60,8 @@ public class AuthFunctionService extends BaseService {
             list = functionMapper.findMenuByTeacherid(userId);
         } else if ("学生".equals(RadioButtonList1)) {
             list = functionMapper.findMenuByStudentid(userId);
+        }else if("教务人员".equals(RadioButtonList1)){
+            list = functionMapper.findMenuByUserid(userId);
         }
         return list;
     }

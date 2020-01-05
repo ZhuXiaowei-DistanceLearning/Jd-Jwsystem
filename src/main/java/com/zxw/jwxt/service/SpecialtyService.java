@@ -59,8 +59,14 @@ public class SpecialtyService extends BaseService {
     public IPage pageQuery(QuerySpecialtyVO baseQueryParam, UserRealm realm) {
         Page<QuerySpecialtyVO> page = getPage(baseQueryParam);
         IPage<QuerySpecialtyVO> iPage = null;
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> keyword = new HashMap<>();
+        if (StringUtils.isNotEmpty(baseQueryParam.getKeyword())) {
+            keyword.put("s.`name`", baseQueryParam.getKeyword());
+        }
+        map.put("s.`college_id`", realm.getCollegeId());
         if (StringUtils.isNotEmpty(realm.getCollegeId())) {
-            iPage = specialtyMapper.findByJwUser(page, realm.getCollegeId());
+            iPage = specialtyMapper.findByJwUser(page, getWrapper(baseQueryParam, keyword, map));
         } else {
             iPage = specialtyMapper.findAll(page);
         }
@@ -87,9 +93,9 @@ public class SpecialtyService extends BaseService {
         return count == 0 ? RS.error("更新或修改失败") : RS.ok();
     }
 
-    public List listajax(QuerySpecialtyVO querySpecialtyVO) {
+    public List listajax(QuerySpecialtyVO querySpecialtyVO, UserRealm realm) {
         Map<String, Object> map = new HashMap<>();
-        if (querySpecialtyVO.getCollegeId() != null) {
+        if (realm.getCollegeId() != null) {
             map.put("college_id", querySpecialtyVO.getCollegeId());
         }
         return specialtyMapper.selectList(getWrapper(querySpecialtyVO, null, map));

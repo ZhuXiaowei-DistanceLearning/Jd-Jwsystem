@@ -1,7 +1,9 @@
 package com.zxw.jwxt.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.jwxt.domain.TSpecialty;
 import com.zxw.jwxt.vo.QuerySpecialtyVO;
@@ -33,8 +35,8 @@ public interface TSpecialtyMapper extends BaseMapper<TSpecialty> {
             "            s.`college_id` = c.`id` ORDER BY c.`name`")
     IPage<QuerySpecialtyVO> findAll(Page page);
 
-    @Select("select s.*,c.`name` cname,c.`status` cstatus from `t_specialty` s,`t_college` c where s.`college_id` = c.`id` and c.`id` = #{collegeId} ")
-    IPage<QuerySpecialtyVO> findByJwUser(Page page, @Param("collegeId") String collegeId);
+    @Select("select s.*,c.`name` cname,c.`status` cstatus from `t_specialty` s,`t_college` c ${ew.customSqlSegment} and s.`college_id` = c.`id`")
+    IPage<QuerySpecialtyVO> findByJwUser(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
 
     @Update(" update t_specialty\n" +
             "        set status=1\n" +
