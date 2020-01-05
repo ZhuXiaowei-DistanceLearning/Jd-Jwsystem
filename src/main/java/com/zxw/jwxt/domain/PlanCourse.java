@@ -11,26 +11,24 @@ import java.io.Serializable;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author zxw
- * @since 2019-11-07
+ * @since 2020-01-05
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "TTeam对象", description = "")
-public class TTeam implements Serializable {
+@ApiModel(value="PlanCourse对象", description="")
+public class PlanCourse implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @TableId(type = IdType.ID_WORKER_STR)
     private String id;
-    private String name;
-    private String status;
-    private Integer start;
-    private Integer end;
-    private Integer team;
 
+    private String planId;
+
+    private String courseId;
 
 }

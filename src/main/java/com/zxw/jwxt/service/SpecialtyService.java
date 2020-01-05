@@ -96,7 +96,7 @@ public class SpecialtyService extends BaseService {
     public List listajax(QuerySpecialtyVO querySpecialtyVO, UserRealm realm) {
         Map<String, Object> map = new HashMap<>();
         if (realm.getCollegeId() != null) {
-            map.put("college_id", querySpecialtyVO.getCollegeId());
+            map.put("college_id", realm.getCollegeId());
         }
         return specialtyMapper.selectList(getWrapper(querySpecialtyVO, null, map));
     }
