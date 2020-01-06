@@ -5,6 +5,7 @@ import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.service.*;
 import com.zxw.jwxt.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +42,7 @@ public class CommonController extends BaseController {
 
     /**
      * 分页查询
+     *
      * @return
      */
     @GetMapping("/cstatus/pageQuery")
