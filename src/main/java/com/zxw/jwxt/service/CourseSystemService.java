@@ -1,8 +1,7 @@
 package com.zxw.jwxt.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zxw.jwxt.domain.CourseSystem;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.mapper.CourseSystemMapper;
 import com.zxw.jwxt.vo.BaseQueryParam;
 import com.zxw.jwxt.vo.QueryCourseSystemVO;
@@ -30,6 +29,7 @@ public class CourseSystemService extends BaseService {
     }
 
     public IPage findCourseBySystemId(QueryCourseSystemVO courseSystemVO) {
-        return null;
+        IPage<CourseDTO> iPage = courseSystemMapper.findCourseBySystemId(this.getPage(courseSystemVO),courseSystemVO.getSystemId());
+        return iPage;
     }
 }

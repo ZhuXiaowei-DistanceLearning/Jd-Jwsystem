@@ -2,6 +2,7 @@ package com.zxw.jwxt.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
 import com.zxw.common.pojo.TableReponse;
 import com.zxw.jwxt.domain.TCourse;
@@ -11,10 +12,7 @@ import com.zxw.jwxt.service.CourseService;
 import com.zxw.jwxt.vo.QueryCourseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,23 +38,29 @@ public class TCourseController extends BaseController {
     }
 
     @GetMapping("/listajax")
-    public ResponseEntity listajax(QueryCourseVO courseVO){
+    public ResponseEntity listajax(QueryCourseVO courseVO) {
         List list = courseService.listajax(courseVO);
         return ResponseEntity.ok(list);
     }
 
     /**
      * 添加选课
+     *
      * @param courseVO
      * @return
      */
     @PostMapping("/add")
-    public RS add(TCourse courseVO) {
-        return courseService.add(courseVO);
+    public ResponseEntity add(@RequestBody TCourse courseVO) {
+        RS rs = courseService.add(courseVO);
+        if (rs.get("status").equals("1")) {
+            return ResponseEntity.ok(rs);
+        }
+        throw new BadRequestException("添加失败");
     }
 
     /**
      * 查找教师的课程
+     *
      * @param courseVO
      * @return
      */
@@ -70,11 +74,12 @@ public class TCourseController extends BaseController {
 
     /**
      * 查询某门课程下的学生
+     *
      * @param courseVO
      * @return
      */
     @GetMapping("/findStudentByCourseId")
-    public ResponseEntity findStudentByCourseId(QueryCourseVO courseVO){
+    public ResponseEntity findStudentByCourseId(QueryCourseVO courseVO) {
         IPage<StudentDTO> result = courseService.findStudentByCourseId(courseVO);
         TableReponse reponse = TableReponse.of(result);
         return ResponseEntity.ok(reponse);

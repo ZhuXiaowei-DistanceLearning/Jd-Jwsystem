@@ -62,7 +62,7 @@ public class TCourse implements Serializable {
     private String cstatusId;
 
     @ApiModelProperty(value = "状态")
-    private String status;
+    private Integer status;
 
     @ApiModelProperty(value = "是否考试")
     @TableField("isExam")
@@ -72,6 +72,8 @@ public class TCourse implements Serializable {
     private String collegeId;
 
     private String systemId;
+
+    private Integer end;
 
 
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.jwxt.vo.BaseQueryParam;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Iterator;
@@ -63,7 +64,9 @@ public class BaseService {
 
     public QueryWrapper queryOne(Object key, Object value) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq(key, value);
+        if (ObjectUtils.isNotEmpty(key) && ObjectUtils.isNotEmpty(value)) {
+            queryWrapper.eq(key, value);
+        }
         return queryWrapper;
     }
 }

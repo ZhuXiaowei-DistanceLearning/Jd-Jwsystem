@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TTeacher;
 import com.zxw.jwxt.domain.TeacherRole;
+import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.mapper.TTeacherMapper;
 import com.zxw.jwxt.vo.QueryCourseVO;
@@ -124,4 +125,8 @@ public class TeacherService extends BaseService {
     }
 
 
+    public List listajax(UserRealm realm) {
+        List list = teacherMapper.selectList(this.queryOne("college_id", realm.getCollegeId()));
+        return list;
+    }
 }

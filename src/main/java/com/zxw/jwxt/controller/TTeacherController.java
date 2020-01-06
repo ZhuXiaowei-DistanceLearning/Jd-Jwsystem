@@ -60,15 +60,30 @@ public class TTeacherController extends BaseController {
         return rs;
     }
 
+    /**
+     * 查找个人信息
+     * @return
+     */
     @GetMapping("/findInfo")
     public ResponseEntity findInfo() {
         TTeacher teacher = teacherService.findInfo(getUserId());
         return ResponseEntity.ok(teacher);
     }
 
+    /**
+     * 查找课程表
+     * @param queryCourseVO
+     * @return
+     */
     @GetMapping("/findSchedule")
     public ResponseEntity findSchedule(QueryCourseVO queryCourseVO){
         Object[][] schedule = teacherService.findSchedule(queryCourseVO, getUserId());
         return ResponseEntity.ok(schedule);
+    }
+
+    @GetMapping("/listajax")
+    public ResponseEntity listajax(){
+        List list = teacherService.listajax(getRealm());
+        return ResponseEntity.ok(list);
     }
 }

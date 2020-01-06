@@ -56,11 +56,6 @@ public class CourseService extends BaseService {
     }
 
     public RS add(TCourse model) {
-        if (model.getWayId().equals("1")) {
-            model.setIsExam(1);
-        } else {
-            model.setIsExam(0);
-        }
         return courseMapper.insert(model) == 0 ? RS.error("添加失败") : RS.ok();
     }
 
