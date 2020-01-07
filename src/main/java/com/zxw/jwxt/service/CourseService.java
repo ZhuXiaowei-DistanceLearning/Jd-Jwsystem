@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TCourse;
+import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.dto.StudentDTO;
 import com.zxw.jwxt.mapper.TCourseMapper;
@@ -107,5 +108,30 @@ public class CourseService extends BaseService {
             keyword.put("name", courseVO.getKeyword());
         }
         return courseMapper.selectList(this.getWrapper(courseVO, keyword, params));
+    }
+
+    public IPage endApply(QueryCourseVO courseVO, UserRealm realm) {
+        IPage<CourseDTO> iPage = courseMapper.courseApply(this.getPage(courseVO), realm.getCollegeId());
+        return iPage;
+    }
+
+    public RS updateCourseEnd(QueryCourseVO courseVO) {
+        TCourse course = courseMapper.selectOne(this.queryOne("id", courseVO.getId()));
+        if (course != null) {
+            switch (courseVO.getEndStatus()) {
+                case "apply":
+                    course.setEnd(1);
+                    break;
+                case "agree":
+                    course.setEnd(2);
+                    break;
+                case "reject":
+                    course.setEnd(3);
+                    break;
+            }
+            int i = courseMapper.updateById(course);
+            return i == 1 ? RS.ok() : RS.error("操作失败");
+        }
+        throw new BadRequestException("该课程不存在");
     }
 }

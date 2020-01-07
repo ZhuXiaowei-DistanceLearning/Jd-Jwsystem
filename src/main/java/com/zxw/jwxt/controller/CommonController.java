@@ -1,11 +1,10 @@
 package com.zxw.jwxt.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.service.*;
 import com.zxw.jwxt.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,9 +45,9 @@ public class CommonController extends BaseController {
      * @return
      */
     @GetMapping("/cstatus/pageQuery")
-    public TableReponse cstatusPageQuery(BaseQueryParam baseQueryParam) {
+    public TableResponse cstatusPageQuery(BaseQueryParam baseQueryParam) {
         IPage iPage = cstatusService.pageQuery(baseQueryParam);
-        TableReponse result = TableReponse.of(iPage);
+        TableResponse result = TableResponse.of(iPage);
         return result;
     }
 
@@ -58,9 +57,9 @@ public class CommonController extends BaseController {
      * @return
      */
     @GetMapping("/nature/pageQuery")
-    public TableReponse naturePageQuery(BaseQueryParam baseQueryParam) {
+    public TableResponse naturePageQuery(BaseQueryParam baseQueryParam) {
         IPage iPage = natureService.pageQuery(baseQueryParam);
-        TableReponse result = TableReponse.of(iPage);
+        TableResponse result = TableResponse.of(iPage);
         return result;
     }
 
@@ -71,9 +70,9 @@ public class CommonController extends BaseController {
      * @return
      */
     @GetMapping("/week/pageQuery")
-    public TableReponse weekPageQuery(BaseQueryParam baseQueryParam) {
+    public TableResponse weekPageQuery(BaseQueryParam baseQueryParam) {
         IPage iPage = weekService.pageQuery(baseQueryParam);
-        TableReponse result = TableReponse.of(iPage);
+        TableResponse result = TableResponse.of(iPage);
         return result;
     }
 
@@ -83,9 +82,9 @@ public class CommonController extends BaseController {
      * @return
      */
     @GetMapping("/examway/pageQuery")
-    public TableReponse examwayPageQuery(BaseQueryParam baseQueryParam) {
+    public TableResponse examwayPageQuery(BaseQueryParam baseQueryParam) {
         IPage iPage = examwayService.pageQuery(baseQueryParam);
-        TableReponse result = TableReponse.of(iPage);
+        TableResponse result = TableResponse.of(iPage);
         return result;
     }
 
@@ -95,9 +94,9 @@ public class CommonController extends BaseController {
      * @return
      */
     @GetMapping("/grade/pageQuery")
-    public TableReponse gradePageQuery(BaseQueryParam baseQueryParam) {
+    public TableResponse gradePageQuery(BaseQueryParam baseQueryParam) {
         IPage iPage = gradeService.pageQuery(baseQueryParam);
-        TableReponse result = TableReponse.of(iPage);
+        TableResponse result = TableResponse.of(iPage);
         return result;
     }
 
@@ -115,9 +114,9 @@ public class CommonController extends BaseController {
      * @return
      */
     @GetMapping("/section/pageQuery")
-    public TableReponse sectionPageQuery(BaseQueryParam baseQueryParam) {
+    public TableResponse sectionPageQuery(BaseQueryParam baseQueryParam) {
         IPage iPage = sectionService.pageQuery(baseQueryParam);
-        TableReponse result = TableReponse.of(iPage);
+        TableResponse result = TableResponse.of(iPage);
         return result;
     }
 
@@ -127,9 +126,9 @@ public class CommonController extends BaseController {
      * @return
      */
     @GetMapping("/team/pageQuery")
-    public TableReponse teamPageQuery(BaseQueryParam baseQueryParam) {
+    public TableResponse teamPageQuery(BaseQueryParam baseQueryParam) {
         IPage iPage = teamService.pageQuery(baseQueryParam);
-        TableReponse result = TableReponse.of(iPage);
+        TableResponse result = TableResponse.of(iPage);
         return result;
     }
 }

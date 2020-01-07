@@ -70,4 +70,6 @@ public class CourseDTO {
     private String teacherName;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String tid;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Integer end;
 }

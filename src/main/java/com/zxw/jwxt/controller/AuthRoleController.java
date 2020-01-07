@@ -3,7 +3,7 @@ package com.zxw.jwxt.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.domain.AuthRole;
 import com.zxw.jwxt.domain.Menu;
 import com.zxw.jwxt.domain.RolesMenus;
@@ -54,9 +54,9 @@ public class AuthRoleController extends BaseController {
     }
 
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(QueryRoleVO roleQueryParam) {
+    public TableResponse pageQuery(QueryRoleVO roleQueryParam) {
         IPage result = roleService.pageQuery(roleQueryParam);
-        TableReponse response = TableReponse.of(result);
+        TableResponse response = TableResponse.of(result);
         return response;
     }
 

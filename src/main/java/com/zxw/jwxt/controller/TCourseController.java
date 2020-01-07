@@ -4,7 +4,7 @@ package com.zxw.jwxt.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.domain.TCourse;
 import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.dto.StudentDTO;
@@ -31,9 +31,9 @@ public class TCourseController extends BaseController {
     private CourseService courseService;
 
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(QueryCourseVO courseVO) {
+    public TableResponse pageQuery(QueryCourseVO courseVO) {
         IPage result = courseService.pageQuery(courseVO);
-        TableReponse reponse = TableReponse.of(result);
+        TableResponse reponse = TableResponse.of(result);
         return reponse;
     }
 
@@ -41,6 +41,28 @@ public class TCourseController extends BaseController {
     public ResponseEntity listajax(QueryCourseVO courseVO) {
         List list = courseService.listajax(courseVO);
         return ResponseEntity.ok(list);
+    }
+
+    /**
+     * 结课申请列表
+     *
+     * @param courseVO
+     * @return
+     */
+    @GetMapping("/endApply")
+    public ResponseEntity endApply(QueryCourseVO courseVO) {
+        IPage page = courseService.endApply(courseVO, getRealm());
+        TableResponse of = TableResponse.of(page);
+        return ResponseEntity.ok(of);
+    }
+
+    @PutMapping("/updateCourseEnd")
+    public ResponseEntity updateCourseEnd(@RequestBody QueryCourseVO courseVO) {
+        RS rs = courseService.updateCourseEnd(courseVO);
+        if (rs.get("status").equals("1")) {
+            return ResponseEntity.ok(rs);
+        }
+        throw new BadRequestException("操作失败");
     }
 
     /**
@@ -65,10 +87,10 @@ public class TCourseController extends BaseController {
      * @return
      */
     @GetMapping("/findCourseByteacherId")
-    public TableReponse findCourseByteacherId(QueryCourseVO courseVO) {
+    public TableResponse findCourseByteacherId(QueryCourseVO courseVO) {
         UserRealm realm = getRealm();
         IPage result = courseService.findCourseByteacherId(courseVO, realm.getId());
-        TableReponse reponse = TableReponse.of(result);
+        TableResponse reponse = TableResponse.of(result);
         return reponse;
     }
 
@@ -81,7 +103,7 @@ public class TCourseController extends BaseController {
     @GetMapping("/findStudentByCourseId")
     public ResponseEntity findStudentByCourseId(QueryCourseVO courseVO) {
         IPage<StudentDTO> result = courseService.findStudentByCourseId(courseVO);
-        TableReponse reponse = TableReponse.of(result);
+        TableResponse reponse = TableResponse.of(result);
         return ResponseEntity.ok(reponse);
     }
 

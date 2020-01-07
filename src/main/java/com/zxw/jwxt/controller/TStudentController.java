@@ -2,7 +2,7 @@ package com.zxw.jwxt.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.domain.TStudent;
 import com.zxw.jwxt.service.StudentService;
 import com.zxw.jwxt.vo.QueryStudentVO;
@@ -39,9 +39,9 @@ public class TStudentController extends BaseController {
      * @throws IOException
      */
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(QueryStudentVO queryStudentVO) throws IOException {
+    public TableResponse pageQuery(QueryStudentVO queryStudentVO) throws IOException {
         IPage result = studentService.pageQuery(queryStudentVO);
-        TableReponse reponse = TableReponse.of(result);
+        TableResponse reponse = TableResponse.of(result);
         return reponse;
     }
 
@@ -52,9 +52,9 @@ public class TStudentController extends BaseController {
      * @return
      */
     @GetMapping("/findStudentByclass")
-    public TableReponse findStudentByclass(QueryStudentVO queryStudentVO) {
+    public TableResponse findStudentByclass(QueryStudentVO queryStudentVO) {
         IPage result = studentService.findStudentByclass(queryStudentVO);
-        TableReponse reponse = TableReponse.of(result);
+        TableResponse reponse = TableResponse.of(result);
         return reponse;
     }
 

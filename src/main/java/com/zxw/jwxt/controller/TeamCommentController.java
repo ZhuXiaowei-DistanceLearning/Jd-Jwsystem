@@ -2,7 +2,7 @@ package com.zxw.jwxt.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.service.TeamCommentService;
 import com.zxw.jwxt.vo.QueryTeamCommentVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class TeamCommentController extends BaseController {
     @GetMapping("/pageQuery")
     public ResponseEntity pageQuery(QueryTeamCommentVO teamCommentVO){
         IPage page =  teamCommentService.pageQuery(teamCommentVO,getUserId());
-        TableReponse of = TableReponse.of(page);
+        TableResponse of = TableResponse.of(page);
         return ResponseEntity.ok(of);
     }
 }

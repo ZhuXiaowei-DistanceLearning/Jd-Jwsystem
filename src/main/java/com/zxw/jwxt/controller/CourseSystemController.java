@@ -1,7 +1,7 @@
 package com.zxw.jwxt.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.service.CourseSystemService;
 import com.zxw.jwxt.vo.BaseQueryParam;
 import com.zxw.jwxt.vo.QueryCourseSystemVO;
@@ -38,7 +38,7 @@ public class CourseSystemController {
     @GetMapping("/findCourseBySystemId")
     public ResponseEntity findCourseBySystemId(QueryCourseSystemVO courseSystemVO) {
         IPage iPage = courseSystemService.findCourseBySystemId(courseSystemVO);
-        TableReponse of = TableReponse.of(iPage);
+        TableResponse of = TableResponse.of(iPage);
         return ResponseEntity.ok(of);
     }
 }

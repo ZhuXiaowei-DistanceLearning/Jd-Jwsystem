@@ -3,7 +3,7 @@ package com.zxw.jwxt.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.domain.TUser;
 import com.zxw.jwxt.service.UserService;
 import com.zxw.jwxt.vo.BaseQueryParam;
@@ -25,9 +25,9 @@ public class TUserController extends BaseController {
     private UserService userService;
 
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(BaseQueryParam baseQueryParam) {
+    public TableResponse pageQuery(BaseQueryParam baseQueryParam) {
         IPage iPage = userService.pageQuery(baseQueryParam);
-        TableReponse of = TableReponse.of(iPage);
+        TableResponse of = TableResponse.of(iPage);
         return of;
     }
 

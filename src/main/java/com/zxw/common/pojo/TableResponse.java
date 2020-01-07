@@ -14,18 +14,18 @@ import java.util.Map;
  */
 @Data
 @AllArgsConstructor
-public class TableReponse extends Page {
+public class TableResponse extends Page {
     private Map<String, Object> extraData = new HashMap<>();
     private long realTotal;
 
-    public static TableReponse of(IPage page) {
-        TableReponse tableReponse = new TableReponse(page);
-        tableReponse.setRealTotal(page.getTotal());
-        return tableReponse;
+    public static TableResponse of(IPage page) {
+        TableResponse tableResponse = new TableResponse(page);
+        tableResponse.setRealTotal(page.getTotal());
+        return tableResponse;
 
     }
 
-    public TableReponse(IPage page) {
+    public TableResponse(IPage page) {
         this.setRecords(page.getRecords());
         this.setTotal(page.getTotal());
         this.setCurrent(page.getCurrent());
@@ -33,7 +33,7 @@ public class TableReponse extends Page {
         this.setPages(page.getPages());
     }
 
-    public TableReponse(Map<String, Object> map) {
+    public TableResponse(Map<String, Object> map) {
         this.extraData = map;
     }
 }

@@ -3,14 +3,12 @@ package com.zxw.jwxt.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.domain.TClasses;
 import com.zxw.jwxt.service.ClassesService;
 import com.zxw.jwxt.vo.QueryClassesVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import com.zxw.jwxt.controller.BaseController;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -36,9 +34,9 @@ public class TClassesController extends BaseController {
      * @throws IOException
      */
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(QueryClassesVO queryClassesVO) {
+    public TableResponse pageQuery(QueryClassesVO queryClassesVO) {
         IPage result = classesService.pageQuery(queryClassesVO, getRealm());
-        TableReponse reponse = TableReponse.of(result);
+        TableResponse reponse = TableResponse.of(result);
         return reponse;
     }
 

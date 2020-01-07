@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.enums.ExceptionEnums;
 import com.zxw.common.exception.JwException;
 import com.zxw.common.pojo.RS;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.domain.TCollege;
 import com.zxw.jwxt.service.CollegeService;
 import com.zxw.jwxt.vo.BaseQueryParam;
@@ -37,9 +37,9 @@ public class TCollegeController extends BaseController {
      * @throws IOException
      */
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(BaseQueryParam baseQueryParam) {
+    public TableResponse pageQuery(BaseQueryParam baseQueryParam) {
         IPage iPage = collegeService.pageQuery(baseQueryParam);
-        TableReponse result = TableReponse.of(iPage);
+        TableResponse result = TableResponse.of(iPage);
         return result;
     }
 

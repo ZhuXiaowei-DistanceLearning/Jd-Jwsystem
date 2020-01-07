@@ -3,7 +3,7 @@ package com.zxw.jwxt.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.domain.TTeacher;
 import com.zxw.jwxt.service.TeacherService;
 import com.zxw.jwxt.vo.QueryCourseVO;
@@ -39,9 +39,9 @@ public class TTeacherController extends BaseController {
      * @return
      */
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(QueryTeacherVO teacherVO) {
+    public TableResponse pageQuery(QueryTeacherVO teacherVO) {
         IPage result = teacherService.pageQuery(teacherVO);
-        TableReponse reponse = TableReponse.of(result);
+        TableResponse reponse = TableResponse.of(result);
         return reponse;
     }
 

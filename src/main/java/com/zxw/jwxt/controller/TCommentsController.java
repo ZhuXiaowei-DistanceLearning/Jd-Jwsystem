@@ -2,7 +2,7 @@ package com.zxw.jwxt.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.dto.CommentDTO;
 import com.zxw.jwxt.service.CommentsService;
 import com.zxw.jwxt.vo.QueryCommentVO;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
-import com.zxw.jwxt.controller.BaseController;
 
 /**
  * <p>
@@ -31,7 +30,7 @@ public class TCommentsController extends BaseController {
     @GetMapping("/pageQuery")
     public ResponseEntity pageQuery(QueryCommentVO commentVO){
         IPage<CommentDTO> page =  commentsService.pageQuery(commentVO);
-        TableReponse of = TableReponse.of(page);
+        TableResponse of = TableResponse.of(page);
         return ResponseEntity.ok(of);
     }
 

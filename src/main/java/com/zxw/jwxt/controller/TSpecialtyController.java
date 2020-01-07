@@ -3,7 +3,7 @@ package com.zxw.jwxt.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
-import com.zxw.common.pojo.TableReponse;
+import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.domain.TSpecialty;
 import com.zxw.jwxt.service.SpecialtyService;
 import com.zxw.jwxt.vo.QuerySpecialtyVO;
@@ -34,9 +34,9 @@ public class TSpecialtyController extends BaseController {
     }
 
     @GetMapping("/pageQuery")
-    public TableReponse pageQuery(QuerySpecialtyVO baseQueryParam) throws IOException {
+    public TableResponse pageQuery(QuerySpecialtyVO baseQueryParam) throws IOException {
         IPage result = specialtyService.pageQuery(baseQueryParam, getRealm());
-        TableReponse response = TableReponse.of(result);
+        TableResponse response = TableResponse.of(result);
         return response;
     }
 
