@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,4 +52,8 @@ public class ClassesService extends BaseService {
         return RS.ok();
     }
 
+    public List findClassesByGrade(QueryClassesVO classesVO, UserRealm realm) {
+        List list = classesMapper.findClassesByGrade(realm.getCollegeId(),classesVO.getGradeId());
+        return list;
+    }
 }

@@ -5,13 +5,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
 import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.domain.TClasses;
+import com.zxw.jwxt.dto.ClassesDTO;
 import com.zxw.jwxt.service.ClassesService;
 import com.zxw.jwxt.vo.QueryClassesVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * <p>
@@ -66,5 +69,11 @@ public class TClassesController extends BaseController {
     public RS findById(String ids, HttpSession session) {
         session.setAttribute("classes_id", ids);
         return RS.ok();
+    }
+
+    @GetMapping("/findClassesByGrade")
+    public ResponseEntity findClassesByGrade(QueryClassesVO classesVO){
+        List<ClassesDTO> list = classesService.findClassesByGrade(classesVO,getRealm());
+        return ResponseEntity.ok(list);
     }
 }
