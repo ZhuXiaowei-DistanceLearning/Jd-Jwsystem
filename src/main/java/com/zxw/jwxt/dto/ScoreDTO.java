@@ -28,5 +28,5 @@ public class ScoreDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer totalTime;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Integer point;
+    private Double point;
 }

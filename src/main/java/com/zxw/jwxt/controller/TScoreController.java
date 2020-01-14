@@ -68,8 +68,7 @@ public class TScoreController extends BaseController {
 
 
     /**
-     * session获取addStudentScore
-     * addScore
+     * 查找学生
      *
      * @param studentId
      */
@@ -80,6 +79,7 @@ public class TScoreController extends BaseController {
     }
 
     /**
+     * 添加成绩
      * @param scoreVO
      * @return
      */
@@ -102,7 +102,7 @@ public class TScoreController extends BaseController {
     }
 
     /**
-     * 调用方法，转发带参数到学生添加缺勤中
+     * 查询学生成绩
      *
      * @return
      */
@@ -113,7 +113,7 @@ public class TScoreController extends BaseController {
     }
 
     /**
-     * 跳转到student中
+     * 添加缺勤
      *
      * @return
      */

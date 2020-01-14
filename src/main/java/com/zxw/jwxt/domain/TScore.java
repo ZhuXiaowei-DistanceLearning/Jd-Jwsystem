@@ -37,10 +37,12 @@ public class TScore implements Serializable {
     private Integer exam;
     @ApiModelProperty("总成绩")
     private Integer score;
+    @ApiModelProperty("绩点")
+    private Double point;
 
     private Integer absent;
 
+    @ApiModelProperty("是否已评分")
     private Integer status;
-
 
 }

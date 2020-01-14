@@ -64,6 +64,8 @@ public class ScoreService extends BaseService {
         tScore.setUsually(scoreVO.getUsually().intValue());
         tScore.setExam(scoreVO.getExam().intValue());
         tScore.setScore(attendance.intValue() + usually.intValue() + exam.intValue());
+        tScore.setPoint(scoreVO.getPoint() * ((attendance + usually) / 100));
+        tScore.setStatus(1);
         int i = scoreMapper.update(tScore, queryWrapper);
         return i == 0 ? RS.error("操作失败") : RS.ok();
     }
@@ -71,13 +73,12 @@ public class ScoreService extends BaseService {
     /**
      * 查询学生成绩
      *
-     *
      * @param scoreVO
      * @param sid
      * @return
      */
     public IPage findStudentScore(QueryScoreVO scoreVO, String sid) {
-        IPage<ScoreDTO> list = scoreMapper.findStudentScore(this.getPage(scoreVO),sid);
+        IPage<ScoreDTO> list = scoreMapper.findStudentScore(this.getPage(scoreVO), sid);
         return list;
     }
 

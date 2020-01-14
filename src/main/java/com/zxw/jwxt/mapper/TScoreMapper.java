@@ -61,7 +61,7 @@ public interface TScoreMapper extends BaseMapper<TScore> {
      *
      * @return
      */
-    @Select("SELECT c.`id`,c.`point`,c.`credit`,c.`isExam`,n.`name` nname,c.`name`,te.`name` tname,s.`score`,cs.`name` csname,c.`total_time` FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_nature` n,`t_section` se,`t_cstatus` cs WHERE s.`student_id` = ts.`sid` AND s.`course_id` = c.`id` AND c.`nature_id` = n.`id` AND c.`team_id` = te.`id` AND c.`week_id` = w.`id` AND c.`teacher_id` = t.`tid` AND se.`id`= c.`section_id` AND cs.`id` = c.`cstatus_id` AND ts.`sid` = #{sid} AND c.`status` = 1")
+    @Select("SELECT c.`id`,s.`point`,c.`credit`,c.`isExam`,n.`name` nname,c.`name`,te.`name` tname,s.`score`,cs.`name` csname,c.`total_time` FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_nature` n,`t_section` se,`t_cstatus` cs WHERE s.`student_id` = ts.`sid` AND s.`course_id` = c.`id` AND c.`nature_id` = n.`id` AND c.`team_id` = te.`id` AND c.`week_id` = w.`id` AND c.`teacher_id` = t.`tid` AND se.`id`= c.`section_id` AND cs.`id` = c.`cstatus_id` AND ts.`sid` = #{sid} AND s.status='1'")
     IPage<ScoreDTO> findStudentScore(Page page, @Param("sid") String sid);
 
     /**
@@ -83,6 +83,6 @@ public interface TScoreMapper extends BaseMapper<TScore> {
     IPage addStudentScore(IPage iPage, String courseId);
 
 
-    @Select("SELECT c.`id`,c.`name`,c.`classroom`,t.`tname` teacherName,te.`name` tname,w.`time` wname,se.`section` sse,se.`week` sw FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_nature` n,`t_section` se WHERE s.`student_id` = ts.`sid` AND s.`course_id` = c.`id` AND c.`nature_id` = n.`id` AND c.`team_id` = te.`id` AND c.`week_id` = w.`id` AND c.`teacher_id` = t.`tid` AND se.`id`= c.`section_id` AND ts.`sid` = #{sid} AND s.`status` = 0")
+    @Select("SELECT c.`id`,c.`name`,c.`classroom`,t.`tname` teacherName,te.`name` tname,w.`time` wname,se.`section` sse,se.`week` sw FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_nature` n,`t_section` se WHERE s.`student_id` = ts.`sid` AND s.`course_id` = c.`id` AND c.`nature_id` = n.`id` AND c.`team_id` = te.`id` AND c.`week_id` = w.`id` AND c.`teacher_id` = t.`tid` AND se.`id`= c.`section_id` AND ts.`sid` = #{sid} and c.`end` = 0 and c.system_id = 1 or c.system_id = 4")
     List<CourseDTO> findSelectCourseByStudentId(String sid);
 }
