@@ -67,6 +67,11 @@ public class TStudentController extends BaseController {
         return ResponseEntity.ok(student);
     }
 
+    /**
+     * 查询课表
+     * @param queryCourseVO
+     * @return
+     */
     @GetMapping("/findSchedule")
     public ResponseEntity findSchedule(QueryStudentVO queryCourseVO){
         Object[][] schedule = studentService.findSchedule(queryCourseVO, getUserId());
