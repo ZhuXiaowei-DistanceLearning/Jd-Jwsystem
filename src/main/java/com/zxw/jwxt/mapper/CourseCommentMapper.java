@@ -2,6 +2,8 @@ package com.zxw.jwxt.mapper;
 
 import com.zxw.jwxt.domain.CourseComment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zxw.jwxt.dto.CommentDTO;
+import com.zxw.jwxt.vo.QueryCommentVO;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CourseCommentMapper extends BaseMapper<CourseComment> {
 
+    CommentDTO queryCourseComment(QueryCommentVO commentVO, String id);
 }
