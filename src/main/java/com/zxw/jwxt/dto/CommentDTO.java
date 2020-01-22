@@ -35,6 +35,10 @@ public class CommentDTO {
     private String teacherName;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String courseName;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Integer status;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Integer remark;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date beginTime;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

@@ -14,4 +14,5 @@ public class QueryCommentVO extends BaseQueryParam {
     private String tid;
     private String teamId;
     private String commentId;
+    private String tcId;
 }
