@@ -36,4 +36,15 @@ public class TeamCommentService extends BaseService {
         IPage<CommentDTO> iPage = teamCommentMapper.findAll(this.getPage(teamCommentVO), userId, teamCommentVO.getCommentId());
         return iPage;
     }
+
+    public IPage findTeacher(QueryTeamCommentVO teamCommentVO, String userId) {
+        IPage<CommentDTO> iPage = teamCommentMapper.findTeacher(this.getPage(teamCommentVO), userId, teamCommentVO.getCommentId());
+        return iPage;
+    }
+
+    public IPage findStudentComment(QueryTeamCommentVO teamCommentVO, String userId) {
+        IPage<CommentDTO> iPage = teamCommentMapper.findStudentComment(this.getPage(teamCommentVO), teamCommentVO.getCommentId(), userId, teamCommentVO.getCid());
+        return iPage;
+    }
+
 }

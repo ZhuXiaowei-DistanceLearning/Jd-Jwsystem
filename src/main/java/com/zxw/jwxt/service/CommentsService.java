@@ -1,14 +1,11 @@
 package com.zxw.jwxt.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zxw.jwxt.domain.TComments;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.zxw.jwxt.dto.CommentDTO;
 import com.zxw.jwxt.mapper.TCommentsMapper;
 import com.zxw.jwxt.vo.QueryCommentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -28,4 +25,5 @@ public class CommentsService extends BaseService {
         IPage<CommentDTO> iPage = commentsMapper.findAll(this.getPage(commentVO));
         return iPage;
     }
+
 }

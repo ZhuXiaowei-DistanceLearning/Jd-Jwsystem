@@ -28,6 +28,8 @@ public class CommentDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String tname;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String sname;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer commentType;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String commentBatch;

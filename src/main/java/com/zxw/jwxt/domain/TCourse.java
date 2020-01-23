@@ -75,5 +75,5 @@ public class TCourse implements Serializable {
 
     private Integer end;
 
-
+    private Integer comment;
 }

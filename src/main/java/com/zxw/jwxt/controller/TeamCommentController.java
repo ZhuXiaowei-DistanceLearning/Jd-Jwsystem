@@ -25,9 +25,38 @@ public class TeamCommentController extends BaseController {
     @Autowired
     private TeamCommentService teamCommentService;
 
+    /**
+     * 查询学生评价列表
+     * @param teamCommentVO
+     * @return
+     */
     @GetMapping("/pageQuery")
     public ResponseEntity pageQuery(QueryTeamCommentVO teamCommentVO){
         IPage page =  teamCommentService.pageQuery(teamCommentVO,getUserId());
+        TableResponse of = TableResponse.of(page);
+        return ResponseEntity.ok(of);
+    }
+
+    /**
+     * 查询教师评价列表
+     * @param teamCommentVO
+     * @return
+     */
+    @GetMapping("/findTeacher")
+    public ResponseEntity findTeacher(QueryTeamCommentVO teamCommentVO){
+        IPage page =  teamCommentService.findTeacher(teamCommentVO,getUserId());
+        TableResponse of = TableResponse.of(page);
+        return ResponseEntity.ok(of);
+    }
+
+    /**
+     * 查找该门课程的学生评价
+     * @param teamCommentVO
+     * @return
+     */
+    @GetMapping("/findStudentComment")
+    public ResponseEntity findStudentComment(QueryTeamCommentVO teamCommentVO){
+        IPage page =  teamCommentService.findStudentComment(teamCommentVO,getUserId());
         TableResponse of = TableResponse.of(page);
         return ResponseEntity.ok(of);
     }

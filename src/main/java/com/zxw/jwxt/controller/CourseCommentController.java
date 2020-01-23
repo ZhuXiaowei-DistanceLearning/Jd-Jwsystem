@@ -30,9 +30,21 @@ public class CourseCommentController extends BaseController {
         return ResponseEntity.ok(rs);
     }
 
+    @PostMapping("/teacherReply")
+    public ResponseEntity teacherReply(@RequestBody CourseComment courseComment) {
+        RS rs = courseCommentService.reply(courseComment);
+        return ResponseEntity.ok(rs);
+    }
+
     @GetMapping("/queryCourseComment")
     public ResponseEntity queryCourseComment(QueryCommentVO commentVO) {
         CourseCommentDTO commentDTO = courseCommentService.queryCourseComment(commentVO, getRealm());
+        return ResponseEntity.ok(commentDTO);
+    }
+
+    @GetMapping("/queryStudentComment")
+    public ResponseEntity queryStudentComment(QueryCommentVO commentVO) {
+        CourseCommentDTO commentDTO = courseCommentService.queryStudentComment(commentVO);
         return ResponseEntity.ok(commentDTO);
     }
 

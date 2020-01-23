@@ -48,4 +48,14 @@ public class CourseCommentService extends BaseService {
     private Integer getRemark(CourseComment courseComment) {
         return (courseComment.getQ1() + courseComment.getQ2() + courseComment.getQ3() + courseComment.getQ4() + courseComment.getQ5() + courseComment.getQ6() + courseComment.getQ7() + courseComment.getQ8() + courseComment.getQ9() + courseComment.getQ10()) * 2;
     }
+
+    public CourseCommentDTO queryStudentComment(QueryCommentVO commentVO) {
+        CourseCommentDTO courseCommentDTO = courseCommentMapper.queryCourseComment(commentVO.getCid(), commentVO.getTcId(), commentVO.getSid());
+        return courseCommentDTO;
+    }
+
+    public RS reply(CourseComment courseComment) {
+        int i = courseCommentMapper.updateById(courseComment);
+        return i == 1 ? RS.ok() : RS.error("添加失败");
+    }
 }
