@@ -18,7 +18,7 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface TCommentsMapper extends BaseMapper<TComments> {
-    @Select("select c.*,t.`name` tname from t_comments c,t_team t where c.team_id = t.id")
+    @Select("select c.*,t.`name` tname,c.`team_id` teamId from t_comments c,t_team t where c.team_id = t.id")
     IPage<CommentDTO> findAll(Page page);
 
 }

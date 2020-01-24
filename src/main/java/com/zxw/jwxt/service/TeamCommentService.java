@@ -1,5 +1,6 @@
 package com.zxw.jwxt.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TeamComment;
@@ -8,6 +9,8 @@ import com.zxw.jwxt.mapper.TeamCommentMapper;
 import com.zxw.jwxt.vo.QueryTeamCommentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -32,6 +35,11 @@ public class TeamCommentService extends BaseService {
         return i == 1 ? RS.ok() : RS.error("操作异常");
     }
 
+    public RS add(TeamComment teamComment) {
+        int insert = teamCommentMapper.insert(teamComment);
+        return insert == 0 ? RS.error("操作失败") : RS.ok();
+    }
+
     public IPage pageQuery(QueryTeamCommentVO teamCommentVO, String userId) {
         IPage<CommentDTO> iPage = teamCommentMapper.findAll(this.getPage(teamCommentVO), userId, teamCommentVO.getCommentId());
         return iPage;
@@ -47,4 +55,15 @@ public class TeamCommentService extends BaseService {
         return iPage;
     }
 
+    public List selectAllByCommentId(String id) {
+        List list = teamCommentMapper.selectList(this.queryOne("comment_id", id));
+        return list;
+    }
+
+    public RS deleteById(String commentId) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("comment_id", commentId);
+        int i = teamCommentMapper.delete(wrapper);
+        return i == 1 ? RS.ok() : RS.error("操作失败");
+    }
 }

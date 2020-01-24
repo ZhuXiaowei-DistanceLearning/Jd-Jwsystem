@@ -1,5 +1,6 @@
 package com.zxw.jwxt.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.exception.BadRequestException;
@@ -133,5 +134,13 @@ public class CourseService extends BaseService {
             return i == 1 ? RS.ok() : RS.error("操作失败");
         }
         throw new BadRequestException("该课程不存在");
+    }
+
+    public List<TCourse> selectAll(String teamId) {
+        QueryWrapper wrapper = new QueryWrapper<>();
+        wrapper.eq("team_id", teamId);
+        wrapper.eq("end", "1");
+        List list = courseMapper.selectList(wrapper);
+        return list;
     }
 }
