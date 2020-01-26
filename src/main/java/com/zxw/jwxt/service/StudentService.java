@@ -230,7 +230,7 @@ public class StudentService extends BaseService {
         Object[][] arr = new Object[5][7];
         List<CourseDTO> list = courseService.findScheduleByStudent(userId, queryCourseVO.getTeamId());
         list.forEach(e -> {
-            ScheduleDTO scheduleDTO = new ScheduleDTO(e.getName(), e.getWname(), e.getTeacherName(), e.getClassroom());
+            ScheduleDTO scheduleDTO = new ScheduleDTO(e.getName(), e.getWname(), e.getTeacherName(), e.getClassroom(),null);
             switch (e.getSse()) {
                 case "1-2节":
                     parseSchedule(arr, e, scheduleDTO, 0);

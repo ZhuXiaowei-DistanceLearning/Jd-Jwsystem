@@ -16,6 +16,6 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface CourseCommentMapper extends BaseMapper<CourseComment> {
 
-    @Select("SELECT cc.*,tc.`remark`,course.`name`,tc.`status` FROM `course_comment` cc,`team_comment` tc,`t_team` t,`t_comments` c,`t_course` course,`t_student` student WHERE cc.`tm_id` = tc.`id` AND tc.`comment_id` = c.`id` AND c.`team_id` = t.`id` AND tc.`cid` = course.`id` and student.`sid` = #{studentId} AND course.`id` = #{courseId} AND tc.`id` = #{tcId};")
+    @Select("SELECT cc.*,tc.`remark`,course.`name`,tc.`status` FROM `course_comment` cc,`team_comment` tc,`t_team` t,`t_comments` c,`t_course` course,`t_student` student,`teacher_course` tcc WHERE cc.`tm_id` = tc.`id` AND tc.`comment_id` = c.`id` AND course.`id` = tcc.`cid` AND c.`team_id` = t.`id` AND tc.`cid` = tcc.`id` AND student.`sid` = #{studentId} AND tcc.`id` = #{courseId} AND tc.`id` = #{tcId}")
     CourseCommentDTO queryCourseComment(@Param("courseId") String courseId, @Param("tcId") String tcId, @Param("studentId") String studentId);
 }

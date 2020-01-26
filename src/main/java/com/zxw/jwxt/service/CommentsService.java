@@ -3,7 +3,7 @@ package com.zxw.jwxt.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TComments;
-import com.zxw.jwxt.domain.TCourse;
+import com.zxw.jwxt.domain.TeacherCourse;
 import com.zxw.jwxt.domain.TeamComment;
 import com.zxw.jwxt.dto.CommentDTO;
 import com.zxw.jwxt.dto.StudentDTO;
@@ -42,7 +42,7 @@ public class CommentsService extends BaseService {
 
     public RS add(TComments tComments) {
         int insert = commentsMapper.insert(tComments);
-        List<TCourse> list = courseService.selectAll(tComments.getTeamId());
+        List<TeacherCourse> list = courseService.selectAll(tComments.getTeamId());
         list.forEach(e -> {
             QueryCourseVO vo = new QueryCourseVO();
             vo.setId(e.getId());
@@ -53,7 +53,7 @@ public class CommentsService extends BaseService {
                 teamComment.setStatus(0);
                 teamComment.setCid(e.getId());
                 teamComment.setSid(e1.getSid());
-//                teamComment.setTid(e.getTeacherId());
+                teamComment.setTid(e1.getTid());
                 teamComment.setCommentId(tComments.getId());
                 teamCommentService.add(teamComment);
             });

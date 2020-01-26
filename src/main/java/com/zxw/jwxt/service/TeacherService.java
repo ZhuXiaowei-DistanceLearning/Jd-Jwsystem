@@ -15,6 +15,7 @@ import com.zxw.jwxt.dto.ScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,49 +77,104 @@ public class TeacherService extends BaseService {
         Object[][] arr = new Object[5][7];
         List<CourseDTO> list = courseService.findScheduleByTeacher(userId, queryCourseVO.getTeamId());
         list.forEach(e -> {
-            ScheduleDTO scheduleDTO = new ScheduleDTO(e.getName(), e.getWname(), e.getNname(), e.getClassroom());
+            ScheduleDTO scheduleDTO = new ScheduleDTO(e.getName(), e.getWname(), e.getNname(), e.getClassroom(), null);
             switch (e.getSse()) {
                 case "1-2节":
-                    parseSchedule(arr, e, scheduleDTO,0);
+                    parseSchedule(arr, e, scheduleDTO, 0);
                     break;
                 case "3-4节":
-                    parseSchedule(arr, e, scheduleDTO,1);
+                    parseSchedule(arr, e, scheduleDTO, 1);
                     break;
                 case "5-6节":
-                    parseSchedule(arr, e, scheduleDTO,2);
+                    parseSchedule(arr, e, scheduleDTO, 2);
                     break;
                 case "7-8节":
-                    parseSchedule(arr, e, scheduleDTO,3);
+                    parseSchedule(arr, e, scheduleDTO, 3);
                     break;
                 case "9-10节":
-                    parseSchedule(arr, e, scheduleDTO,4);
+                    parseSchedule(arr, e, scheduleDTO, 4);
                     break;
             }
         });
         return arr;
     }
 
-    private void parseSchedule(Object[][] arr, CourseDTO e, ScheduleDTO scheduleDTO,int i) {
+    private void parseSchedule(Object[][] arr, CourseDTO e, ScheduleDTO scheduleDTO, int i) {
         switch (e.getSw()) {
             case "周一":
-                arr[i][0] = scheduleDTO;
+                List<ScheduleDTO> o1 = (List<ScheduleDTO>) arr[i][0];
+                if (o1 == null) {
+                    ArrayList<Object> list = new ArrayList<>();
+                    list.add(scheduleDTO);
+                    arr[i][0] = list;
+                } else {
+                    o1.add(scheduleDTO);
+                }
                 break;
             case "周二":
+                List<ScheduleDTO> o2 = (List<ScheduleDTO>) arr[i][1];
+                if (o2 == null) {
+                    ArrayList<Object> list = new ArrayList<>();
+                    list.add(scheduleDTO);
+                    arr[i][1] = list;
+                } else {
+                    o2.add(scheduleDTO);
+                }
                 arr[i][1] = scheduleDTO;
                 break;
             case "周三":
+                List<ScheduleDTO> o3 = (List<ScheduleDTO>) arr[i][2];
+                if (o3 == null) {
+                    ArrayList<Object> list = new ArrayList<>();
+                    list.add(scheduleDTO);
+                    arr[i][2] = list;
+                } else {
+                    o3.add(scheduleDTO);
+                }
                 arr[i][2] = scheduleDTO;
                 break;
             case "周四":
+                List<ScheduleDTO> o4 = (List<ScheduleDTO>) arr[i][3];
+                if (o4 == null) {
+                    ArrayList<Object> list = new ArrayList<>();
+                    list.add(scheduleDTO);
+                    arr[i][3] = list;
+                } else {
+                    o4.add(scheduleDTO);
+                }
                 arr[i][3] = scheduleDTO;
                 break;
             case "周五":
+                List<ScheduleDTO> o5 = (List<ScheduleDTO>) arr[i][4];
+                if (o5 == null) {
+                    ArrayList<Object> list = new ArrayList<>();
+                    list.add(scheduleDTO);
+                    arr[i][4] = list;
+                } else {
+                    o5.add(scheduleDTO);
+                }
                 arr[i][4] = scheduleDTO;
                 break;
             case "周六":
+                List<ScheduleDTO> o6 = (List<ScheduleDTO>) arr[i][5];
+                if (o6 == null) {
+                    ArrayList<Object> list = new ArrayList<>();
+                    list.add(scheduleDTO);
+                    arr[i][5] = list;
+                } else {
+                    o6.add(scheduleDTO);
+                }
                 arr[i][5] = scheduleDTO;
                 break;
             case "周日":
+                List<ScheduleDTO> o7 = (List<ScheduleDTO>) arr[i][6];
+                if (o7 == null) {
+                    ArrayList<Object> list = new ArrayList<>();
+                    list.add(scheduleDTO);
+                    arr[i][6] = list;
+                } else {
+                    o7.add(scheduleDTO);
+                }
                 arr[i][6] = scheduleDTO;
                 break;
         }

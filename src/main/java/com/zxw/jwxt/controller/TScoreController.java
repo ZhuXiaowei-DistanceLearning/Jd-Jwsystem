@@ -4,10 +4,10 @@ package com.zxw.jwxt.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
-import com.zxw.jwxt.domain.TCourse;
 import com.zxw.jwxt.domain.TScore;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.service.CourseService;
+import com.zxw.jwxt.service.ITeacherCourseService;
 import com.zxw.jwxt.service.ScoreService;
 import com.zxw.jwxt.service.StudentService;
 import com.zxw.jwxt.vo.QueryScoreVO;
@@ -38,6 +38,9 @@ public class TScoreController extends BaseController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private ITeacherCourseService teacherCourseService;
+
 
     /**
      * 选课实现
@@ -48,22 +51,8 @@ public class TScoreController extends BaseController {
     @PostMapping("/save")
     public ResponseEntity save(@RequestBody QueryScoreVO scoreVO) {
         // 判断是否已经选修
-        Boolean b = scoreService.findIsSelect(getUserId(), scoreVO.getCid());
-        if (!b) {
-            // 判断人数是否已满
-            TCourse tCourse = courseService.findById(scoreVO.getCid());
-//            if (!tCourse.getPeople().equals(tCourse.getTotalPeople())) {
-//                // 选修
-//                RS rs = scoreService.save(scoreVO, getUserId());
-//                RS people = courseService.updatePeople(scoreVO.getCid());
-//                if (rs.get("status").equals("1")) {
-//                    return ResponseEntity.ok(rs);
-//                }
-//                throw new BadRequestException("选课失败");
-//            }
-            throw new BadRequestException("课程人数已满");
-        }
-        throw new BadRequestException("已经选择了该门课程,不能重复下载");
+        RS rs = scoreService.save(scoreVO, getUserId());
+        return ResponseEntity.ok(rs);
     }
 
 

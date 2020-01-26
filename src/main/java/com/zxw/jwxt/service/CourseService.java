@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TCourse;
+import com.zxw.jwxt.domain.TeacherCourse;
 import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.dto.StudentDTO;
@@ -33,6 +34,9 @@ public class CourseService extends BaseService {
 
     @Autowired
     private TCourseMapper courseMapper;
+
+    @Autowired
+    private ITeacherCourseService teacherCourseService;
 
     public RS addPeople(int i, String id) {
         TCourse course = new TCourse();
@@ -78,18 +82,18 @@ public class CourseService extends BaseService {
     }
 
     public RS updatePeople(String cid) {
-        TCourse tCourse = courseMapper.selectOne(this.queryOne("id", cid));
-//        tCourse.setPeople(tCourse.getPeople() + 1);
-        int i = courseMapper.updateById(tCourse);
-        return i == 1 ? RS.ok() : RS.error("操作失败");
+        TeacherCourse teacherCourse = teacherCourseService.getOne(this.queryOne("cid", cid));
+        teacherCourse.setPeople(teacherCourse.getPeople() + 1);
+        boolean b = teacherCourseService.updateById(teacherCourse);
+        return b ? RS.ok() : RS.error("操作失败");
     }
 
     public RS deletePeople(String cid) {
-        TCourse tCourse = courseMapper.selectOne(this.queryOne("id", cid));
-        if (tCourse != null) {
-//            tCourse.setPeople(tCourse.getPeople() - 1);
-            int i = courseMapper.update(tCourse, this.queryOne("id", cid));
-            return i == 1 ? RS.ok() : RS.error("操作失败");
+        TeacherCourse teacherCourse = teacherCourseService.getOne(this.queryOne("cid", cid));
+        if (teacherCourse != null) {
+            teacherCourse.setPeople(teacherCourse.getPeople() - 1);
+            boolean b = teacherCourseService.updateById(teacherCourse);
+            return b ? RS.ok() : RS.error("操作失败");
         }
         throw new BadRequestException("该课程不存在");
     }
@@ -117,31 +121,33 @@ public class CourseService extends BaseService {
         return iPage;
     }
 
-    public RS updateCourseEnd(QueryCourseVO courseVO) {
-        TCourse course = courseMapper.selectOne(this.queryOne("id", courseVO.getId()));
-        if (course != null) {
+    public RS updateCourseEnd(QueryCourseVO courseVO, UserRealm realm) {
+        QueryWrapper queryWrapper = this.queryOne("cid", courseVO.getId());
+        queryWrapper.eq("teacher_id", realm.getQx().equals("讲师") ? realm.getId() : courseVO.getTid());
+        TeacherCourse teacherCourse = teacherCourseService.getOne(queryWrapper);
+        if (teacherCourse != null) {
             switch (courseVO.getEndStatus()) {
                 case "apply":
-//                    course.setEnd(1);
+                    teacherCourse.setEnd(1);
                     break;
                 case "agree":
-//                    course.setEnd(2);
+                    teacherCourse.setEnd(2);
                     break;
                 case "reject":
-//                    course.setEnd(3);
+                    teacherCourse.setEnd(3);
                     break;
             }
-            int i = courseMapper.updateById(course);
-            return i == 1 ? RS.ok() : RS.error("操作失败");
+            boolean b = teacherCourseService.updateById(teacherCourse);
+            return b ? RS.ok() : RS.error("操作失败");
         }
         throw new BadRequestException("该课程不存在");
     }
 
-    public List<TCourse> selectAll(String teamId) {
+    public List<TeacherCourse> selectAll(String teamId) {
         QueryWrapper wrapper = new QueryWrapper<>();
         wrapper.eq("team_id", teamId);
         wrapper.eq("end", "1");
-        List list = courseMapper.selectList(wrapper);
+        List list = teacherCourseService.list(wrapper);
         return list;
     }
 }

@@ -20,19 +20,27 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface TeamCommentMapper extends BaseMapper<TeamComment> {
 
-    @Select("SELECT tc.*,teacher.`tname` teacherName,course.`name` courseName,c.`commentType` FROM `team_comment` tc,`t_comments` c,`t_teacher` teacher,`t_course` course WHERE tc.`comment_id` = c.`id` AND tc.`comment_id` = c.`id` AND tc.`tid`  = teacher.`tid` AND course.`id` = tc.`cid` AND course.`teacher_id` = teacher.tid AND tc.sid = #{sid} AND tc.`comment_id` = #{commentId}")
+    @Select("SELECT course.`id` cid,teacher.`tname` teacherName,course.`name` courseName,c.`commentType`,tc.`id`,tc.`remark`,tc.`status`  FROM `team_comment` tc, `t_comments` c, `t_teacher` teacher, `t_course` course, `teacher_course` tcc WHERE tc.`comment_id` = c.`id` AND tcc.`cid` = course.`id` AND tcc.`id` = tc.`cid` AND tc.`tid` = teacher.tid AND tc.sid = #{sid} AND tc.`comment_id` = #{commentId}")
     IPage<CommentDTO> findAll(Page page, @Param("sid") String sid, @Param("commentId") String commentId);
 
-    @Select("SELECT course.`id` cid,teacher.`tname` teacherName,course.`name` courseName,c.`commentType`,c.`id` FROM `t_comments` c,`t_teacher` teacher,`t_course` course WHERE course.`teacher_id` = teacher.tid AND c.`id` = #{commentId} AND course.`team_id` = c.`team_id` AND teacher.`tid` = #{teacherId} and course.`comment` = 1")
+    /**
+     * 查找课程评价
+     *
+     * @param page
+     * @param teacherId
+     * @param commentId
+     * @return
+     */
+    @Select("SELECT tc.`cid` cid,course.`name` courseName,c.`commentType`,c.`id`  FROM `t_comments` c, `t_course` course, `teacher_course` tc WHERE tc.`cid` = course.`id` AND tc.`team_id` = c.`team_id` AND tc.`teacher_id` = #{teacherId} AND c.`id` = #{commentId}")
     IPage<CommentDTO> findTeacher(Page page, @Param("teacherId") String teacherId, @Param("commentId") String commentId);
 
     /**
      * @param page
-     * @param id    评价id
+     * @param id        评价id
      * @param teacherId 教师id
      * @param courseId  课程id
      * @return
      */
-    @Select("SELECT s.`sid`,course.`id` cid,tc.remark,tc.`status`, tc.`id`,s.`sname` FROM  `team_comment` tc,`t_comments` c,`t_teacher` t,`t_student` s,`t_course` course WHERE tc.`comment_id` = c.`id` AND tc.`sid` = s.`sid` AND tc.`tid` = t.`tid` AND c.`id` = #{id} AND tc.`tid` =#{teacherId} AND course.`id` = tc.`cid` AND course.`id` = #{courseId}")
+    @Select("SELECT s.`sid`,tcc.`cid` cid,tc.remark,tc.`status`, tc.`id`,s.`sname` FROM  `team_comment` tc,`t_student` s,`t_course` course,`teacher_course` tcc WHERE tc.`sid` = s.`sid` AND tc.`comment_id` = #{id} AND tc.`tid` = #{teacherId} AND tcc.`cid` = course.`id` AND tcc.`cid` = tc.`cid` AND tcc.`id` = #{courseId}")
     IPage<CommentDTO> findStudentComment(Page page, @Param("id") String id, @Param("teacherId") String teacherId, @Param("courseId") String courseId);
 }

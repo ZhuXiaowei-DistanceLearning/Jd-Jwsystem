@@ -17,5 +17,6 @@ public class ScheduleDTO {
     private String week;
     private String teacherName;
     private String classroom;
+    private ScheduleDTO children;
 
 }

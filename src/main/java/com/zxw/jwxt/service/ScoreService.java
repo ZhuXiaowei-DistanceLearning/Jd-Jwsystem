@@ -2,8 +2,10 @@ package com.zxw.jwxt.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TScore;
+import com.zxw.jwxt.domain.TeacherCourse;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.dto.ScoreDTO;
 import com.zxw.jwxt.mapper.TScoreMapper;
@@ -26,6 +28,18 @@ import java.util.List;
 public class ScoreService extends BaseService {
     @Autowired
     private TScoreMapper scoreMapper;
+
+    @Autowired
+    private ScoreService scoreService;
+
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private ITeacherCourseService teacherCourseService;
 
     public RS saveCourse(QueryScoreVO model) {
 //        return scoreMapper.insert(model) == 0 ? RS.error("插入失败") : RS.ok();
@@ -64,7 +78,7 @@ public class ScoreService extends BaseService {
         tScore.setUsually(scoreVO.getUsually().intValue());
         tScore.setExam(scoreVO.getExam().intValue());
         tScore.setScore(attendance.intValue() + usually.intValue() + exam.intValue());
-        tScore.setPoint(scoreVO.getPoint() * ((attendance + usually) / 100));
+        tScore.setPoint((attendance.intValue() + usually.intValue() + exam.intValue()) / 20.0);
         tScore.setStatus(1);
         int i = scoreMapper.update(tScore, queryWrapper);
         return i == 0 ? RS.error("操作失败") : RS.ok();
@@ -107,12 +121,26 @@ public class ScoreService extends BaseService {
     }
 
     public RS save(QueryScoreVO scoreVO, String userId) {
-        TScore tScore = new TScore();
-        tScore.setStudentId(userId);
-        tScore.setTeacherId(scoreVO.getTid());
-        tScore.setCourseId(scoreVO.getCid());
-        int i = scoreMapper.insert(tScore);
-        return i == 0 ? RS.error("操作失败") : RS.ok();
+        Boolean b = this.findIsSelect(userId, scoreVO.getCid());
+        if (!b) {
+            // 判断人数是否已满
+            TeacherCourse teacherCourse = teacherCourseService.getOne(this.queryOne("cid", scoreVO.getCid()));
+            if (!teacherCourse.getPeople().equals(teacherCourse.getTotalPeople())) {
+                // 选修
+                TScore tScore = new TScore();
+                tScore.setStudentId(userId);
+                tScore.setTeacherId(scoreVO.getTid());
+                tScore.setCourseId(teacherCourse.getId());
+                int i = scoreMapper.insert(tScore);
+                RS people = courseService.updatePeople(scoreVO.getCid());
+                if (i == 1) {
+                    return RS.ok();
+                }
+                throw new BadRequestException("选课失败");
+            }
+            throw new BadRequestException("课程人数已满");
+        }
+        throw new BadRequestException("已经选择了该门课程,不能重复下载");
     }
 
     public RS delete(String userId, String cid) {

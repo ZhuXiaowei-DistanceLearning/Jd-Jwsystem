@@ -22,7 +22,7 @@ public class QueryCourseVO extends BaseQueryParam {
 
     private String weekId;
 
-    private String teacherId;
+    private String tid;
 
     private String natureId;
 

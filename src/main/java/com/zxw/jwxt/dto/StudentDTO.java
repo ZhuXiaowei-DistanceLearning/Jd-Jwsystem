@@ -12,6 +12,8 @@ public class StudentDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String sid;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String tid;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String sname;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String cname;

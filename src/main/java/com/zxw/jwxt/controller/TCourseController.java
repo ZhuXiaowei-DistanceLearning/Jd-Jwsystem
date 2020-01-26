@@ -58,7 +58,7 @@ public class TCourseController extends BaseController {
 
     @PutMapping("/updateCourseEnd")
     public ResponseEntity updateCourseEnd(@RequestBody QueryCourseVO courseVO) {
-        RS rs = courseService.updateCourseEnd(courseVO);
+        RS rs = courseService.updateCourseEnd(courseVO,getRealm());
         if (rs.get("status").equals("1")) {
             return ResponseEntity.ok(rs);
         }
