@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
  * @PACKAGE_NAME: com.zxw.jwxt.dto
  * @author: Administrator
@@ -19,7 +21,7 @@ public class CourseDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String name;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Integer credit;
+    private BigDecimal credit;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String classroom;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -39,7 +41,7 @@ public class CourseDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer totalTime;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Integer point;
+    private BigDecimal point;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String wayId;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

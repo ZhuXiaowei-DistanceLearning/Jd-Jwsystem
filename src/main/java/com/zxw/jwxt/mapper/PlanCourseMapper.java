@@ -18,6 +18,6 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface PlanCourseMapper extends BaseMapper<PlanCourse> {
 
-    @Select("SELECT pc.`id`,pc.`plan_id` planId,c.`id` courseId,c.`credit`,c.`point`,n.`name` nname,co.`name` coname,cs.`name` csname,c.name cname,c.`total_time`,system.`name` systemName FROM `plan_course` pc,`t_course` c,`t_nature` n,`t_college` co,`t_cstatus` cs,`course_system` system WHERE pc.`course_id` = c.`id` AND c.`nature_id` = n.`id` AND co.`id` = c.`college_id` AND system.`id` = c.`system_id` AND c.`cstatus_id` = cs.`id` AND pc.`plan_id` = #{planId}")
+    @Select("SELECT pc.`id`,pc.`plan_id` planId,c.`id` courseId,c.`credit`,n.`name` nname,co.`name` coname,cs.`name` csname,c.name cname,c.`total_time`,system.`name` systemName FROM `plan_course` pc,`t_course` c,`t_nature` n,`t_college` co,`t_cstatus` cs,`course_system` system WHERE pc.`course_id` = c.`id` AND c.`nature_id` = n.`id` AND co.`id` = c.`college_id` AND system.`id` = c.`system_id` AND c.`cstatus_id` = cs.`id` AND pc.`plan_id` = #{planId}")
     IPage<PlanDTO> findAll(Page page, @Param("planId") String planId);
 }

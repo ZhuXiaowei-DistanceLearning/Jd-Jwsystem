@@ -22,7 +22,7 @@ public class PlanDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer status;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private String teamId;
+    private String yearId;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String tname;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

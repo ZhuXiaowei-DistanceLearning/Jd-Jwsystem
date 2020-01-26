@@ -52,15 +52,15 @@ public class TScoreController extends BaseController {
         if (!b) {
             // 判断人数是否已满
             TCourse tCourse = courseService.findById(scoreVO.getCid());
-            if (!tCourse.getPeople().equals(tCourse.getTotalPeople())) {
-                // 选修
-                RS rs = scoreService.save(scoreVO, getUserId());
-                RS people = courseService.updatePeople(scoreVO.getCid());
-                if (rs.get("status").equals("1")) {
-                    return ResponseEntity.ok(rs);
-                }
-                throw new BadRequestException("选课失败");
-            }
+//            if (!tCourse.getPeople().equals(tCourse.getTotalPeople())) {
+//                // 选修
+//                RS rs = scoreService.save(scoreVO, getUserId());
+//                RS people = courseService.updatePeople(scoreVO.getCid());
+//                if (rs.get("status").equals("1")) {
+//                    return ResponseEntity.ok(rs);
+//                }
+//                throw new BadRequestException("选课失败");
+//            }
             throw new BadRequestException("课程人数已满");
         }
         throw new BadRequestException("已经选择了该门课程,不能重复下载");

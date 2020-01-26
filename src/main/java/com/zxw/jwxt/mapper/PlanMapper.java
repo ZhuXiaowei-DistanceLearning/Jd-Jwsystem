@@ -18,6 +18,6 @@ import java.util.List;
  */
 public interface PlanMapper extends BaseMapper<Plan> {
 
-    @Select("select p.*,t.`name` from `plan` p,`t_team` t where p.`team_id` = t.`id` and p.`specialty_id` = #{specialtyId}")
+    @Select("select p.*,t.`name` from `plan` p,`t_year` t where p.`year_id` = t.`id` and p.`specialty_id` = #{specialtyId}")
     List<PlanDTO> listajax(@Param("specialtyId") String specialtyId);
 }

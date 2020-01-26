@@ -37,7 +37,7 @@ public class Plan implements Serializable {
 
     private Integer status = 1;
 
-    private String teamId;
+    private String yearId;
 
     private String specialtyId;
 

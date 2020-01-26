@@ -2,6 +2,8 @@ package com.zxw.jwxt.vo;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * @author zxw
  * @date 2019/11/21 13:51:07
@@ -12,7 +14,7 @@ public class QueryCourseVO extends BaseQueryParam {
 
     private String name;
 
-    private Integer credit;
+    private BigDecimal credit;
 
     private String classroom;
 

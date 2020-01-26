@@ -36,7 +36,7 @@ public class CourseService extends BaseService {
 
     public RS addPeople(int i, String id) {
         TCourse course = new TCourse();
-        course.setPeople(i);
+//        course.setPeople(i);
         course.setId(id);
         return courseMapper.updateById(course) == 0 ? RS.error("选课人数添加失败") : RS.ok();
     }
@@ -57,7 +57,8 @@ public class CourseService extends BaseService {
         return iPage;
     }
 
-    public RS add(TCourse model) {
+    public RS add(TCourse model, UserRealm realm) {
+        model.setCollegeId(realm.getCollegeId());
         return courseMapper.insert(model) == 0 ? RS.error("添加失败") : RS.ok();
     }
 
@@ -78,7 +79,7 @@ public class CourseService extends BaseService {
 
     public RS updatePeople(String cid) {
         TCourse tCourse = courseMapper.selectOne(this.queryOne("id", cid));
-        tCourse.setPeople(tCourse.getPeople() + 1);
+//        tCourse.setPeople(tCourse.getPeople() + 1);
         int i = courseMapper.updateById(tCourse);
         return i == 1 ? RS.ok() : RS.error("操作失败");
     }
@@ -86,7 +87,7 @@ public class CourseService extends BaseService {
     public RS deletePeople(String cid) {
         TCourse tCourse = courseMapper.selectOne(this.queryOne("id", cid));
         if (tCourse != null) {
-            tCourse.setPeople(tCourse.getPeople() - 1);
+//            tCourse.setPeople(tCourse.getPeople() - 1);
             int i = courseMapper.update(tCourse, this.queryOne("id", cid));
             return i == 1 ? RS.ok() : RS.error("操作失败");
         }
@@ -121,13 +122,13 @@ public class CourseService extends BaseService {
         if (course != null) {
             switch (courseVO.getEndStatus()) {
                 case "apply":
-                    course.setEnd(1);
+//                    course.setEnd(1);
                     break;
                 case "agree":
-                    course.setEnd(2);
+//                    course.setEnd(2);
                     break;
                 case "reject":
-                    course.setEnd(3);
+//                    course.setEnd(3);
                     break;
             }
             int i = courseMapper.updateById(course);

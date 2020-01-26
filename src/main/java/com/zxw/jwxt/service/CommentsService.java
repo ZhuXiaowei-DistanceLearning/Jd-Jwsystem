@@ -53,7 +53,7 @@ public class CommentsService extends BaseService {
                 teamComment.setStatus(0);
                 teamComment.setCid(e.getId());
                 teamComment.setSid(e1.getSid());
-                teamComment.setTid(e.getTeacherId());
+//                teamComment.setTid(e.getTeacherId());
                 teamComment.setCommentId(tComments.getId());
                 teamCommentService.add(teamComment);
             });

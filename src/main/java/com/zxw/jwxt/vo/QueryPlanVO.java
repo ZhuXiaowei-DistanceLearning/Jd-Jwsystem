@@ -11,4 +11,5 @@ public class QueryPlanVO extends BaseQueryParam {
     private String specialtyId;
     private String planId;
     private String[] cids;
+    private String yearId;
 }
