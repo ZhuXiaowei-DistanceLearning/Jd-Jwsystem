@@ -2,6 +2,8 @@ package com.zxw.jwxt.vo;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * @author zxw
  * @date 2019/11/21 13:51:07
@@ -16,5 +18,5 @@ public class QueryScoreVO extends BaseQueryParam {
     private Double attendance;
     private Double usually;
     private Double exam;
-    private Double point;
+    private BigDecimal point;
 }

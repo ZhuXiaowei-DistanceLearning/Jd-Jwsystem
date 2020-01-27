@@ -13,6 +13,7 @@ import com.zxw.jwxt.vo.QueryScoreVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -78,7 +79,7 @@ public class ScoreService extends BaseService {
         tScore.setUsually(scoreVO.getUsually().intValue());
         tScore.setExam(scoreVO.getExam().intValue());
         tScore.setScore(attendance.intValue() + usually.intValue() + exam.intValue());
-        tScore.setPoint((attendance.intValue() + usually.intValue() + exam.intValue()) / 20.0);
+        tScore.setPoint(new BigDecimal((attendance.intValue() + usually.intValue() + exam.intValue()) / 20));
         tScore.setStatus(1);
         int i = scoreMapper.update(tScore, queryWrapper);
         return i == 0 ? RS.error("操作失败") : RS.ok();
@@ -124,7 +125,7 @@ public class ScoreService extends BaseService {
         Boolean b = this.findIsSelect(userId, scoreVO.getCid());
         if (!b) {
             // 判断人数是否已满
-            TeacherCourse teacherCourse = teacherCourseService.getOne(this.queryOne("cid", scoreVO.getCid()));
+            TeacherCourse teacherCourse = teacherCourseService.getOne(this.queryOne("id", scoreVO.getCid()));
             if (!teacherCourse.getPeople().equals(teacherCourse.getTotalPeople())) {
                 // 选修
                 TScore tScore = new TScore();

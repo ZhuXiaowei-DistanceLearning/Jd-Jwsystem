@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -38,7 +39,7 @@ public class TScore implements Serializable {
     @ApiModelProperty("总成绩")
     private Integer score;
     @ApiModelProperty("绩点")
-    private Double point;
+    private BigDecimal point;
 
     private Integer absent;
 

@@ -82,14 +82,14 @@ public class CourseService extends BaseService {
     }
 
     public RS updatePeople(String cid) {
-        TeacherCourse teacherCourse = teacherCourseService.getOne(this.queryOne("cid", cid));
+        TeacherCourse teacherCourse = teacherCourseService.getOne(this.queryOne("id", cid));
         teacherCourse.setPeople(teacherCourse.getPeople() + 1);
         boolean b = teacherCourseService.updateById(teacherCourse);
         return b ? RS.ok() : RS.error("操作失败");
     }
 
     public RS deletePeople(String cid) {
-        TeacherCourse teacherCourse = teacherCourseService.getOne(this.queryOne("cid", cid));
+        TeacherCourse teacherCourse = teacherCourseService.getOne(this.queryOne("id", cid));
         if (teacherCourse != null) {
             teacherCourse.setPeople(teacherCourse.getPeople() - 1);
             boolean b = teacherCourseService.updateById(teacherCourse);
