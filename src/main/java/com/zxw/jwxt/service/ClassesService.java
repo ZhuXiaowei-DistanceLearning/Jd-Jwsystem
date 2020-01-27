@@ -56,4 +56,9 @@ public class ClassesService extends BaseService {
         List list = classesMapper.findClassesByGrade(realm.getCollegeId(),classesVO.getGradeId());
         return list;
     }
+
+    public TClasses findById(String id) {
+        TClasses tClasses = classesMapper.selectById(id);
+        return tClasses;
+    }
 }

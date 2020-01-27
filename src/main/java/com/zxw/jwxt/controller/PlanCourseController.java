@@ -32,6 +32,12 @@ public class PlanCourseController extends BaseController {
         return ResponseEntity.ok(iPage);
     }
 
+    @GetMapping("/findStudentPlan")
+    public ResponseEntity findStudentPlan(QueryPlanVO planVO){
+        Object[] plan = planCourseService.findStudentPlan(planVO,getRealm());
+        return ResponseEntity.ok(plan);
+    }
+
     @PostMapping
     public ResponseEntity add(@RequestBody QueryPlanVO plan) {
         RS rs = planCourseService.add(plan);
