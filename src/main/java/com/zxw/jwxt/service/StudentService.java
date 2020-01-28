@@ -231,7 +231,7 @@ public class StudentService extends BaseService {
         Object[][] arr = new Object[5][7];
         List<CourseDTO> list = courseService.findScheduleByStudent(userId, queryCourseVO.getTeamId());
         list.forEach(e -> {
-            ScheduleDTO scheduleDTO = new ScheduleDTO(e.getName(), e.getWname(), e.getTeacherName(), e.getClassroom(),null);
+            ScheduleDTO scheduleDTO = new ScheduleDTO(e.getCourseName(), e.getWname(), e.getTeacherName(), e.getClassroom(),null);
             switch (e.getSse()) {
                 case "1-2节":
                     parseSchedule(arr, e, scheduleDTO, 0);
@@ -274,7 +274,6 @@ public class StudentService extends BaseService {
                 } else {
                     o2.add(scheduleDTO);
                 }
-                arr[i][1] = scheduleDTO;
                 break;
             case "周三":
                 List<ScheduleDTO> o3 = (List<ScheduleDTO>) arr[i][2];
@@ -285,7 +284,6 @@ public class StudentService extends BaseService {
                 } else {
                     o3.add(scheduleDTO);
                 }
-                arr[i][2] = scheduleDTO;
                 break;
             case "周四":
                 List<ScheduleDTO> o4 = (List<ScheduleDTO>) arr[i][3];
@@ -296,7 +294,6 @@ public class StudentService extends BaseService {
                 } else {
                     o4.add(scheduleDTO);
                 }
-                arr[i][3] = scheduleDTO;
                 break;
             case "周五":
                 List<ScheduleDTO> o5 = (List<ScheduleDTO>) arr[i][4];
@@ -307,7 +304,6 @@ public class StudentService extends BaseService {
                 } else {
                     o5.add(scheduleDTO);
                 }
-                arr[i][4] = scheduleDTO;
                 break;
             case "周六":
                 List<ScheduleDTO> o6 = (List<ScheduleDTO>) arr[i][5];
@@ -318,7 +314,6 @@ public class StudentService extends BaseService {
                 } else {
                     o6.add(scheduleDTO);
                 }
-                arr[i][5] = scheduleDTO;
                 break;
             case "周日":
                 List<ScheduleDTO> o7 = (List<ScheduleDTO>) arr[i][6];
@@ -329,7 +324,6 @@ public class StudentService extends BaseService {
                 } else {
                     o7.add(scheduleDTO);
                 }
-                arr[i][6] = scheduleDTO;
                 break;
         }
     }

@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.jwxt.domain.TWeek;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.zxw.jwxt.mapper.TWeekMapper;
 import com.zxw.jwxt.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * <p>
@@ -28,8 +28,15 @@ public class WeekService extends BaseService {
 
     public IPage pageQuery(BaseQueryParam baseQueryParam) {
         Page page = getPage(baseQueryParam);
-        QueryWrapper queryWrapper = getWrapper(baseQueryParam,null);
+        QueryWrapper queryWrapper = getWrapper(baseQueryParam, null);
         IPage iPage = weekMapper.selectPage(page, queryWrapper);
         return iPage;
+    }
+
+    public TWeek findOne() {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.orderByDesc("id");
+        List<TWeek> list = weekMapper.selectList(queryWrapper);
+        return list == null ? null : list.get(0);
     }
 }

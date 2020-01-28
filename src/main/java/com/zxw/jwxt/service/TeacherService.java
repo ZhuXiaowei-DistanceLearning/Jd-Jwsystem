@@ -120,7 +120,6 @@ public class TeacherService extends BaseService {
                 } else {
                     o2.add(scheduleDTO);
                 }
-                arr[i][1] = scheduleDTO;
                 break;
             case "周三":
                 List<ScheduleDTO> o3 = (List<ScheduleDTO>) arr[i][2];
@@ -142,7 +141,6 @@ public class TeacherService extends BaseService {
                 } else {
                     o4.add(scheduleDTO);
                 }
-                arr[i][3] = scheduleDTO;
                 break;
             case "周五":
                 List<ScheduleDTO> o5 = (List<ScheduleDTO>) arr[i][4];
@@ -153,7 +151,6 @@ public class TeacherService extends BaseService {
                 } else {
                     o5.add(scheduleDTO);
                 }
-                arr[i][4] = scheduleDTO;
                 break;
             case "周六":
                 List<ScheduleDTO> o6 = (List<ScheduleDTO>) arr[i][5];
@@ -164,7 +161,6 @@ public class TeacherService extends BaseService {
                 } else {
                     o6.add(scheduleDTO);
                 }
-                arr[i][5] = scheduleDTO;
                 break;
             case "周日":
                 List<ScheduleDTO> o7 = (List<ScheduleDTO>) arr[i][6];
@@ -175,7 +171,6 @@ public class TeacherService extends BaseService {
                 } else {
                     o7.add(scheduleDTO);
                 }
-                arr[i][6] = scheduleDTO;
                 break;
         }
     }

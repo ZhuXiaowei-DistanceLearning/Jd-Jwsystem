@@ -1,11 +1,14 @@
 package com.zxw.jwxt.domain;
 
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -23,6 +26,7 @@ public class TeacherCourse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(type = IdType.ID_WORKER_STR)
     private String id;
 
     @ApiModelProperty(value = "学期")
@@ -38,16 +42,16 @@ public class TeacherCourse implements Serializable {
     private String sectionId;
 
     @ApiModelProperty(value = "是否结课")
-    private Integer end;
+    private Integer end = 0;
 
     @ApiModelProperty(value = "是否可以评论")
-    private Integer comment;
+    private Integer comment = 0;
 
     @ApiModelProperty(value = "课程编号")
     private String cid;
 
     @ApiModelProperty(value = "已选人数")
-    private Integer people;
+    private Integer people = 0;
 
     @ApiModelProperty(value = "总人数")
     private Integer totalPeople;
@@ -55,7 +59,10 @@ public class TeacherCourse implements Serializable {
     @ApiModelProperty(value = "上课教室")
     private String classroom;
 
-    private Integer status;
+    private Integer status = 1;
+
+    @ApiModelProperty(value = "审核状态")
+    private Integer apply = 0;
 
 
 }

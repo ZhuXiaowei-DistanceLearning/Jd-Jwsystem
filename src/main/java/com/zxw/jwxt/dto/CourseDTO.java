@@ -67,11 +67,17 @@ public class CourseDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String tname;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String courseName;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String collegeName;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String teacherName;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String tid;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String cid;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer end;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Integer apply;
 }
