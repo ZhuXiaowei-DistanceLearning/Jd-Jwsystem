@@ -41,6 +41,13 @@ public class SpecialtyService extends BaseService {
     }
 
     /**
+     * 数组id
+     */
+    public TSpecialty findById(String id) {
+        return specialtyMapper.selectById(id);
+    }
+
+    /**
      * 作废专业信息
      *
      * @param ids

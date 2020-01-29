@@ -75,9 +75,13 @@ public class CourseDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String tid;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String systemId;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String cid;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer end;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer apply;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Integer score;
 }

@@ -6,10 +6,7 @@ import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
 import com.zxw.jwxt.domain.TScore;
 import com.zxw.jwxt.dto.CourseDTO;
-import com.zxw.jwxt.service.CourseService;
-import com.zxw.jwxt.service.ITeacherCourseService;
-import com.zxw.jwxt.service.ScoreService;
-import com.zxw.jwxt.service.StudentService;
+import com.zxw.jwxt.service.*;
 import com.zxw.jwxt.vo.QueryScoreVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +37,9 @@ public class TScoreController extends BaseController {
 
     @Autowired
     private ITeacherCourseService teacherCourseService;
+
+    @Autowired
+    private IAbsentService absentService;
 
 
     /**
@@ -110,6 +110,7 @@ public class TScoreController extends BaseController {
     public ResponseEntity addAbsent(@RequestBody QueryScoreVO queryScoreVO) {
         RS rs = scoreService.addAbsent(queryScoreVO);
         RS absent = studentService.updateAbsent(queryScoreVO.getSid());
+//        RS absentService.addAbsent(new Absent());
         if (rs.get("status").equals("1") && absent.get("status").equals("1")) {
             return ResponseEntity.ok(rs);
         }

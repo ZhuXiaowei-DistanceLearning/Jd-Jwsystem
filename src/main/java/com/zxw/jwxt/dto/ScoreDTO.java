@@ -26,9 +26,9 @@ public class ScoreDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer isExam;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Integer credit;
+    private BigDecimal credit;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Integer id;
+    private String id;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer totalTime;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

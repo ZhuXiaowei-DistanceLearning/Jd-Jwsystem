@@ -151,4 +151,9 @@ public class ScoreService extends BaseService {
         int i = scoreMapper.delete(queryWrapper);
         return i == 1 ? RS.ok() : RS.error("操作失败");
     }
+
+    public List<CourseDTO> findCourseByStudent(String sid) {
+        List<CourseDTO> list = scoreMapper.findCourseByStudent(sid);
+        return list;
+    }
 }

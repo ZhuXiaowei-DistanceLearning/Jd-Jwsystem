@@ -122,7 +122,7 @@ public class CourseService extends BaseService {
     }
 
     public RS updateCourseEnd(QueryCourseVO courseVO, UserRealm realm) {
-        QueryWrapper queryWrapper = this.queryOne("cid", courseVO.getId());
+        QueryWrapper queryWrapper = this.queryOne("id", courseVO.getId());
         queryWrapper.eq("teacher_id", realm.getQx().equals("讲师") ? realm.getId() : courseVO.getTid());
         TeacherCourse teacherCourse = teacherCourseService.getOne(queryWrapper);
         if (teacherCourse != null) {

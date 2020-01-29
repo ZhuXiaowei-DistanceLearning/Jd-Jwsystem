@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.vo.QueryCourseVO;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -23,4 +25,6 @@ public interface ITeacherCourseService extends IService<TeacherCourse> {
     boolean agree(String id);
 
     boolean back(String id);
+
+    List<TeacherCourse> findCourseByStudent(String id);
 }

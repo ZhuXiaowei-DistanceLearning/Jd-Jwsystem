@@ -20,7 +20,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface TeacherCourseMapper extends BaseMapper<TeacherCourse> {
 
-    @Select("SELECT c.`name`,tc.`id`,tc.`total_people`,tc.`classroom`,t.`tname`,s.`section` sse,s.`id` sectionId,w.`id` weekId,c.`id` cid, s.`week` sw,w.`time`,tc.`apply` wname FROM `teacher_course` tc,`t_teacher` t,`t_course` c,`t_college` co,`t_section` s,`t_week` w,`t_team` te WHERE tc.`team_id` = te.`id` AND tc.`section_id` = s.`id` AND tc.`week_id` = w.`id` AND tc.`teacher_id` = t.`tid` AND tc.`cid` = c.`id` AND t.`college_id` = co.`id` AND tc.`apply` = 0 and co.`id` = #{collegeId}")
+    @Select("SELECT c.`name`,tc.`id`,tc.`total_people`,tc.`classroom`,t.`tname`,s.`section` sse,s.`id` sectionId,w.`id` weekId,c.`id` cid, s.`week` sw,w.`time` wname,tc.`apply`  FROM `teacher_course` tc,`t_teacher` t,`t_course` c,`t_college` co,`t_section` s,`t_week` w,`t_team` te WHERE tc.`team_id` = te.`id` AND tc.`section_id` = s.`id` AND tc.`week_id` = w.`id` AND tc.`teacher_id` = t.`tid` AND tc.`cid` = c.`id` AND t.`college_id` = co.`id` AND tc.`apply` = 0 and co.`id` = #{collegeId}")
     IPage<CourseDTO> findApply(Page page, @Param("collegeId") String collegeId);
 
     @Select("SELECT c.`name`,tc.`total_people`,tc.`classroom`,t.`tname`,s.`section` sse,s.`week` sw,w.`time` wname,tc.`apply` FROM `teacher_course` tc,`t_teacher` t,`t_course` c,`t_college` co,`t_section` s,`t_week` w,`t_team` te WHERE tc.`team_id` = te.`id` AND tc.`section_id` = s.`id` AND tc.`week_id` = w.`id` AND tc.`teacher_id` = t.`tid` AND tc.`cid` = c.`id` AND t.`college_id` = co.`id` AND t.`tid`=#{id}")

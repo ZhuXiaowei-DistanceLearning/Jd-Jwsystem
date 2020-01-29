@@ -90,4 +90,12 @@ public interface TScoreMapper extends BaseMapper<TScore> {
      */
     @Select("SELECT tc.`id`,s.`point`,se.`section` sse,se.`week` sw,w.`time` wname,tc.`classroom`,c.`credit`,c.`isExam`,c.`name`,te.`name` tname,s.`score`,cs.`name` csname,c.`total_time` FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_section` se,`t_cstatus` cs,`teacher_course` tc  WHERE s.`student_id` = ts.`sid` AND tc.`cid` = c.`id` AND  s.`course_id` = tc.`id` AND tc.`team_id` = te.`id` AND tc.`week_id` = w.`id` AND s.`teacher_id` = t.`tid` AND se.`id`= tc.`section_id` AND cs.`id` = c.`cstatus_id` AND ts.`sid` = #{sid} AND tc.`end` = 0 AND c.system_id = 4")
     List<CourseDTO> findSelectCourseByStudentId(@Param("sid") String sid);
+
+    /**
+     * 统计
+     * @param sid
+     * @return
+     */
+    @Select("SELECT c.*,s.`point`,se.`section` sse,se.`week` sw,w.`time` wname,tc.`classroom`,te.`name` tname,s.`score`,cs.`name` csname,s.`absent` FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_section` se,`t_cstatus` cs,`teacher_course` tc  WHERE s.`student_id` = ts.`sid` AND tc.`cid` = c.`id` AND  s.`course_id` = tc.`id` AND tc.`team_id` = te.`id` AND tc.`week_id` = w.`id` AND s.`teacher_id` = t.`tid` AND se.`id`= tc.`section_id` AND cs.`id` = c.`cstatus_id` AND ts.`sid` = #{sid} AND s.status='1'")
+    List<CourseDTO> findCourseByStudent(@Param("sid") String sid);
 }
