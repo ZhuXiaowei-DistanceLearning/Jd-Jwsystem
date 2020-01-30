@@ -4,6 +4,7 @@ package com.zxw.jwxt.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
+import com.zxw.jwxt.domain.Absent;
 import com.zxw.jwxt.domain.TScore;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.service.*;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -109,9 +111,16 @@ public class TScoreController extends BaseController {
     @PostMapping("/addAbsent")
     public ResponseEntity addAbsent(@RequestBody QueryScoreVO queryScoreVO) {
         RS rs = scoreService.addAbsent(queryScoreVO);
-        RS absent = studentService.updateAbsent(queryScoreVO.getSid());
-//        RS absentService.addAbsent(new Absent());
-        if (rs.get("status").equals("1") && absent.get("status").equals("1")) {
+        RS update = studentService.updateAbsent(queryScoreVO.getSid());
+        Absent absent = new Absent();
+        absent.setCid(queryScoreVO.getCid());
+        absent.setSectionId(queryScoreVO.getSectionId());
+        absent.setTeamId(queryScoreVO.getTeamId());
+        absent.setCreateTime(new Date());
+        absent.setSid(queryScoreVO.getSid());
+        absent.setTid(getUserId());
+        boolean save = absentService.save(absent);
+        if (rs.get("status").equals("1") && update.get("status").equals("1")) {
             return ResponseEntity.ok(rs);
         }
         throw new BadRequestException("考勤更新失败");

@@ -18,5 +18,7 @@ public class QueryScoreVO extends BaseQueryParam {
     private Double attendance;
     private Double usually;
     private Double exam;
+    private String sectionId;
     private BigDecimal point;
+    private String teamId;
 }

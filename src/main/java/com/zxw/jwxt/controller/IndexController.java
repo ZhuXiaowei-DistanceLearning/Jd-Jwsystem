@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,6 +43,9 @@ public class IndexController extends BaseController {
     private CourseService courseService;
     @Autowired
     private ITeacherCourseService teacherCourseService;
+
+    @Autowired
+    private IAbsentService absentService;
 
     @GetMapping("/")
     public String index() {
@@ -98,6 +102,7 @@ public class IndexController extends BaseController {
 
     @GetMapping("/findStudentPanel")
     public ResponseEntity findStudentPanel() {
+        DecimalFormat df = new DecimalFormat(".0");
         TStudent student = (TStudent) getRealm();
         TClasses classes = classesService.findById(student.getClassesId());
         TSpecialty specialty = specialtyService.findById(classes.getSpecialtyId());
@@ -105,6 +110,7 @@ public class IndexController extends BaseController {
         StudentPanel studentPanel = new StudentPanel();
         studentPanel.setCourseNum(list.size());
         studentPanel.setStudent(student);
+        studentPanel.setSpecialty(specialty);
         // 成绩能力模型
         int tongshi = 0;
         int zhuanye = 0;
@@ -114,37 +120,45 @@ public class IndexController extends BaseController {
         for (CourseDTO courseDTO : list) {
             studentPanel.setTotalTime(studentPanel.getTotalTime() + courseDTO.getTotalTime());
             if (courseDTO.getScore() >= 60) {
+                // 合格率
                 studentPanel.setPassNum(studentPanel.getPassNum() + 1);
             }
-            if (courseDTO.getSystemId().equals(1)) {
+            if (courseDTO.getSystemId().equals("1")) {
                 gonggong += 1;
                 studentPanel.setGonggong(studentPanel.getGonggong() + courseDTO.getScore());
             }
-            if (courseDTO.getSystemId().equals(2)) {
+            if (courseDTO.getSystemId().equals("2")) {
                 zhuanye += 1;
                 studentPanel.setZhuanye(studentPanel.getZhuanye() + courseDTO.getScore());
             }
-            if (courseDTO.getSystemId().equals(4)) {
+            if (courseDTO.getSystemId().equals("4")) {
                 tongshi += 1;
                 studentPanel.setTongshi(studentPanel.getTongshi() + courseDTO.getScore());
             }
-            if (courseDTO.getSystemId().equals(5)) {
+            if (courseDTO.getSystemId().equals("5")) {
                 shijian += 1;
                 studentPanel.setShijan(studentPanel.getShijan() + courseDTO.getScore());
             }
-            if (courseDTO.getSystemId().equals(6)) {
+            if (courseDTO.getSystemId().equals("6")) {
                 xueke += 1;
                 studentPanel.setXueke(studentPanel.getXueke() + courseDTO.getScore());
             }
         }
+        // 缺勤次数
         studentPanel.setDisciplinary(student.getAbsent());
-        studentPanel.setEligiableRate(studentPanel.getPassNum() / studentPanel.getCourseNum() / 1.0);
-        studentPanel.setUpCourseRate(studentPanel.getDisciplinary() / studentPanel.getTotalTime() / 2.0);
-        studentPanel.setGonggongRate(studentPanel.getGonggong() / gonggong * 100 / 1.0);
-        studentPanel.setZhuanyeRate(studentPanel.getZhuanye() / zhuanye * 100 / 1.0);
-        studentPanel.setTongshiRate(studentPanel.getTongshi() / shijian * 100 / 1.0);
-        studentPanel.setXuekeRate(studentPanel.getXueke() / xueke * 100 / 1.0);
-        studentPanel.setShijanRate(studentPanel.getShijan() / shijian * 100 / 1.0);
+        // 合格率
+        studentPanel.setEligiableRate(studentPanel.getPassNum() == 0 ? 0 : Double.valueOf(df.format(studentPanel.getPassNum() / (studentPanel.getCourseNum() * 1.0) * 100)));
+        // 到课率
+        studentPanel.setUpCourseRate(studentPanel.getDisciplinary() == 0 ? 0 : Double.valueOf(df.format(100.0 - studentPanel.getDisciplinary() / (studentPanel.getTotalTime() / 2.0) * 100)));
+        // 成绩能力模型
+        studentPanel.setGonggongRate(studentPanel.getGonggong() == 0 ? 0 : Double.valueOf(df.format(studentPanel.getGonggong() / (gonggong * 100.0) * 100)));
+        studentPanel.setZhuanyeRate(studentPanel.getZhuanye() == 0 ? 0 : Double.valueOf(df.format(studentPanel.getZhuanye() / (zhuanye * 100.0) * 100)));
+        studentPanel.setTongshiRate(studentPanel.getTongshi() == 0 ? 0 : Double.valueOf(df.format(studentPanel.getTongshi() / (tongshi * 100.0) * 100)));
+        studentPanel.setXuekeRate(studentPanel.getXueke() == 0 ? 0 : Double.valueOf(df.format(studentPanel.getXueke() / (xueke * 100.0) * 100)));
+        studentPanel.setShijanRate(studentPanel.getShijan() == 0 ? 0 : Double.valueOf(df.format(studentPanel.getShijan() / (shijian * 100.0) * 100)));
+        // 统计缺勤
+        int[][] absentCount = absentService.countStudentAbsent(getUserId());
+        studentPanel.setAbsentCount(absentCount);
         return ResponseEntity.ok(studentPanel);
     }
 }

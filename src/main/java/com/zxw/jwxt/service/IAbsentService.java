@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IAbsentService extends IService<Absent> {
 
+    int[][] countStudentAbsent(String userId);
 }
