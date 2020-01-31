@@ -27,4 +27,6 @@ public interface ITeacherCourseService extends IService<TeacherCourse> {
     boolean back(String id);
 
     List<TeacherCourse> findCourseByStudent(String id);
+
+    int[] countDownCourseSection(UserRealm realm);
 }

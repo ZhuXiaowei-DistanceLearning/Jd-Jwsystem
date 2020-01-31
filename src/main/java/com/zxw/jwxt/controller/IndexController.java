@@ -4,6 +4,8 @@ import com.zxw.jwxt.domain.TClasses;
 import com.zxw.jwxt.domain.TSpecialty;
 import com.zxw.jwxt.domain.TStudent;
 import com.zxw.jwxt.dto.CourseDTO;
+import com.zxw.jwxt.dto.JWPanel;
+import com.zxw.jwxt.dto.NoticeDTO;
 import com.zxw.jwxt.dto.StudentPanel;
 import com.zxw.jwxt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,9 @@ public class IndexController extends BaseController {
 
     @Autowired
     private IAbsentService absentService;
+
+    @Autowired
+    private IUserNoticeService userNoticeService;
 
     @GetMapping("/")
     public String index() {
@@ -160,5 +165,31 @@ public class IndexController extends BaseController {
         int[][] absentCount = absentService.countStudentAbsent(getUserId());
         studentPanel.setAbsentCount(absentCount);
         return ResponseEntity.ok(studentPanel);
+    }
+
+    @GetMapping("/findUserPanel")
+    public ResponseEntity findUserPanel() {
+        JWPanel jwPanel = new JWPanel();
+        // 统计最近7天缺勤
+        int[][] absentCount = absentService.countStudentByJW(getRealm());
+        jwPanel.setAbsentCount(absentCount);
+        // 统计在校人数
+        List<Integer> countGrade = studentService.countPeople(getRealm());
+        jwPanel.setCountGrade(countGrade);
+        // 统计缺课率前5的课程
+        List<CourseDTO> courseDTOList = courseService.countDownCourseRate(getRealm());
+        jwPanel.setDownCourseRate(courseDTOList);
+        // 统计旷课时段
+        int[] list = teacherCourseService.countDownCourseSection(getRealm());
+        jwPanel.setDownCourseSectionRate(list);
+        // 通知公告
+        List<NoticeDTO> notice = userNoticeService.findNoticeByJW(getRealm());
+        jwPanel.setNoticeList(notice);
+        return ResponseEntity.ok(jwPanel);
+    }
+
+    @GetMapping("/findTeacherPanel")
+    public ResponseEntity findTeacherPanel() {
+        return ResponseEntity.ok(null);
     }
 }

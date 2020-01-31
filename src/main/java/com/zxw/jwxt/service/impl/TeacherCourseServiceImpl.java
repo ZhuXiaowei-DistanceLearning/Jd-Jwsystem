@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zxw.common.exception.BadRequestException;
+import com.zxw.jwxt.domain.Absent;
+import com.zxw.jwxt.domain.TUser;
 import com.zxw.jwxt.domain.TeacherCourse;
 import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.mapper.TeacherCourseMapper;
@@ -12,6 +14,7 @@ import com.zxw.jwxt.vo.QueryCourseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,5 +70,35 @@ public class TeacherCourseServiceImpl extends ServiceImpl<TeacherCourseMapper, T
     @Override
     public List<TeacherCourse> findCourseByStudent(String id) {
         return null;
+    }
+
+    @Override
+    public int[] countDownCourseSection(UserRealm realm) {
+        TUser user = (TUser) realm;
+        List<Absent> list = teacherCourseMapper.countDownCourseSection(user.getCollegeId(), new Date(), new Date());
+        int[] arr = countAbsentSection(list);
+        return arr;
+    }
+
+    public int[] countAbsentSection(List<Absent> list) {
+        int[] arr = new int[5];
+        for (Absent absent : list) {
+            if (absent.getSectionId().equals("1") || absent.getSectionId().equals("11") || absent.getSectionId().equals("16") || absent.getSectionId().equals("26") || absent.getSectionId().equals("6") || absent.getSectionId().equals("31") || absent.getSectionId().equals("21")) {
+                arr[0]++;
+            }
+            if (absent.getSectionId().equals("12") || absent.getSectionId().equals("22") || absent.getSectionId().equals("17") || absent.getSectionId().equals("27") || absent.getSectionId().equals("7") || absent.getSectionId().equals("32") || absent.getSectionId().equals("2")) {
+                arr[1]++;
+            }
+            if (absent.getSectionId().equals("3") || absent.getSectionId().equals("13") || absent.getSectionId().equals("18") || absent.getSectionId().equals("28") || absent.getSectionId().equals("8") || absent.getSectionId().equals("33") || absent.getSectionId().equals("23")) {
+                arr[2]++;
+            }
+            if (absent.getSectionId().equals("4") || absent.getSectionId().equals("14") || absent.getSectionId().equals("19") || absent.getSectionId().equals("29") || absent.getSectionId().equals("9") || absent.getSectionId().equals("34") || absent.getSectionId().equals("24")) {
+                arr[3]++;
+            }
+            if (absent.getSectionId().equals("5") || absent.getSectionId().equals("10") || absent.getSectionId().equals("15") || absent.getSectionId().equals("20") || absent.getSectionId().equals("25") || absent.getSectionId().equals("30") || absent.getSectionId().equals("35")) {
+                arr[4]++;
+            }
+        }
+        return arr;
     }
 }

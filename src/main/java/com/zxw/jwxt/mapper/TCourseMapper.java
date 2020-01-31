@@ -39,4 +39,7 @@ public interface TCourseMapper extends BaseMapper<TCourse> {
 
     @Select("SELECT tc.`id`,tc.`classroom`,c.`name` courseName,tc.`classroom`,t.`tname` teacherName,te.`name` tname,w.`time` wname,se.`section` sse,se.`week` sw FROM `t_score` s,`t_course` c,`t_teacher` t,`t_team` te,`t_student` ts,`t_week` w,`t_nature` n,`t_section` se,`teacher_course` tc WHERE s.`student_id` = ts.`sid` AND s.`course_id` = tc.`id` AND tc.`cid` = c.`id` AND c.`nature_id` = n.`id` AND tc.`team_id` = te.`id` AND tc.`week_id` = w.`id` AND tc.`teacher_id` = t.`tid` AND se.`id`= tc.`section_id` AND ts.`sid` = #{sid} AND tc.team_id = #{teamId} and tc.`apply` = 1")
     List<CourseDTO> findScheduleByStudent(@Param("sid") String userId, @Param("teamId") String teamId);
+
+    @Select("SELECT c.`name`,COUNT(*) FROM `absent` ab,`teacher_course` tc,`t_course` c,`t_team` t WHERE tc.`team_id` = t.`id` AND c.`id` = tc.`cid` AND ab.`cid` = tc.`id` AND c.`college_id` = #{collegeId} AND  t.`team` = #{teamId} AND (c.`system_id` = 2 OR c.`system_id` = 6) GROUP BY c.`id` LIMIT 0,5")
+    List<CourseDTO> countDownCourseRate(@Param("collegeId") String collegeId, @Param("teamId") String teamId);
 }

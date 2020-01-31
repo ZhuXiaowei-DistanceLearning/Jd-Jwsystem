@@ -9,6 +9,8 @@ import com.zxw.common.pojo.RS;
 import com.zxw.common.utils.FileUtils;
 import com.zxw.jwxt.domain.StudentRole;
 import com.zxw.jwxt.domain.TStudent;
+import com.zxw.jwxt.domain.TUser;
+import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.dto.ScheduleDTO;
 import com.zxw.jwxt.mapper.TStudentMapper;
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -231,7 +234,7 @@ public class StudentService extends BaseService {
         Object[][] arr = new Object[5][7];
         List<CourseDTO> list = courseService.findScheduleByStudent(userId, queryCourseVO.getTeamId());
         list.forEach(e -> {
-            ScheduleDTO scheduleDTO = new ScheduleDTO(e.getCourseName(), e.getWname(), e.getTeacherName(), e.getClassroom(),null);
+            ScheduleDTO scheduleDTO = new ScheduleDTO(e.getCourseName(), e.getWname(), e.getTeacherName(), e.getClassroom(), null);
             switch (e.getSse()) {
                 case "1-2节":
                     parseSchedule(arr, e, scheduleDTO, 0);
@@ -326,5 +329,13 @@ public class StudentService extends BaseService {
                 }
                 break;
         }
+    }
+
+    public List<Integer> countPeople(UserRealm realm) {
+        TUser user = (TUser) realm;
+        LocalDate date = LocalDate.now();
+        int year = date.getYear();
+        List<Integer> list = studentMapper.countPeople(String.valueOf(year - 4), String.valueOf(year - 1));
+        return list;
     }
 }

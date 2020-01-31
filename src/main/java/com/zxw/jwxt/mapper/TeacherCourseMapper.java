@@ -2,12 +2,16 @@ package com.zxw.jwxt.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zxw.jwxt.domain.Absent;
 import com.zxw.jwxt.domain.TeacherCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zxw.jwxt.dto.CourseDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -25,4 +29,7 @@ public interface TeacherCourseMapper extends BaseMapper<TeacherCourse> {
 
     @Select("SELECT c.`name`,tc.`total_people`,tc.`classroom`,t.`tname`,s.`section` sse,s.`week` sw,w.`time` wname,tc.`apply` FROM `teacher_course` tc,`t_teacher` t,`t_course` c,`t_college` co,`t_section` s,`t_week` w,`t_team` te WHERE tc.`team_id` = te.`id` AND tc.`section_id` = s.`id` AND tc.`week_id` = w.`id` AND tc.`teacher_id` = t.`tid` AND tc.`cid` = c.`id` AND t.`college_id` = co.`id` AND t.`tid`=#{id}")
     IPage<CourseDTO> findApplyByTeacher(Page page, @Param("id") String id);
+
+    @Select("SELECT ab.* FROM `absent` ab,`teacher_course` tc,`t_course` c,`t_team` t WHERE ab.`cid` = tc.`id` AND (c.`system_id` = '2' OR c.`system_id` = '6') AND tc.`cid` = c.`id` AND tc.`team_id` = t.`id` AND c.`college_id` = #{collegeId} AND ab.`create_time` BETWEEN #{beginDate} AND #{endDate}")
+    List<Absent> countDownCourseSection(@Param("collegeId") String collegeId, @Param("beginDate") Date beginDate, @Param("endDate") Date endDate);
 }

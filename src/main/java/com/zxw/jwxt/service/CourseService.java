@@ -5,9 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.exception.BadRequestException;
 import com.zxw.common.pojo.RS;
-import com.zxw.jwxt.domain.TCourse;
-import com.zxw.jwxt.domain.TeacherCourse;
-import com.zxw.jwxt.domain.UserRealm;
+import com.zxw.jwxt.domain.*;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.dto.StudentDTO;
 import com.zxw.jwxt.mapper.TCourseMapper;
@@ -34,6 +32,9 @@ public class CourseService extends BaseService {
 
     @Autowired
     private TCourseMapper courseMapper;
+
+    @Autowired
+    private TeamService teamService;
 
     @Autowired
     private ITeacherCourseService teacherCourseService;
@@ -148,6 +149,13 @@ public class CourseService extends BaseService {
         wrapper.eq("team_id", teamId);
         wrapper.eq("end", "1");
         List list = teacherCourseService.list(wrapper);
+        return list;
+    }
+
+    public List<CourseDTO> countDownCourseRate(UserRealm realm) {
+        TTeam team = teamService.findOne();
+        TUser user = (TUser) realm;
+        List<CourseDTO> list = courseMapper.countDownCourseRate(user.getCollegeId(), team.getId());
         return list;
     }
 }
