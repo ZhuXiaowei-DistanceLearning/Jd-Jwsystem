@@ -26,10 +26,10 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,7 +64,7 @@ public class StudentService extends BaseService {
      */
     public IPage findStudentByclass(QueryStudentVO queryStudentVO) {
         Page page = getPage(queryStudentVO);
-        IPage<QueryStudentVO> iPage = studentMapper.findStudentByClassesId(page, queryStudentVO.getCid());
+        IPage<QueryStudentVO> iPage = studentMapper.findStudentByClassesId(page, queryStudentVO.getClassesId());
         return iPage;
     }
 
@@ -131,6 +131,7 @@ public class StudentService extends BaseService {
             String idcard = row.getCell(6).getStringCellValue();
             String address = row.getCell(7).getStringCellValue();
             String political = row.getCell(8).getStringCellValue();
+            String beginTime = row.getCell(9).getStringCellValue();
             String roleId = "b762e0f84ec911e8bf5d34de1af4e65a";
             String qx = "学生";
             TStudent student = new TStudent();
@@ -142,7 +143,12 @@ public class StudentService extends BaseService {
             student.setQx(qx);
             student.setId(sid);
             student.setSex(sex);
-            student.setBeginTime(new Date());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                student.setBeginTime(sdf.parse(beginTime));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             student.setPhone(phone);
             student.setPoliticalStatus(political);
             student.setAddress(address);

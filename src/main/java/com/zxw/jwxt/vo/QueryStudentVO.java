@@ -1,5 +1,6 @@
 package com.zxw.jwxt.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -25,7 +26,9 @@ public class QueryStudentVO extends BaseQueryParam {
     private Integer absent;
     private String classesId;
     private String gradeId;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date beginTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
     private String phone;
     private String idcard;
