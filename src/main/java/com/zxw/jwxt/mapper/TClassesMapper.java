@@ -1,7 +1,6 @@
 package com.zxw.jwxt.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
@@ -12,7 +11,6 @@ import com.zxw.jwxt.vo.QueryClassesVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
 
@@ -35,4 +33,7 @@ public interface TClassesMapper extends BaseMapper<TClasses> {
 
     @Select("select c.* from t_classes c,t_grade g where c.`grade_id` = g.`id` and c.`college_id` = #{collegeId} and g.`id` = #{gradeId}")
     List<ClassesDTO> findClassesByGrade(@Param("collegeId") String collegeId, @Param("gradeId") String gradeId);
+
+    @Select("select c.* from t_classes c,t_grade g where c.`grade_id` = g.`id` and c.`college_id` = #{collegeId} and g.`id` = #{gradeId}")
+    void findBySpecialty(@Param("specialtyId") String specialtyId, @Param("gradeId") String gradeId);
 }

@@ -10,6 +10,7 @@ import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.dto.ScoreDTO;
 import com.zxw.jwxt.mapper.TScoreMapper;
 import com.zxw.jwxt.vo.QueryScoreVO;
+import com.zxw.jwxt.vo.QueryStudentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +43,25 @@ public class ScoreService extends BaseService {
     @Autowired
     private ITeacherCourseService teacherCourseService;
 
-    public RS saveCourse(QueryScoreVO model) {
-//        return scoreMapper.insert(model) == 0 ? RS.error("插入失败") : RS.ok();
-        return null;
+    @Autowired
+    private ClassesService classesService;
+
+    public RS saveCourse(String classesId, String cid, String teacherId) {
+        try {
+            QueryStudentVO studentVO = new QueryStudentVO();
+            studentVO.setClassesId(classesId);
+            List<QueryStudentVO> list = studentService.findStudentByclass(studentVO).getRecords();
+            for (QueryStudentVO queryStudentVO : list) {
+                TScore score = new TScore();
+                score.setTeacherId(teacherId);
+                score.setCourseId(cid);
+                score.setStudentId(queryStudentVO.getSid());
+                scoreMapper.insert(score);
+            }
+            return RS.ok();
+        } catch (Exception e) {
+            throw new BadRequestException("课程分配失败");
+        }
     }
 
     /**

@@ -4,10 +4,13 @@ package com.zxw.jwxt.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zxw.common.pojo.TableResponse;
 import com.zxw.jwxt.domain.TeacherCourse;
+import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.service.ITeacherCourseService;
+import com.zxw.jwxt.service.ScoreService;
 import com.zxw.jwxt.service.TeamService;
 import com.zxw.jwxt.service.WeekService;
 import com.zxw.jwxt.vo.QueryCourseVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,8 @@ public class TeacherCourseController extends BaseController {
     private WeekService weekService;
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private ScoreService scoreService;
 
     /**
      * 查找审核列表
@@ -56,10 +61,24 @@ public class TeacherCourseController extends BaseController {
         return ResponseEntity.ok(of);
     }
 
+    /**
+     * 查找班级下的课程
+     * @param courseVO
+     * @return
+     */
+    @GetMapping("/findClassCoure")
+    public ResponseEntity findClassCoure(QueryCourseVO courseVO){
+        IPage<CourseDTO> list=teacherCourseService.findClassCoure(courseVO);
+        return ResponseEntity.ok(list);
+    }
+
     @PostMapping
     public ResponseEntity add(@RequestBody TeacherCourse teacherCourse) {
         teacherCourse.setTeacherId(getUserId());
         teacherCourse.setTeamId(teamService.findOne().getId());
+        if (StringUtils.isNotEmpty(teacherCourse.getClassesId()) && teacherCourse.getIsClasses() == 1) {
+            scoreService.saveCourse(teacherCourse.getClassesId(), teacherCourse.getCid(), teacherCourse.getTeacherId());
+        }
         boolean b = teacherCourseService.save(teacherCourse);
         return ResponseEntity.ok(b);
     }
@@ -87,5 +106,6 @@ public class TeacherCourseController extends BaseController {
         boolean b = teacherCourseService.removeById(id);
         return ResponseEntity.ok(b);
     }
+
 
 }

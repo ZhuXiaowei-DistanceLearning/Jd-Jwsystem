@@ -1,5 +1,6 @@
 package com.zxw.jwxt.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zxw.common.pojo.RS;
@@ -60,5 +61,17 @@ public class ClassesService extends BaseService {
     public TClasses findById(String id) {
         TClasses tClasses = classesMapper.selectById(id);
         return tClasses;
+    }
+
+    public List findBySpecialty(QueryClassesVO classesVO) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if(StringUtils.isNotEmpty(classesVO.getGradeId())){
+            queryWrapper.eq("grade_id", classesVO.getGradeId());
+        }
+        if(StringUtils.isNotEmpty(classesVO.getSpecialtyId())){
+            queryWrapper.eq("specialty_id", classesVO.getSpecialtyId());
+        }
+        List list = classesMapper.selectList(queryWrapper);
+        return list;
     }
 }

@@ -64,5 +64,9 @@ public class TeacherCourse implements Serializable {
     @ApiModelProperty(value = "审核状态")
     private Integer apply = 0;
 
+    @ApiModelProperty(value = "班级id")
+    private String classesId;
 
+    @ApiModelProperty(value = "是否绑定班级")
+    private Integer isClasses = 0;
 }

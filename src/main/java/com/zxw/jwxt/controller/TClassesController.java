@@ -76,4 +76,10 @@ public class TClassesController extends BaseController {
         List<ClassesDTO> list = classesService.findClassesByGrade(classesVO,getRealm());
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping("/findBySpecialty")
+    public ResponseEntity findBySpecialty(QueryClassesVO classesVO){
+        List list= classesService.findBySpecialty(classesVO);
+        return ResponseEntity.ok(list);
+    }
 }

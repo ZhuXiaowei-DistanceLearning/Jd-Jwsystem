@@ -80,6 +80,13 @@ public class TeacherCourseServiceImpl extends ServiceImpl<TeacherCourseMapper, T
         return arr;
     }
 
+    @Override
+    public IPage findClassCoure(QueryCourseVO courseVO) {
+        Page page = new Page(courseVO.getOffset(), courseVO.getLimit());
+        IPage classCourse = teacherCourseMapper.findClassCourse(page, courseVO);
+        return classCourse;
+    }
+
     public int[] countAbsentSection(List<Absent> list) {
         int[] arr = new int[5];
         for (Absent absent : list) {

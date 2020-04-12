@@ -39,4 +39,5 @@ public class QueryCourseVO extends BaseQueryParam {
     private String collegeId;
     private String systemId;
     private String endStatus;
+    private String classesId;
 }

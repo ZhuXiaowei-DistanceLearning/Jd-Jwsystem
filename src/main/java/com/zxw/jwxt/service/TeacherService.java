@@ -180,4 +180,14 @@ public class TeacherService extends BaseService {
         List list = teacherMapper.selectList(this.queryOne("college_id", realm.getCollegeId()));
         return list;
     }
+
+    public RS edit(TTeacher tTeacher) {
+        int id = teacherMapper.update(tTeacher, this.queryOne("id", tTeacher.getId()));
+        return id == 1 ? RS.ok() : RS.error("修改失败");
+    }
+
+    public RS delete(String tid) {
+        int i = teacherMapper.deleteById(tid);
+        return i == 1 ? RS.ok() : RS.error("删除失败");
+    }
 }

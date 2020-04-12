@@ -10,10 +10,7 @@ import com.zxw.jwxt.vo.QueryCourseVO;
 import com.zxw.jwxt.vo.QueryTeacherVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -61,10 +58,29 @@ public class TTeacherController extends BaseController {
     }
 
     /**
+     * 添加用户
+     */
+    @PutMapping
+    public ResponseEntity edit(@RequestBody TTeacher tTeacher) {
+        RS rs = teacherService.edit(tTeacher);
+        return ResponseEntity.ok(rs);
+    }
+
+    /**
+     * 添加用户
+     */
+    @DeleteMapping
+    public ResponseEntity delete(String tid) {
+        RS rs = teacherService.delete(tid);
+        return ResponseEntity.ok(rs);
+    }
+
+    /**
      * 查找个人信息
+     *
      * @return
      */
-    @GetMapping("/findInfo")
+    @GetMapping("/findById")
     public ResponseEntity findInfo() {
         TTeacher teacher = teacherService.findInfo(getUserId());
         return ResponseEntity.ok(teacher);
@@ -72,18 +88,20 @@ public class TTeacherController extends BaseController {
 
     /**
      * 查找课程表
+     *
      * @param queryCourseVO
      * @return
      */
     @GetMapping("/findSchedule")
-    public ResponseEntity findSchedule(QueryCourseVO queryCourseVO){
+    public ResponseEntity findSchedule(QueryCourseVO queryCourseVO) {
         Object[][] schedule = teacherService.findSchedule(queryCourseVO, getUserId());
         return ResponseEntity.ok(schedule);
     }
 
     @GetMapping("/listajax")
-    public ResponseEntity listajax(){
+    public ResponseEntity listajax() {
         List list = teacherService.listajax(getRealm());
         return ResponseEntity.ok(list);
     }
+
 }

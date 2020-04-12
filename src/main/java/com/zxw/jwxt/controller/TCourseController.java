@@ -58,7 +58,7 @@ public class TCourseController extends BaseController {
 
     @PutMapping("/updateCourseEnd")
     public ResponseEntity updateCourseEnd(@RequestBody QueryCourseVO courseVO) {
-        RS rs = courseService.updateCourseEnd(courseVO,getRealm());
+        RS rs = courseService.updateCourseEnd(courseVO, getRealm());
         if (rs.get("status").equals("1")) {
             return ResponseEntity.ok(rs);
         }
@@ -73,7 +73,7 @@ public class TCourseController extends BaseController {
      */
     @PostMapping("/add")
     public ResponseEntity add(@RequestBody TCourse courseVO) {
-        RS rs = courseService.add(courseVO,getRealm());
+        RS rs = courseService.add(courseVO, getRealm());
         if (rs.get("status").equals("1")) {
             return ResponseEntity.ok(rs);
         }
@@ -106,5 +106,6 @@ public class TCourseController extends BaseController {
         TableResponse reponse = TableResponse.of(result);
         return ResponseEntity.ok(reponse);
     }
+
 
 }
