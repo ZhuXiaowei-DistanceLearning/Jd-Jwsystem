@@ -63,20 +63,24 @@ public class TeacherCourseController extends BaseController {
 
     /**
      * 查找班级下的课程
+     *
      * @param courseVO
      * @return
      */
     @GetMapping("/findClassCoure")
-    public ResponseEntity findClassCoure(QueryCourseVO courseVO){
-        IPage<CourseDTO> list=teacherCourseService.findClassCoure(courseVO);
+    public ResponseEntity findClassCoure(QueryCourseVO courseVO) {
+        IPage<CourseDTO> list = teacherCourseService.findClassCoure(courseVO);
         return ResponseEntity.ok(list);
     }
 
     @PostMapping
     public ResponseEntity add(@RequestBody TeacherCourse teacherCourse) {
-        teacherCourse.setTeacherId(getUserId());
+        if (!getRealm().getQx().equals("教务人员")) {
+            teacherCourse.setTeacherId(getUserId());
+        }
         teacherCourse.setTeamId(teamService.findOne().getId());
         if (StringUtils.isNotEmpty(teacherCourse.getClassesId()) && teacherCourse.getIsClasses() == 1) {
+            teacherCourse.setApply(1);
             scoreService.saveCourse(teacherCourse.getClassesId(), teacherCourse.getCid(), teacherCourse.getTeacherId());
         }
         boolean b = teacherCourseService.save(teacherCourse);

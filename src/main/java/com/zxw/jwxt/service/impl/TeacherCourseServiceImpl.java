@@ -87,6 +87,12 @@ public class TeacherCourseServiceImpl extends ServiceImpl<TeacherCourseMapper, T
         return classCourse;
     }
 
+    @Override
+    public Integer countCourseScore(Integer begin, Integer end, String cid) {
+        Integer list =  teacherCourseMapper.countCourseScore(begin, end, cid);
+        return list;
+    }
+
     public int[] countAbsentSection(List<Absent> list) {
         int[] arr = new int[5];
         for (Absent absent : list) {

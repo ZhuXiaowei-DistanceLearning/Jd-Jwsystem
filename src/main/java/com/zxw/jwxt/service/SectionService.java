@@ -3,13 +3,10 @@ package com.zxw.jwxt.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zxw.jwxt.domain.TSection;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.zxw.jwxt.mapper.TSectionMapper;
 import com.zxw.jwxt.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>

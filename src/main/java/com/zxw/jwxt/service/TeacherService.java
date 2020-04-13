@@ -56,15 +56,12 @@ public class TeacherService extends BaseService {
         return null;
     }
 
-    public RS save(TTeacher model, String roleIds) {
+    public RS save(TTeacher model) {
+        TeacherRole record = new TeacherRole();
+        record.setRoleId("6b4fef6e4ecb11e8bf5d34de1af4e65a");
+        record.setTeacherId(model.getId());
+        teacherRoleService.insertRole(record);
         teacherMapper.insert(model);
-        String[] ids = roleIds.split(",");
-        for (String id : ids) {
-            TeacherRole record = new TeacherRole();
-            record.setRoleId(id);
-            record.setTeacherId(model.getId());
-            teacherRoleService.insertRole(record);
-        }
         return RS.ok();
     }
 

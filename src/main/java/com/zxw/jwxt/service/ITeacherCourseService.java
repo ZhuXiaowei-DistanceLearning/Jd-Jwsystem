@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author zxw
@@ -31,4 +31,6 @@ public interface ITeacherCourseService extends IService<TeacherCourse> {
     int[] countDownCourseSection(UserRealm realm);
 
     IPage findClassCoure(QueryCourseVO courseVO);
+
+    Integer countCourseScore(Integer begin, Integer end, String cid);
 }

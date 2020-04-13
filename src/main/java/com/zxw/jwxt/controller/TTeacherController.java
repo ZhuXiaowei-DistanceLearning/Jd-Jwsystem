@@ -51,10 +51,10 @@ public class TTeacherController extends BaseController {
     /**
      * 添加用户
      */
-    @PostMapping("/add")
-    public RS add(TTeacher teacher, String roleIds) {
-        RS rs = teacherService.save(teacher, roleIds);
-        return rs;
+    @PostMapping
+    public ResponseEntity add(@RequestBody TTeacher teacher) {
+        RS rs = teacherService.save(teacher);
+        return ResponseEntity.ok(rs);
     }
 
     /**

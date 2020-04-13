@@ -89,12 +89,15 @@ public class ScoreService extends BaseService {
         queryWrapper.eq("student_id", scoreVO.getSid());
         queryWrapper.eq("course_id", scoreVO.getCid());
         TScore tScore = scoreMapper.selectOne(queryWrapper);
+        if(tScore == null){
+            throw new BadRequestException("查不到该用户信息");
+        }
         Double attendance = scoreVO.getAttendance() * 0.2;
         Double usually = scoreVO.getUsually() * 0.2;
         Double exam = scoreVO.getExam() * 0.6;
-        tScore.setAttendance(scoreVO.getAttendance().intValue());
-        tScore.setUsually(scoreVO.getUsually().intValue());
-        tScore.setExam(scoreVO.getExam().intValue());
+        tScore.setAttendance(attendance.intValue());
+        tScore.setUsually(usually.intValue());
+        tScore.setExam(exam.intValue());
         tScore.setScore(attendance.intValue() + usually.intValue() + exam.intValue());
         tScore.setPoint(new BigDecimal((attendance.intValue() + usually.intValue() + exam.intValue()) / 20));
         tScore.setStatus(1);
