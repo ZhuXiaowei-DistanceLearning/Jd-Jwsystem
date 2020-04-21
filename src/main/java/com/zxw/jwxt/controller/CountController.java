@@ -29,6 +29,8 @@ public class CountController extends BaseController {
     private ScoreService scoreService;
     @Autowired
     private ITeacherCourseService teacherCourseService;
+    @Autowired
+    private TeamCommentService teamCommentService;
 
     /**
      * 统计课程成绩
@@ -50,5 +52,15 @@ public class CountController extends BaseController {
         list.add(eight);
         list.add(night);
         return ResponseEntity.ok(list);
+    }
+
+    /**
+     * 统计某门课程的评价
+     * @return
+     */
+    @GetMapping("/countCommentByCourse")
+    public ResponseEntity countCommentByCourse(String cid,String commentId){
+        Integer num = teamCommentService.countCommentByCourse(cid,commentId);
+        return ResponseEntity.ok(num);
     }
 }

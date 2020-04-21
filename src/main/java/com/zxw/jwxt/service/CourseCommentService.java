@@ -41,7 +41,7 @@ public class CourseCommentService extends BaseService {
     }
 
     public CourseCommentDTO queryCourseComment(QueryCommentVO commentVO, UserRealm realm) {
-        CourseCommentDTO courseCommentDTO = courseCommentMapper.queryCourseComment(commentVO.getCid(), commentVO.getTcId(), realm.getId());
+        CourseCommentDTO courseCommentDTO = courseCommentMapper.queryCourseComment(commentVO.getCid(), commentVO.getTcId(), realm.getQx().equals("学生") ? realm.getId() : commentVO.getSid());
         return courseCommentDTO;
     }
 

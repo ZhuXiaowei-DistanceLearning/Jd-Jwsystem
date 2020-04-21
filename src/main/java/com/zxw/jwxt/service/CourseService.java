@@ -147,7 +147,7 @@ public class CourseService extends BaseService {
     public List<TeacherCourse> selectAll(String teamId) {
         QueryWrapper wrapper = new QueryWrapper<>();
         wrapper.eq("team_id", teamId);
-        wrapper.eq("end", "1");
+        wrapper.eq("end", "2");
         List list = teacherCourseService.list(wrapper);
         return list;
     }

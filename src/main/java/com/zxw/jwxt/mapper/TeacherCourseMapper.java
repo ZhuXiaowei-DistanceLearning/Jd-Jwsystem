@@ -40,6 +40,6 @@ public interface TeacherCourseMapper extends BaseMapper<TeacherCourse> {
     @SelectProvider(type = CourseProvider.class, method = "findCourseByClass")
     IPage<CourseDTO> findClassCourse(Page page, QueryCourseVO courseVO);
 
-    @Select("select count(*) from `teacher_course` tc,`t_score` s where tc.`cid` = s.`course_id` and tc.`teacher_id` = s.`teacher_id` and s.`score` between #{begin} and #{end} and tc.`id`=#{cid};")
+    @Select("select count(*) from `teacher_course` tc,`t_score` s where tc.`id` = s.`course_id` and tc.`teacher_id` = s.`teacher_id` and s.`score` between #{begin} and #{end} and tc.`id`=#{cid};")
     Integer countCourseScore(@Param("begin") Integer begin, @Param("end") Integer end, @Param("cid") String cid);
 }

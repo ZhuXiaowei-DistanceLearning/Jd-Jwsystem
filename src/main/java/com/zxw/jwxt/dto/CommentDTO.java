@@ -20,6 +20,8 @@ public class CommentDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String id;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String tcid;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String cid;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String sid;

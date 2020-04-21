@@ -66,4 +66,13 @@ public class TeamCommentService extends BaseService {
         int i = teamCommentMapper.delete(wrapper);
         return i == 1 ? RS.ok() : RS.error("操作失败");
     }
+
+    public Integer countCommentByCourse(String cid, String commentId) {
+        Integer count = teamCommentMapper.countCommentByCourse(cid, commentId);
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("comment_id", commentId);
+        wrapper.eq("cid", cid);
+        Integer num = teamCommentMapper.selectCount(wrapper);
+        return count == null ? 0 : count / num ;
+    }
 }
