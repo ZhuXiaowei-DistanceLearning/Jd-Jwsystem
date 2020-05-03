@@ -14,7 +14,6 @@ import com.zxw.jwxt.vo.QueryCourseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,10 +72,16 @@ public class TeacherCourseServiceImpl extends ServiceImpl<TeacherCourseMapper, T
     }
 
     @Override
-    public int[] countDownCourseSection(UserRealm realm) {
+    public int[] countDownCourseSection(UserRealm realm, int[][] absentCount) {
         TUser user = (TUser) realm;
-        List<Absent> list = teacherCourseMapper.countDownCourseSection(user.getCollegeId(), new Date(), new Date());
-        int[] arr = countAbsentSection(list);
+        int[] arr = new int[7];
+//        List<Absent> list = teacherCourseMapper.countDownCourseSection(user.getCollegeId(), new Date(), new Date());
+        for (int j = 0; j < absentCount[0].length; j++) {
+            for (int i = 0; i < absentCount.length; i++) {
+                arr[i] = arr[i] + absentCount[i][j];
+            }
+        }
+//        int[] arr = countAbsentSection(list);
         return arr;
     }
 
@@ -89,7 +94,7 @@ public class TeacherCourseServiceImpl extends ServiceImpl<TeacherCourseMapper, T
 
     @Override
     public Integer countCourseScore(Integer begin, Integer end, String cid) {
-        Integer list =  teacherCourseMapper.countCourseScore(begin, end, cid);
+        Integer list = teacherCourseMapper.countCourseScore(begin, end, cid);
         return list;
     }
 

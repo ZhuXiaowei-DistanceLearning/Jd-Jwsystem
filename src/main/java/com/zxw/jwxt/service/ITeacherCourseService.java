@@ -28,7 +28,7 @@ public interface ITeacherCourseService extends IService<TeacherCourse> {
 
     List<TeacherCourse> findCourseByStudent(String id);
 
-    int[] countDownCourseSection(UserRealm realm);
+    int[] countDownCourseSection(UserRealm realm, int[][] absentCount);
 
     IPage findClassCoure(QueryCourseVO courseVO);
 

@@ -16,7 +16,7 @@ import java.util.List;
 public class JWPanel {
     int[][] absentCount;
     List<Integer> countGrade;
-    List<CourseDTO> downCourseRate;
+    int[] downCourseRate;
     int[] downCourseSectionRate;
     List<NoticeDTO> noticeList;
 }

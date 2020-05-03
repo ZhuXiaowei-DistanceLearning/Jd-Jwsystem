@@ -152,10 +152,16 @@ public class CourseService extends BaseService {
         return list;
     }
 
-    public List<CourseDTO> countDownCourseRate(UserRealm realm) {
-        TTeam team = teamService.findOne();
-        TUser user = (TUser) realm;
-        List<CourseDTO> list = courseMapper.countDownCourseRate(user.getCollegeId(), team.getId());
-        return list;
+    public int[] countDownCourseRate(UserRealm realm, int[][] absentCount) {
+//        TTeam team = teamService.findOne();
+//        TUser user = (TUser) realm;
+//        List<CourseDTO> list = courseMapper.countDownCourseRate(user.getCollegeId(), team.getId());
+        int[] arr = new int[5];
+        for (int i = 0; i < absentCount.length; i++) {
+            for (int j = 0; j < absentCount[i].length; j++) {
+                arr[j] = arr[j] + absentCount[i][j];
+            }
+        }
+        return arr;
     }
 }

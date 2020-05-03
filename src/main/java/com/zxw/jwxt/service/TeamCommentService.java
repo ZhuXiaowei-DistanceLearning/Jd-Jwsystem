@@ -64,7 +64,7 @@ public class TeamCommentService extends BaseService {
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("comment_id", commentId);
         int i = teamCommentMapper.delete(wrapper);
-        return i == 1 ? RS.ok() : RS.error("操作失败");
+        return i == 1              ? RS.ok() : RS.error("操作失败");
     }
 
     public Integer countCommentByCourse(String cid, String commentId) {

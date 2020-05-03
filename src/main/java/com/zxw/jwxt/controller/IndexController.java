@@ -176,11 +176,11 @@ public class IndexController extends BaseController {
         // 统计在校人数
         List<Integer> countGrade = studentService.countPeople(getRealm());
         jwPanel.setCountGrade(countGrade);
-        // 统计缺课率前5的课程
-        List<CourseDTO> courseDTOList = courseService.countDownCourseRate(getRealm());
+        // 统计缺课课时
+        int[] courseDTOList = courseService.countDownCourseRate(getRealm(), absentCount);
         jwPanel.setDownCourseRate(courseDTOList);
         // 统计旷课时段
-        int[] list = teacherCourseService.countDownCourseSection(getRealm());
+        int[] list = teacherCourseService.countDownCourseSection(getRealm(), absentCount);
         jwPanel.setDownCourseSectionRate(list);
         // 通知公告
         List<NoticeDTO> notice = userNoticeService.findNoticeByJW(getRealm());
