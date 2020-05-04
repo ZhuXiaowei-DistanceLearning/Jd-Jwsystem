@@ -1,9 +1,8 @@
 package com.zxw.jwxt.service;
 
-import com.zxw.jwxt.domain.UserNotice;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zxw.jwxt.domain.UserNotice;
 import com.zxw.jwxt.domain.UserRealm;
-import com.zxw.jwxt.dto.NoticeDTO;
 
 import java.util.List;
 
@@ -17,9 +16,11 @@ import java.util.List;
  */
 public interface IUserNoticeService extends IService<UserNotice> {
 
-    List<NoticeDTO> findNoticeByJW(UserRealm realm);
+    List findNoticeByJW(UserRealm realm);
 
-    List<NoticeDTO> findNoticeByStudent(UserRealm realm);
+    List findNoticeByStudent(UserRealm realm);
 
-    List<NoticeDTO> findNoticeByTeacher(UserRealm realm);
+    List findNoticeByTeacher(UserRealm realm);
+
+    boolean save(UserNotice userNotice, UserRealm realm, String type);
 }

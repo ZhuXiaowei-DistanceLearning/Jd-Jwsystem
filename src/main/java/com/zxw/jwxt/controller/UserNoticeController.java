@@ -46,8 +46,8 @@ public class UserNoticeController extends BaseController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody UserNotice userNotice) {
-        boolean b = userNoticeService.save(userNotice);
+    public ResponseEntity save(@RequestBody UserNotice userNotice, String type) {
+        boolean b = userNoticeService.save(userNotice, getRealm(), type);
         return ResponseEntity.ok(b);
     }
 

@@ -5,8 +5,8 @@ import com.zxw.jwxt.domain.TSpecialty;
 import com.zxw.jwxt.domain.TStudent;
 import com.zxw.jwxt.dto.CourseDTO;
 import com.zxw.jwxt.dto.JWPanel;
-import com.zxw.jwxt.dto.NoticeDTO;
 import com.zxw.jwxt.dto.StudentPanel;
+import com.zxw.jwxt.dto.TeacherPanel;
 import com.zxw.jwxt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -183,13 +183,18 @@ public class IndexController extends BaseController {
         int[] list = teacherCourseService.countDownCourseSection(getRealm(), absentCount);
         jwPanel.setDownCourseSectionRate(list);
         // 通知公告
-        List<NoticeDTO> notice = userNoticeService.findNoticeByJW(getRealm());
-        jwPanel.setNoticeList(notice);
+        List moticeLists = userNoticeService.findNoticeByJW(getRealm());
+        jwPanel.setNoticeList(moticeLists);
         return ResponseEntity.ok(jwPanel);
     }
 
     @GetMapping("/findTeacherPanel")
     public ResponseEntity findTeacherPanel() {
-        return ResponseEntity.ok(null);
+        TeacherPanel teacherPanel = new TeacherPanel();
+        // 缺课次数
+        // 教学完成进度
+        List noticeByTeacher = userNoticeService.findNoticeByTeacher(getRealm());
+        teacherPanel.setNoticeList(noticeByTeacher);
+        return ResponseEntity.ok(teacherPanel);
     }
 }

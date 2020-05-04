@@ -173,7 +173,7 @@ public class StudentService extends BaseService {
         Page page = getPage(queryStudentVO);
         Page<QueryStudentVO> list = studentMapper.findAll(page, queryStudentVO.getClassesId());
         // 在内存中创建一个Excel文件，通过输出流写到客户端提供下载
-        if (list.getTotal() == 0) {
+        if (list.getRecords().isEmpty()) {
             throw new JwException(ExceptionEnums.NO_DATA);
         }
         XSSFWorkbook workbook = new XSSFWorkbook();
@@ -342,6 +342,13 @@ public class StudentService extends BaseService {
         LocalDate date = LocalDate.now();
         int year = date.getYear();
         List<Integer> list = studentMapper.countPeople(String.valueOf(year - 4), String.valueOf(year - 1));
+        return list;
+    }
+
+    public List<TStudent> findByCollege(String collegeId) {
+        QueryWrapper wrapper = new QueryWrapper<>();
+        wrapper.eq("college_id", collegeId);
+        List<TStudent> list = studentMapper.selectList(wrapper);
         return list;
     }
 }

@@ -75,10 +75,14 @@ public class TeacherCourseController extends BaseController {
 
     @PostMapping
     public ResponseEntity add(@RequestBody TeacherCourse teacherCourse) {
-      if (!getRealm().getQx().equals("教务人员")) {
-                teacherCourse.setTeacherId(getUserId());
+        if (!getRealm().getQx().equals("教务人员")) {
+            teacherCourse.setTeacherId(getUserId());
         }
-        teacherCourse.setTeamId(teamService.findOne().getId());
+        if (StringUtils.isNotEmpty(teacherCourse.getTeamId())) {
+            teacherCourse.setTeamId(teacherCourse.getTeamId());
+        } else {
+            teacherCourse.setTeamId(teamService.findOne().getId());
+        }
         if (StringUtils.isNotEmpty(teacherCourse.getClassesId()) && teacherCourse.getIsClasses() == 1) {
             teacherCourse.setApply(1);
         }

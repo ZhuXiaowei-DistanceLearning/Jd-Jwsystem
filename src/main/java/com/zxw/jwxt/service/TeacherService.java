@@ -8,10 +8,10 @@ import com.zxw.jwxt.domain.TTeacher;
 import com.zxw.jwxt.domain.TeacherRole;
 import com.zxw.jwxt.domain.UserRealm;
 import com.zxw.jwxt.dto.CourseDTO;
+import com.zxw.jwxt.dto.ScheduleDTO;
 import com.zxw.jwxt.mapper.TTeacherMapper;
 import com.zxw.jwxt.vo.QueryCourseVO;
 import com.zxw.jwxt.vo.QueryTeacherVO;
-import com.zxw.jwxt.dto.ScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,9 +59,9 @@ public class TeacherService extends BaseService {
     public RS save(TTeacher model) {
         TeacherRole record = new TeacherRole();
         record.setRoleId("6b4fef6e4ecb11e8bf5d34de1af4e65a");
+        teacherMapper.insert(model);
         record.setTeacherId(model.getId());
         teacherRoleService.insertRole(record);
-        teacherMapper.insert(model);
         return RS.ok();
     }
 
@@ -186,5 +186,12 @@ public class TeacherService extends BaseService {
     public RS delete(String tid) {
         int i = teacherMapper.deleteById(tid);
         return i == 1 ? RS.ok() : RS.error("删除失败");
+    }
+
+    public List<TTeacher> findByCollege(String collegeId) {
+        QueryWrapper wrapper = new QueryWrapper<>();
+        wrapper.eq("college_id", collegeId);
+        List<TTeacher> list = teacherMapper.selectList(wrapper);
+        return list;
     }
 }
