@@ -41,7 +41,7 @@ public class CountController extends BaseController {
     @GetMapping("/countCourseScore")
     public ResponseEntity countCourseScore(String cid) {
         List list = new ArrayList();
-        Integer no = teacherCourseService.countCourseScore(0, 69, cid);
+        Integer no = teacherCourseService.countCourseScore(0, 59, cid);
         Integer six = teacherCourseService.countCourseScore(60, 69, cid);
         Integer seven = teacherCourseService.countCourseScore(70, 79, cid);
         Integer eight = teacherCourseService.countCourseScore(80, 89, cid);
@@ -56,11 +56,27 @@ public class CountController extends BaseController {
 
     /**
      * 统计某门课程的评价
+     *
      * @return
      */
     @GetMapping("/countCommentByCourse")
-    public ResponseEntity countCommentByCourse(String cid,String commentId){
-        Integer num = teamCommentService.countCommentByCourse(cid,commentId);
-        return ResponseEntity.ok(num);
+    public ResponseEntity countCommentByCourse(String cid, String commentId) {
+        List list = new ArrayList();
+        Integer num = teamCommentService.countCommentByCourse(cid, commentId);
+        list.add(num);
+        List<Integer> comment = new ArrayList<>();
+        Integer no = teamCommentService.countCourseComment(0, 59, cid);
+        Integer six = teamCommentService.countCourseComment(60, 69, cid);
+        Integer seven = teamCommentService.countCourseComment(70, 79, cid);
+        Integer eight = teamCommentService.countCourseComment(80, 89, cid);
+        Integer night = teamCommentService.countCourseComment(90, 100, cid);
+        comment.add(no);
+        comment.add(six);
+        comment.add(seven);
+        comment.add(eight);
+        comment.add(night);
+        comment.add(no);
+        list.add(comment);
+        return ResponseEntity.ok(list);
     }
 }

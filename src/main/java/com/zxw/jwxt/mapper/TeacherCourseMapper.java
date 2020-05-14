@@ -42,4 +42,10 @@ public interface TeacherCourseMapper extends BaseMapper<TeacherCourse> {
 
     @Select("select count(*) from `teacher_course` tc,`t_score` s where tc.`id` = s.`course_id` and tc.`teacher_id` = s.`teacher_id` and s.`score` between #{begin} and #{end} and tc.`id`=#{cid};")
     Integer countCourseScore(@Param("begin") Integer begin, @Param("end") Integer end, @Param("cid") String cid);
+
+    @Select("select course.`name` from teacher_course tc,t_course course where tc.cid = course.id and tc.team_id = #{teamId} and tc.teacher_id = #{id} and tc.`end` = #{end}")
+    List<String> countFinishCourseName(@Param("id") String id, @Param("teamId") String teamId, @Param("end") Integer end);
+
+    @Select("select c.`name` name,sum(s.absent) value from teacher_course tc,t_score s,t_course c where tc.teacher_id = s.teacher_id and tc.id = s.course_id and tc.team_id = #{teamId} and tc.teacher_id = #{id} and tc.cid = c.id GROUP BY tc.id HAVING sum(s.absent >0) limit 0,5")
+    List<CourseDTO> countAbsent(@Param("id") String id, @Param("teamId") String teamId);
 }

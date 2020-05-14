@@ -24,6 +24,6 @@ public interface UserNoticeMapper extends BaseMapper<UserNotice> {
     @Select("SELECT n.* FROM `user_notice` un,`notice` n WHERE n.`id` = un.`notice_id` AND un.`sid` = #{userId}")
     List<NoticeDTO> findNoticeByStudent(@Param("userId") String id);
 
-    @Select("SELECT n.* FROM `user_notice` un,`notice` n WHERE n.`id` = un.`notice_id` AND un.`tid` = #{userId}")
+    @Select("select n.*,u.`username` from `notice` n,`t_user` u where u.`id` = n.`publisher`")
     List<NoticeDTO> findNoticeByTeacher(@Param("userId") String id);
 }

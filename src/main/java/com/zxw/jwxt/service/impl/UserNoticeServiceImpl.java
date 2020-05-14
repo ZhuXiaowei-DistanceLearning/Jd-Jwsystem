@@ -40,15 +40,13 @@ public class UserNoticeServiceImpl extends ServiceImpl<UserNoticeMapper, UserNot
 
     @Override
     public List<NoticeDTO> findNoticeByStudent(UserRealm realm) {
-        TUser user = (TUser) realm;
-        List<NoticeDTO> list = userNoticeMapper.findNoticeByStudent(user.getId());
+        List<NoticeDTO> list = userNoticeMapper.findNoticeByStudent(realm.getId());
         return list;
     }
 
     @Override
     public List<NoticeDTO> findNoticeByTeacher(UserRealm realm) {
-        TUser user = (TUser) realm;
-        List<NoticeDTO> list = userNoticeMapper.findNoticeByTeacher(user.getId());
+        List<NoticeDTO> list = userNoticeMapper.findNoticeByTeacher(realm.getId());
         return list;
     }
 

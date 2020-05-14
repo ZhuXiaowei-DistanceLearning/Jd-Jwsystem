@@ -15,4 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 public class TeacherPanel {
     List<NoticeDTO> noticeList;
+    TeacherSchedule teacherSchedule;
+    List<CourseDTO> courseList;
 }

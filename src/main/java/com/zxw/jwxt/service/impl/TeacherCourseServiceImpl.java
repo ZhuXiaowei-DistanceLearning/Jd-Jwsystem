@@ -1,5 +1,6 @@
 package com.zxw.jwxt.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -8,6 +9,8 @@ import com.zxw.jwxt.domain.Absent;
 import com.zxw.jwxt.domain.TUser;
 import com.zxw.jwxt.domain.TeacherCourse;
 import com.zxw.jwxt.domain.UserRealm;
+import com.zxw.jwxt.dto.CourseDTO;
+import com.zxw.jwxt.dto.TeacherSchedule;
 import com.zxw.jwxt.mapper.TeacherCourseMapper;
 import com.zxw.jwxt.service.ITeacherCourseService;
 import com.zxw.jwxt.vo.QueryCourseVO;
@@ -95,6 +98,31 @@ public class TeacherCourseServiceImpl extends ServiceImpl<TeacherCourseMapper, T
     @Override
     public Integer countCourseScore(Integer begin, Integer end, String cid) {
         Integer list = teacherCourseMapper.countCourseScore(begin, end, cid);
+        return list;
+    }
+
+    @Override
+    public TeacherSchedule countTeacherSchedule(UserRealm realm, String teamId) {
+        TeacherSchedule teacherSchedule = new TeacherSchedule();
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("teacher_id", realm.getId());
+        queryWrapper.eq("team_id", teamId);
+        Integer count = teacherCourseMapper.selectCount(queryWrapper);
+        queryWrapper.eq("end", 2);
+        Integer count1 = teacherCourseMapper.selectCount(queryWrapper);
+        List<String> list = teacherCourseMapper.countFinishCourseName(realm.getId(), teamId, 2);
+        List<String> list1 = teacherCourseMapper.countFinishCourseName(realm.getId(), teamId, 0);
+        teacherSchedule.setFinishNum(count1);
+        teacherSchedule.setNum(count);
+        teacherSchedule.setUnFinishNum(count - count1);
+        teacherSchedule.setFinishName(list);
+        teacherSchedule.setUnFinishName(list1);
+        return teacherSchedule;
+    }
+
+    @Override
+    public List<CourseDTO> countAbsent(UserRealm realm, String teamId) {
+        List<CourseDTO> list = teacherCourseMapper.countAbsent(realm.getId(), teamId);
         return list;
     }
 

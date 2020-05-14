@@ -127,7 +127,6 @@ public class TeacherService extends BaseService {
                 } else {
                     o3.add(scheduleDTO);
                 }
-                arr[i][2] = scheduleDTO;
                 break;
             case "周四":
                 List<ScheduleDTO> o4 = (List<ScheduleDTO>) arr[i][3];

@@ -21,6 +21,8 @@ public class CourseDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String name;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Integer value;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private BigDecimal credit;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String classroom;
@@ -68,6 +70,8 @@ public class CourseDTO {
     private String tname;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String courseName;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String systemName;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String collegeName;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

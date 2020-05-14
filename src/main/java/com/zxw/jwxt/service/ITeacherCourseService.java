@@ -1,9 +1,11 @@
 package com.zxw.jwxt.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zxw.jwxt.domain.TeacherCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zxw.jwxt.domain.TeacherCourse;
 import com.zxw.jwxt.domain.UserRealm;
+import com.zxw.jwxt.dto.CourseDTO;
+import com.zxw.jwxt.dto.TeacherSchedule;
 import com.zxw.jwxt.vo.QueryCourseVO;
 
 import java.util.List;
@@ -33,4 +35,8 @@ public interface ITeacherCourseService extends IService<TeacherCourse> {
     IPage findClassCoure(QueryCourseVO courseVO);
 
     Integer countCourseScore(Integer begin, Integer end, String cid);
+
+    TeacherSchedule countTeacherSchedule(UserRealm realm, String teamId);
+
+    List<CourseDTO> countAbsent(UserRealm realm, String teamId);
 }

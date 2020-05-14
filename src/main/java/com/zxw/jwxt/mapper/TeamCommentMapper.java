@@ -46,10 +46,14 @@ public interface TeamCommentMapper extends BaseMapper<TeamComment> {
 
     /**
      * 统计课程评价
+     *
      * @param cid
      * @param commentId
      * @return
      */
     @Select("SELECT SUM(remark) FROM `team_comment` WHERE cid=#{cid} AND comment_id = #{commentId}")
     Integer countCommentByCourse(@Param("cid") String cid, @Param("commentId") String commentId);
+
+    @Select("select count(*) from `team_comment` tc where tc.remark between #{begin} and #{end} and tc.`cid`=#{cid}")
+    Integer countCourseComment(@Param("begin") Integer begin, @Param("end") Integer end, @Param("cid") String cid);
 }

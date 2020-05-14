@@ -75,4 +75,8 @@ public class TeamCommentService extends BaseService {
         Integer num = teamCommentMapper.selectCount(wrapper);
         return count == null ? 0 : count / num ;
     }
+
+    public Integer countCourseComment(int i, int i1, String cid) {
+        return teamCommentMapper.countCourseComment(i, i1, cid);
+    }
 }

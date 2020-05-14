@@ -3,10 +3,7 @@ package com.zxw.jwxt.controller;
 import com.zxw.jwxt.domain.TClasses;
 import com.zxw.jwxt.domain.TSpecialty;
 import com.zxw.jwxt.domain.TStudent;
-import com.zxw.jwxt.dto.CourseDTO;
-import com.zxw.jwxt.dto.JWPanel;
-import com.zxw.jwxt.dto.StudentPanel;
-import com.zxw.jwxt.dto.TeacherPanel;
+import com.zxw.jwxt.dto.*;
 import com.zxw.jwxt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -189,12 +186,17 @@ public class IndexController extends BaseController {
     }
 
     @GetMapping("/findTeacherPanel")
-    public ResponseEntity findTeacherPanel() {
+    public ResponseEntity findTeacherPanel(String teamId) {
         TeacherPanel teacherPanel = new TeacherPanel();
-        // 缺课次数
+        // 通知公告
+        List moticeLists = userNoticeService.findNoticeByTeacher(getRealm());
+        teacherPanel.setNoticeList(moticeLists);
         // 教学完成进度
-        List noticeByTeacher = userNoticeService.findNoticeByTeacher(getRealm());
-        teacherPanel.setNoticeList(noticeByTeacher);
+        TeacherSchedule teacherSchedule = teacherCourseService.countTeacherSchedule(getRealm(), teamId);
+        // 缺课情况
+        List<CourseDTO> list = teacherCourseService.countAbsent(getRealm(), teamId);
+        teacherPanel.setCourseList(list);
+        teacherPanel.setTeacherSchedule(teacherSchedule);
         return ResponseEntity.ok(teacherPanel);
     }
 }
