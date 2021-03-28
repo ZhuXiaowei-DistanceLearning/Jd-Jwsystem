@@ -33,6 +33,7 @@ public class XssfUtils {
         headRow.createCell(6).setCellValue("身份证号码");
         headRow.createCell(7).setCellValue("家庭住址");
         headRow.createCell(8).setCellValue("政治面貌");
+        headRow.createCell(9).setCellValue("入学时间");
         String filename = "学生信息模板.xlsx";
         String agent = request.getHeader("User-Agent");
         filename = FileUtils.encodeDownloadFilename(filename, agent);
